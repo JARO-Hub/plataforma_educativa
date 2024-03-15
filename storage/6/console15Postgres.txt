@@ -1,0 +1,268 @@
+/*logs*/
+CREATE TABLE tbd_application.logs (
+    log_id serial PRIMARY KEY,
+    usuario VARCHAR,
+    ip inet,
+    tabla VARCHAR,
+    operacion VARCHAR,
+    fecha TIMESTAMP DEFAULT NOW(),
+    detalle TEXT
+);
+
+
+
+CREATE OR REPLACE FUNCTION tbd_application.is_estudiante(p_usuario_id INTEGER, p_rol_id INTEGER) RETURNS BOOLEAN AS $$
+DECLARE
+    esEstudiante BOOLEAN;
+BEGIN
+    IF p_rol_id in (SELECT r.roles_id FROM tbd_application.roles r
+                                    INNER JOIN tbd_application.usuariosroles ur ON r.roles_id = ur.roles_id
+                                    INNER JOIN tbd_application.sesions s ON ur.usuario_id = s.usuario_id
+                                    WHERE s.usuario_id = p_usuario_id AND r.nombre = 'estudiante') THEN
+        esEstudiante := TRUE;
+    ELSE
+        esEstudiante := FALSE;
+    END IF;
+    RETURN esEstudiante;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION tbd_application.is_educador(p_usuario_id INTEGER, p_rol_id INTEGER) RETURNS BOOLEAN AS $$
+DECLARE
+    esEducador BOOLEAN;
+BEGIN
+    IF p_rol_id in (SELECT r.roles_id FROM tbd_application.roles r
+                                    INNER JOIN tbd_application.usuariosroles ur ON r.roles_id = ur.roles_id
+                                    INNER JOIN tbd_application.sesions s ON ur.usuario_id = s.usuario_id
+                                    WHERE s.usuario_id = p_usuario_id AND r.nombre = 'educador') THEN
+        esEducador := TRUE;
+    ELSE
+        esEducador := FALSE;
+    END IF;
+    RETURN esEducador;
+END;
+$$ LANGUAGE plpgsql;
+
+
+/* insertar una tarea y archivo de estudiante */
+CREATE OR REPLACE PROCEDURE tbd_application.c_TareaEstudiante(p_id_usuario int, p_file text, p_id_tarea int, p_id_educador int, p_id_grupo int, p_file_tamano integer) AS $$
+DECLARE
+    v_id_archivo int;
+
+BEGIN
+    INSERT INTO tbd_application.estudiantestareas (estudiante_id, tarea_id, educador_id, grupo_id)
+    VALUES (p_id_usuario, p_id_tarea, p_id_educador, p_id_grupo);
+    INSERT INTO tbd_application.archivosestudiantestareas (estudiante_id, tarea_id, educador_id, grupo_id, fecha_subida, fecha_modificacion, tamano)
+    VALUES (p_id_usuario, p_id_tarea, p_id_educador, p_id_grupo, current_date, current_date, p_file_tamano)
+    RETURNING archivo_estudiante_tarea_ INTO v_id_archivo;
+    INSERT INTO tbd_application.documentosarchivosestudiantesta(archivo_estudiante_tarea_, estudiante_id, tarea_id, educador_id, grupo_id, extension, contenido_url)
+    VALUES (v_id_archivo, p_id_usuario, p_id_tarea, p_id_educador, p_id_grupo, 'pdf', p_file);
+
+END;
+$$ LANGUAGE plpgsql;
+
+/* insertar tarea y archivo adjunto de educador */
+CREATE OR REPLACE PROCEDURE tbd_application.c_TareasEnUnGrupo(p_id_educador int, p_titulo_tarea VARCHAR, p_descripcion_tarea text,  p_puntaje_maximo INTEGER, p_file text, p_id_grupo int, p_file_tamano integer, p_fecha_limite date DEFAULT NULL) AS $$
+DECLARE
+    v_id_tarea int;
+    v_id_archivo int;
+BEGIN
+    INSERT INTO tbd_application.tareas (educador_id, grupo_id, titulo, descripcion, fecha_limite, puntaje_maximo)
+    VALUES (p_id_educador, p_id_grupo, p_titulo_tarea, p_descripcion_tarea, p_fecha_limite, p_puntaje_maximo)
+    RETURNING tarea_id INTO v_id_tarea;
+    INSERT INTO tbd_application.archivostareas (tarea_id, educador_id, grupo_id, fecha_subida, fecha_modificacion, tamano)
+    VALUES (v_id_tarea, p_id_educador, p_id_grupo, current_date, current_date, p_file_tamano)
+    RETURNING archivo_tarea_id INTO v_id_archivo;
+    INSERT INTO tbd_application.documentosarchivostareas(archivo_tarea_id, tarea_id, educador_id, grupo_id, extension, contenido_url)
+    VALUES (v_id_archivo, v_id_tarea, p_id_educador, p_id_grupo, 'pdf', p_file);
+END;
+$$ LANGUAGE plpgsql;
+
+
+/* triggers a las tablas afectadas */
+CREATE TRIGGER trigger_insert_after
+AFTER INSERT OR UPDATE OR DELETE ON tbd_application.estudiantestareas
+FOR EACH ROW
+EXECUTE FUNCTION registrar_log();
+
+
+
+CREATE TRIGGER trigger_update_after
+AFTER INSERT OR UPDATE OR DELETE ON tbd_application.archivosestudiantestareas
+FOR EACH ROW
+EXECUTE FUNCTION registrar_log();
+
+CREATE TRIGGER trigger_insert_after
+AFTER INSERT OR UPDATE OR DELETE ON tbd_application.documentosarchivosestudiantesta
+FOR EACH ROW
+EXECUTE FUNCTION registrar_log();
+
+CREATE TRIGGER trigger_insert_after
+AFTER INSERT OR UPDATE OR DELETE ON tbd_application.tareas
+FOR EACH ROW
+EXECUTE FUNCTION registrar_log();
+
+CREATE TRIGGER trigger_insert_after
+AFTER INSERT OR UPDATE OR DELETE ON tbd_application.archivostareas
+FOR EACH ROW
+EXECUTE FUNCTION registrar_log();
+
+CREATE TRIGGER trigger_insert_after
+AFTER INSERT OR UPDATE OR DELETE ON tbd_application.documentosarchivostareas
+FOR EACH ROW
+EXECUTE FUNCTION registrar_log();
+
+CREATE TRIGGER trigger_insert_after
+AFTER INSERT OR UPDATE OR DELETE ON tbd_application.grupos
+FOR EACH ROW
+EXECUTE FUNCTION registrar_log();
+
+CREATE TRIGGER trigger_insert_after
+AFTER INSERT OR UPDATE OR DELETE ON tbd_application.estudiantesgrupos
+FOR EACH ROW
+EXECUTE FUNCTION registrar_log();
+
+
+CREATE OR REPLACE FUNCTION tbd_application.registrar_log() RETURNS TRIGGER AS $$
+DECLARE
+    userEmail VARCHAR;
+    currentUserId INTEGER;
+    detalle TEXT;
+BEGIN
+    -- Obtener el usuario_id basado en el pid de la sesión actual
+    SELECT usuario_id INTO currentUserId FROM tbd_application.sesions WHERE pid = pg_backend_pid();
+
+    -- A partir del usuario_id, obtener el correo electrónico
+    SELECT email INTO userEmail FROM tbd_application.usuarios WHERE usuario_id = currentUserId;
+
+    -- Determinar el detalle basado en la operación
+    IF TG_OP = 'INSERT' THEN
+        detalle := 'INSERT realizado en ' || TG_TABLE_NAME || ' con nuevos datos.';
+    ELSIF TG_OP = 'UPDATE' THEN
+        detalle := 'UPDATE realizado en ' || TG_TABLE_NAME || ' de datos antiguos: ';
+    ELSIF TG_OP = 'DELETE' THEN
+        detalle := 'DELETE realizado en ' || TG_TABLE_NAME || ' con datos antiguos: ';
+    END IF;
+
+    INSERT INTO tbd_application.logs (usuario, ip, tabla, operacion, fecha, detalle)
+    VALUES (
+        userEmail,
+        inet_client_addr(),
+        TG_TABLE_NAME,
+        TG_OP,
+        NOW(),
+        detalle
+    );
+
+    -- En el caso de un DELETE, no hay un registro NEW para devolver
+    IF TG_OP = 'DELETE' THEN
+        RETURN OLD;
+    ELSE
+        RETURN NEW;
+    END IF;
+
+END;
+$$ LANGUAGE plpgsql;
+
+create or replace function tbd_application.tieneAcceso(p_usuario_id INTEGER, p_nombre_funcion VARCHAR)
+    returns boolean
+as $BODY$
+DECLARE
+    v_tiene_acceso boolean;
+BEGIN
+
+    IF p_nombre_funcion in
+        (SELECT f.nombre FROM tbd_application.funciones f
+            INNER JOIN tbd_application.rel_funciones rf ON f.funcion_id = rf.funcion_id
+            INNER JOIN tbd_application.roles r ON rf.roles_id = r.roles_id
+            INNER JOIN tbd_application.usuariosroles ur ON r.roles_id = ur.roles_id
+            INNER JOIN tbd_application.usuarios u ON ur.usuario_id = u.usuario_id
+            WHERE u.usuario_id = p_usuario_id)
+    THEN
+            v_tiene_acceso := TRUE;
+    ELSE
+            v_tiene_acceso := FALSE;
+    END IF;
+
+    RETURN v_tiene_acceso;
+END;
+$BODY$
+language plpgsql;
+
+
+create or replace function tbd_application.get_Grupos(p_id_educador INTEGER)
+    returns table (educador_id INTEGER, grupo_id INTEGER, tipo_grupo_id INTEGER, nombre varchar, descripcion text, cantidad_estudiantes INTEGER, capacidad_maxima INTEGER)
+as $BODY$
+BEGIN
+    RETURN QUERY
+    SELECT
+        e.educador_id,
+        g.grupo_id,
+        g.tipo_grupo_id,
+        g.nombre,
+        g.descripcion,
+           (SELECT count(eg.grupo_id)::INTEGER
+            FROM tbd_application.estudiantesgrupos eg
+            WHERE eg.grupo_id = g.grupo_id) as cantidad_estudiantes,
+        g.capacidad_maxima
+    FROM tbd_application.educadores e
+    INNER JOIN tbd_application.grupos g ON e.educador_id = g.educador_id
+    WHERE e.educador_id = p_id_educador
+    GROUP BY e.educador_id, g.grupo_id, g.tipo_grupo_id, g.nombre, g.descripcion, g.capacidad_maxima;
+END;
+$BODY$
+language plpgsql;
+
+select * from tbd_application.get_tareas(4);
+
+
+create or replace function tbd_application.get_tareas(p_id_estudiante INTEGER)
+    returns table (educador_id INTEGER, grupo_id INTEGER, tarea_id INTEGER, titulo varchar, descripcion text, puntaje_maximo integer)
+as $BODY$
+BEGIN
+    RETURN QUERY
+
+    SELECT
+        e.educador_id,
+        g.grupo_id,
+        t.tarea_id,
+        t.titulo,
+        t.descripcion,
+        t.puntaje_maximo
+    FROM tbd_application.educadores e
+    INNER JOIN tbd_application.grupos g ON e.educador_id = g.educador_id
+    INNER JOIN tbd_application.tareas t ON g.grupo_id = t.grupo_id
+    INNER JOIN tbd_application.estudiantesgrupos eg ON g.grupo_id = eg.grupo_id
+    WHERE eg.estudiante_id = p_id_estudiante
+    GROUP BY e.educador_id, g.grupo_id, t.tarea_id, t.titulo, t.descripcion, t.puntaje_maximo;
+END;
+$BODY$
+language plpgsql;
+
+select * from tbd_application.get_grupos(5);
+INSERT INTO tbd_application.grupos (educador_id, tipo_grupo_id, nombre, descripcion, capacidad_maxima)
+VALUES
+    (5, 1, 'Matematica I', 'Horarios: 10:35 am. Dias: Lunes , Martes, Miercoles' , 100),
+    (5, 2, 'Matematica II', 'Horarios: 12:15 pm. Dias:  Martes, Miercoles' , 100),
+    (5, 3, 'Matematica III', 'Horarios: 18:45 pm. Dias: Lunes , Martes, Jueves' , 90),
+    (5, 4, 'Fisica I', 'Horarios: 10:35 am. Dias: Lunes , Martes, Miercoles' , 100),
+    (5, 1, 'Fisica II', 'Horarios: 12:15 pm. Dias:  Martes, Miercoles' , 100),
+    (5, 2, 'Fisica III', 'Horarios: 18:45 pm. Dias: Lunes , Martes, Jueves' , 90),
+    (5, 3, 'Quimica I', 'Horarios: 10:35 am. Dias: Lunes , Martes, Miercoles' , 100),
+    (5, 1, 'Quimica II', 'Horarios: 12:15 pm. Dias:  Martes, Miercoles' , 100),
+    (5, 2, 'Quimica III', 'Horarios: 18:45 pm. Dias: Lunes , Martes, Jueves' , 90),
+    (5, 2, 'Biologia I', 'Horarios: 10:35 am. Dias: Lunes , Martes, Miercoles' , 100),
+    (5, 2, 'Biologia II', 'Horarios: 12:15 pm. Dias:  Martes, Miercoles' , 100),
+    (5, 1, 'Biologia III', 'Horarios: 18:45 pm. Dias: Lunes , Martes, Jueves' , 90),
+    (5, 1, 'Ingles I', 'Horarios: 10:35 am. Dias: Lunes , Martes, Miercoles' , 100),
+    (5, 4, 'Ingles II', 'Horarios: 12:15 pm. Dias:  Martes, Miercoles' , 100),
+    (5, 3, 'Ingles III', 'Horarios: 18:45 pm. Dias: Lunes , Martes, Jueves' , 90),
+    (5, 2, 'Español I', 'Horarios: 10:35 am. Dias: Lunes , Martes, Miercoles' , 100);
+
+INSERT INTO tbd_application.estudiantesgrupos (educador_id, grupo_id, estudiante_id)
+    Values (5, 18, 4),
+           (5,20,4),
+           (5,24,4),
+           (5,17, 4),
+           (5,30,4);
+
