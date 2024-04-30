@@ -55,6 +55,7 @@ class ComposerStaticInitd17e9b9e8a6b9fe1c1af2deb7361d924
             'Psalm\\' => 6,
             'PhpParser\\' => 10,
             'PackageVersions\\' => 16,
+            'PHPStan\\PhpDocParser\\' => 21,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
         'M' => 
@@ -65,6 +66,10 @@ class ComposerStaticInitd17e9b9e8a6b9fe1c1af2deb7361d924
         'L' => 
         array (
             'LanguageServerProtocol\\' => 23,
+        ),
+        'D' => 
+        array (
+            'Doctrine\\Deprecations\\' => 22,
         ),
         'C' => 
         array (
@@ -157,6 +162,10 @@ class ComposerStaticInitd17e9b9e8a6b9fe1c1af2deb7361d924
         array (
             0 => __DIR__ . '/..' . '/composer/package-versions-deprecated/src/PackageVersions',
         ),
+        'PHPStan\\PhpDocParser\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpstan/phpdoc-parser/src',
+        ),
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
@@ -172,6 +181,10 @@ class ComposerStaticInitd17e9b9e8a6b9fe1c1af2deb7361d924
         'LanguageServerProtocol\\' => 
         array (
             0 => __DIR__ . '/..' . '/felixfbecker/language-server-protocol/src',
+        ),
+        'Doctrine\\Deprecations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/deprecations/lib/Doctrine/Deprecations',
         ),
         'Controllers\\' => 
         array (

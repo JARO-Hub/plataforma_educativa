@@ -66,17 +66,17 @@ var KTUsersList = function () {
             },
             "columns": [
                 { "data": "id" },
-                { "data": "name" },
-                { "data": "email" },
-                { "data": "role" },
-                { "data": "status" },
-                { "data": "last_login" },
-                { "data": "joined_date" }
+                { "data": "estado" },
+                { "data": "solo_lectura" },
+                { "data": "nombre" },
+                { "data": "ruta" },
+                { "data": "acceso_invitado" },
+                { "data": "comentario" }
                 // Puedes definir otras columnas aquí
             ],
             "columnDefs": [
                 {
-                    "targets": [0],  // Index de columnas específicas
+                    "targets": [0],
                     "orderable": false,
                     "searchable": false,
                     "render": function(data, type, row) {
@@ -99,46 +99,45 @@ var KTUsersList = function () {
                                 <!--begin::User details-->
                                 <div class="d-flex flex-column">
                                     <a href="#" class="text-gray-800 text-hover-primary mb-1">${data}</a>
-                                    <span>${row.email}</span>
+                                    <span>${row.estado}</span>
                                 </div>
                                 <!--end::User details-->`;
 
                     }
                 },
                 {
+                    "targets": [2],
+                    "render": function(data, type, row) {
+                        return `<strong>${row.solo_lectura}</strong>`;
+                    }
+                },
+                {
                     "targets": [3],
                     "render": function(data, type, row) {
-                        return `<strong>${row.role}</strong>`;
-                    }
+
+                        return `<div class="badge badge-light fw-bold">${row.nombre}</div>`;
+
+                    },
                 },
                 {
                     "targets": [4],
                     "render": function(data, type, row) {
-                        return `<span class="badge badge-light">${row.last_login}</span>`;
-                    },
-                    "type": "date"
-                },
-                {
-                    "targets": [5],
-                    /*<td><div class="badge badge-light-success fw-bold">Enabled</div></td>*/
-                    "render": function(data, type, row) {
                         /** @var {Object} status */
                         let status = {
-                            "active": { 'title': 'Activo', 'class': 'badge-light-success' },
-                            "inactive": { 'title': 'Inactivo', 'class': 'badge-light-danger' }
+                            "Si": { 'title': 'Activo', 'class': 'badge-light-success' },
+                            "No": { 'title': 'Inactivo', 'class': 'badge-light-danger' }
                         };
                         if (typeof row.status === 'undefined') {
                             return data;
                         }
-                        return `<div class="badge ${status[row.status].class } fw-bold">${ status[row.status].title }</div>`;
+                        return `<div class="badge ${status[row.acceso_invitado].class } fw-bold">${ status[row.status].title }</div>`;
                     }
                 },
                 {
-                    "targets": [6],
+                    "targets": [5],
                     "render": function(data, type, row) {
-                        return `<span class="badge badge-light">${row.joined_date}</span>`;
+                        return `<span class="badge badge-light">${row.comentario}</span>`;
                     },
-                    "type": "date"
                 },
                 {
                     "targets": -1,
@@ -172,10 +171,7 @@ var KTUsersList = function () {
                 }
 
             ],
-            'columnDefs': [
-                { orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)
-                { orderable: false, targets: 6 }, // Disable ordering on column 6 (actions)
-            ]
+
         });
 
         // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw

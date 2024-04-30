@@ -2,28 +2,62 @@
 
 namespace Controllers;
 
-use MVC\Router;
-use Model\Usuario;
 use Model\Servicio;
+use Model\Usuario;
+use MVC\Router;
+use Model\ActiveRecord as SambaShare;
+
 
 class ServicioController {
     public static function index(Router $router) {
-        session_start();
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+        header('Content-Type: application/json');
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $search = $_POST['search']['value'] ?? ''; // DataTables envía 'search' como parte de un array
+            $draw = $_POST['draw'] ?? 1;
 
-       // isAdmin();
+            $shares = SambaShare::all();
+            $filteredShares = array_filter($shares, function ($share) use ($search) {
+                // Podrías añadir más condiciones de filtrado aquí basadas en otros campos
+                return stripos($share->name, $search) !== false;
+            });
 
-       // $servicios = Servicio::all();
+            // Asignar más datos basados en la captura de pantalla proporcionada
+            $data = array_map(function ($share) {
+                return [
+                    'estado' => $share->writable === 'Sí' ? 'Habilitado' : 'Deshabilitado',
+                    'solo_lectura' => $share->writable === 'Sí' ? 'No' : 'Sí',
+                    'nombre' => $share->name,
+                    'ruta' => $share->path,
+                    'acceso_invitado' => $share->guestOk,
+                    'comentario' => $share->comment
+                ];
+            }, $filteredShares);
 
-        $router->render('servicios/index', [
-            'nombre' => $_SESSION['nombre'] ? $_SESSION['nombre'] : 'Invitado',
-            'servicios' => $servicios ?? []
-        ]);
+            $response = [
+                'draw' => intval($draw),
+                'recordsTotal' => count($shares),
+                'recordsFiltered' => count($filteredShares),
+                'data' => $data
+            ];
+
+            return json_encode($response);
+        } else {
+            // Manejar otros tipos de métodos HTTP según sea necesario
+            http_response_code(405); // Método no permitido
+            return json_encode(['error' => 'Method Not Allowed']);
+
+        }
+
+
     }
 
     public static function crear(Router $router) {
         session_start();
-        isAdmin();
-        $servicio = new Servicio;
+        //isAdmin();
+       // $servicio = new Servicio;
         $alertas = [];
 
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -39,7 +73,7 @@ class ServicioController {
 
         $router->render('servicios/crear', [
             'nombre' => $_SESSION['nombre'],
-            'servicio' => $servicio,
+            'servicio' => 'hola',
             'alertas' => $alertas
         ]);
     }
