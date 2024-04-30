@@ -10,13 +10,13 @@ class ServicioController {
     public static function index(Router $router) {
         session_start();
 
-        isAdmin();
+       // isAdmin();
 
-        $servicios = Servicio::all();
+       // $servicios = Servicio::all();
 
         $router->render('servicios/index', [
-            'nombre' => $_SESSION['nombre'],
-            'servicios' => $servicios
+            'nombre' => $_SESSION['nombre'] ? $_SESSION['nombre'] : 'Invitado',
+            'servicios' => $servicios ?? []
         ]);
     }
 

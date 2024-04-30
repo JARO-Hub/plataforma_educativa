@@ -33,6 +33,7 @@ $router->get('/mensaje', [LoginController::class, 'mensaje']);
 
 // AREA PRIVADA
 /** @var bool $access_estd */
+/*
 $access_estd = $router->tiene_acceso_estd();
 if ($access_estd){
     $router->get('/estudiante', [EstudianteController::class, 'index']);
@@ -40,15 +41,17 @@ if ($access_estd){
     $router->post('/estudiante/home', [EstudianteController::class, 'home']);
     
 }
+*/
 
 /** @var bool $access_edu */
+/*
 $access_edu = $router->tiene_acceso_edu();
 if ($access_edu){
     $router->get('/educador', [EducadorController::class, 'index']);
     $router->get('/educador/home', [EducadorController::class, 'home']);
     $router->post('/educador/home', [EducadorController::class, 'home']);
 }
-
+*/
 
 
 // API de Citas
