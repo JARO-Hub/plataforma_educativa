@@ -4256,7 +4256,7 @@ var KTSearch = function(element, options) {
                         the.toggleElement.classList.remove('show');
                     }
                 });
-            }            
+            }
 
             the.menuObject.on('kt.menu.dropdown.shown', function() {
                 the.inputElement.focus();

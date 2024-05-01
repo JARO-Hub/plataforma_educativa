@@ -62,8 +62,8 @@ $router->post('/api/eliminar', [APIController::class, 'eliminar']);
 
 
 // CRUD de Servicios
-$router->get('/servicios', [ServicioController::class, 'index']);
-$router->get('/servicios/crear', [ServicioController::class, 'crear']);
+$router->post('/servicios', [ServicioController::class, 'index']);
+$router->get('/servicios', [ServicioController::class, 'invoke']);
 $router->post('/servicios/crear', [ServicioController::class, 'crear']);
 $router->get('/servicios/actualizar', [ServicioController::class, 'actualizar']);
 $router->post('/servicios/actualizar', [ServicioController::class, 'actualizar']);

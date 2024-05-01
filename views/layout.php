@@ -4,12 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plataforma Educativa</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;700;900&display=swap" rel="stylesheet"> 
-
-    <link rel="stylesheet" href="/assets/css/style.bundle.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/plugins/global/plugins.bundle.css">
+    <link rel="stylesheet" href="/assets/css/style.bundle.css">
+
+    <?php if (!empty($css)): ?>
+        <?php foreach ($css as $stylesheet): ?>
+            <link rel="stylesheet" href="<?php echo htmlspecialchars($stylesheet); ?>">
+        <?php endforeach; ?>
+    <?php endif; ?>
 </head>
-<body id="kt-body" data-kt-app-header-stacked="true" data-kt-app-header-primary-enabled="true" data-kt-app-header-secondary-enabled="true" data-kt-app-toolbar-enabled="true" class="app-default">
+<body id="kt-body" data-kt-app-header-stacked="true" data-kt-app-header-primary-enabled="true" data-kt-app-header-secondary-enabled="true" data-kt-app-toolbar-enabled="true" class="app-default" data-kt-sticky-app-header-primary-sticky="on" data-kt-app-header-primary-sticky="on">
     <!--begin::App-->
     <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
         <!--begin::Page-->
@@ -2221,11 +2226,20 @@
         <!--end::Page-->
     </div>
     <!--end::App-->
-    <?php
-        echo $script ?? '';
-    ?>
+
+
+
+
+    <script src="/assets/plugins/global/plugins.bundle.js"></script>
 
     <script src="/assets/js/scripts.bundle.js"></script>
-    <script src="/assets/plugins/global/plugins.bundle.js"></script>
+        <?php if (!empty($js)): ?>
+            <?php foreach ($js as $script): ?>
+                <script src="<?php echo htmlspecialchars($script); ?>"></script>
+            <?php endforeach; ?>
+        <?php endif; ?>
+
+
+
 </body>
 </html>

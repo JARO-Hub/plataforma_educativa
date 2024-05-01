@@ -13,37 +13,50 @@ class ServicioController {
         if (session_status() !== PHP_SESSION_ACTIVE) {
             session_start();
         }
-        header('Content-Type: application/json');
+        ini_set('max_execution_time', 300); // 5 minutos
+        ini_set('memory_limit', '512M');
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $search = $_POST['search']['value'] ?? ''; // DataTables envía 'search' como parte de un array
-            $draw = $_POST['draw'] ?? 1;
+            try {
+                $search = $_POST['search']['value'] ?? ''; // DataTables envía 'search' como parte de un array
+                $draw = $_POST['draw'] ?? 1;
 
-            $shares = SambaShare::all();
-            $filteredShares = array_filter($shares, function ($share) use ($search) {
-                // Podrías añadir más condiciones de filtrado aquí basadas en otros campos
-                return stripos($share->name, $search) !== false;
-            });
+                $shares = SambaShare::all();
+                if (!empty($search)) {
+                    $filteredShares = array_filter($shares, function ($share) use ($search) {
+                        return stripos($share->name, $search) !== false;
+                    });
+                } else {
+                    $filteredShares = $shares;  // No aplicar filtro, usar todos los datos
+                }
 
-            // Asignar más datos basados en la captura de pantalla proporcionada
-            $data = array_map(function ($share) {
-                return [
-                    'estado' => $share->writable === 'Sí' ? 'Habilitado' : 'Deshabilitado',
-                    'solo_lectura' => $share->writable === 'Sí' ? 'No' : 'Sí',
-                    'nombre' => $share->name,
-                    'ruta' => $share->path,
-                    'acceso_invitado' => $share->guestOk,
-                    'comentario' => $share->comment
+                // Asignar más datos basados en la captura de pantalla proporcionada
+                $data = array_map(function ($share) {
+                    return [
+
+                        'id' =>  uniqid(),
+                        'estado' => $share->writable === 'Sí' ? 'Habilitado' : 'Deshabilitado',
+                        'solo_lectura' => $share->writable === 'Si' ? 'No' : 'Si',
+                        'nombre' => $share->name,
+                        'ruta' => $share->path,
+                        'acceso_invitado' => $share->guestOk,
+                        'comentario' => $share->comment
+                    ];
+                }, $filteredShares);
+
+                $response = [
+                    'draw' => intval($draw),
+                    'recordsTotal' => count($shares),
+                    'recordsFiltered' => count($filteredShares),
+                    'data' => $data
                 ];
-            }, $filteredShares);
-
-            $response = [
-                'draw' => intval($draw),
-                'recordsTotal' => count($shares),
-                'recordsFiltered' => count($filteredShares),
-                'data' => $data
-            ];
-
-            return json_encode($response);
+                $json = json_encode($response);
+                header('Content-Type: application/json');
+                echo json_encode($response);
+            }catch (\Exception $e) {
+                http_response_code(500); // Error interno del servidor
+                return json_encode(['error' => $e->getMessage()]);
+            }
         } else {
             // Manejar otros tipos de métodos HTTP según sea necesario
             http_response_code(405); // Método no permitido
@@ -54,28 +67,23 @@ class ServicioController {
 
     }
 
-    public static function crear(Router $router) {
-        session_start();
-        //isAdmin();
-       // $servicio = new Servicio;
+    public static function invoke(Router $router) {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
         $alertas = [];
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $servicio->sincronizar($_POST);
-            
-            $alertas = $servicio->validar();
-
-            if(empty($alertas)) {
-                $servicio->guardar();
-                header('Location: /servicios');
-            }
+        if($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $router->render('servicios/index', [
+                'nombre' => $_SESSION['nombre'],
+                'servicio' => 'hola',
+                'alertas' => $alertas
+            ]);
         }
 
-        $router->render('servicios/crear', [
-            'nombre' => $_SESSION['nombre'],
-            'servicio' => 'hola',
-            'alertas' => $alertas
-        ]);
+        return;
+
+
     }
 
     public static function actualizar(Router $router) {

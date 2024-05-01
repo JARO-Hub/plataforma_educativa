@@ -54,14 +54,14 @@ var KTUsersList = function () {
             'order': [],
             "pageLength": 10,
             "lengthChange": false,
-            "processing": true,
-            "serverSide": true,
+
             "ajax": {
-                "url": "/api/users",  // Ruta del API que devuelve los datos
+                "url": "/servicios",  // Ruta del API que devuelve los datos
                 "type": "POST",
-                "data": function (d) {
-                    // Puedes modificar los datos de la solicitud antes de enviarla al servidor aquí
-                    // Por ejemplo, agregar parámetros adicionales de filtrado
+                "error": function (xhr, error, thrown) {
+                    console.error("Error occurred:", error, thrown);
+                    console.error('Error:', error);
+                    console.error('Response:', xhr.responseText);
                 }
             },
             "columns": [
@@ -91,14 +91,14 @@ var KTUsersList = function () {
                                 <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                     <a href="#">
                                         <div class="symbol-label">
-                                            <img src="${row.avatar}" alt="${data}" class="w-100">
+                                            <img src="../assets/media/custom/user.jpg" alt="../../public/assets/media/custom/user.jpg" class="w-100">
                                         </div>
                                     </a>
                                 </div>
                                 <!--end:: Avatar -->
                                 <!--begin::User details-->
                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">${data}</a>
+                                 
                                     <span>${row.estado}</span>
                                 </div>
                                 <!--end::User details-->`;
@@ -143,30 +143,34 @@ var KTUsersList = function () {
                     "targets": -1,
                     "orderable": false,
                     "searchable": false,
+                    className: 'text-end',
                     "render": function(data, type, row) {
 
-                        return `<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                        return `
+                            <!-- Botón Dropdown -->
+                            <div class="dropdown">
+                                <a href="#" class="btn btn-light btn-active-light-primary btn-sm" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                     Actions
-                                    <i class="ki ki-bold more-hor fs-5"></i>
+                                    <i class="ki-duotone ki-down fs-5 ms-1"></i>
                                 </a>
-                                <!--begin::Menu-->
-                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3">
+                            
+                                <!-- Menú Dropdown -->
+                                <ul class="dropdown-menu menu-sub menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" aria-labelledby="dropdownMenuButton">
+                                    <!-- Opción Editar -->
+                                    <li class="menu-item px-3">
+                                        <a class="menu-link px-3" href="#">
                                             Edit
                                         </a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">
+                                    </li>
+                                    <!-- Opción Eliminar -->
+                                    <li class="menu-item px-3">
+                                        <a class="menu-link px-3" href="#" data-kt-users-table-filter="delete_row">
                                             Delete
                                         </a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                </div>
-                                <!--end::Menu-->`;
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- end: Dropdown -->`;
                     }
                 }
 
@@ -404,6 +408,9 @@ var KTUsersList = function () {
             toolbarSelected.classList.add('d-none');
         }
     }
+
+    // Handle actions
+
 
     return {
         // Public functions

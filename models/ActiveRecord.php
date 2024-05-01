@@ -2,11 +2,11 @@
 namespace Model;
 class ActiveRecord {
 
-    protected  $name;
-    protected  $path;
-    protected  $guestOk;
-    protected  $comment;
-    protected  $writable;
+    public  $name;
+    public  $path;
+    public  $guestOk;
+    public  $comment;
+    public  $writable;
 
     private static $configPath = '/etc/samba/smb.conf';
 

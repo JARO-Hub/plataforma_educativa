@@ -1,27 +1,20 @@
-<h1 class="nombre-pagina">Servicios </h1>
-<p class="descripcion-pagina">Administración de Servicios</p>
 
 <?php
-    include_once __DIR__ . '/../templates/barra.php';
-    $path = ($user === 'estudiante') ? 'estudiante' : 'educador';
-    $label = ucfirst($path ?? '');
+    $css = [
+            '/assets/plugins/custom/datatables/datatables.bundle.css'
+    ];
+    $js = [
+        '/assets/plugins/custom/datatables/datatables.bundle.js',
+        '/assets/js/home/list.js',
+        '/assets/js/custom/apps/user-management/users/list/add.js',
+        '/assets/js/custom/apps/user-management/users/list/export-users.js',
+        '/assets/js/widgets.bundle.js',
+    ];
 ?>
 
-<ul class="servicios">
-    <?php //foreach($servicios as $servicio) { ?>
-        <li>
-            <div class="acciones">
-                <a class="boton" href="/<?php echo $path; ?>/home"><?php echo $label; ?></a>
-                
-                <form action="/servicios/eliminar" method="POST">
-                    <input type="hidden" name="id" value="<?php "Probando 3" ?>">
-
-                   <!-- <input type="submit" value="Borrar" class="boton-eliminar"> !-->
-                </form>
-            </div>
+<?php
+include_once __DIR__ . '/../templates/alertas.php';
+include_once __DIR__ .'/../templates/wrapper.php';
+?>
 
 
-             
-        </li>
-    
-</ul>
