@@ -11,12 +11,12 @@ var KTUsersViewMain = function () {
             e.preventDefault();
 
             Swal.fire({
-                text: "Are you sure you would like sign out all sessions?",
+                text: "Seguro que quieres cerrar? would like sign out all sessions?",
                 icon: "warning",
                 showCancelButton: true,
                 buttonsStyling: false,
                 confirmButtonText: "Yes, sign out!",
-                cancelButtonText: "No, return",
+                cancelButtonText: "No,regresar",
                 customClass: {
                     confirmButton: "btn btn-primary",
                     cancelButton: "btn btn-active-light"
@@ -59,12 +59,12 @@ var KTUsersViewMain = function () {
                 const deviceName = button.closest('tr').querySelectorAll('td')[1].innerText;
 
                 Swal.fire({
-                    text: "Are you sure you would like sign out " + deviceName + "?",
+                    text: "Seguro que quieres cerrar? would like sign out " + deviceName + "?",
                     icon: "warning",
                     showCancelButton: true,
                     buttonsStyling: false,
                     confirmButtonText: "Yes, sign out!",
-                    cancelButtonText: "No, return",
+                    cancelButtonText: "No,regresar",
                     customClass: {
                         confirmButton: "btn btn-primary",
                         cancelButton: "btn btn-active-light"
@@ -108,12 +108,12 @@ var KTUsersViewMain = function () {
             e.preventDefault();
 
             Swal.fire({
-                text: "Are you sure you would like remove this two-step authentication?",
+                text: "Seguro que quieres cerrar? would like remove this two-step authentication?",
                 icon: "warning",
                 showCancelButton: true,
                 buttonsStyling: false,
                 confirmButtonText: "Yes, remove it!",
-                cancelButtonText: "No, return",
+                cancelButtonText: "No,regresar",
                 customClass: {
                     confirmButton: "btn btn-primary",
                     cancelButton: "btn btn-active-light"
@@ -188,12 +188,12 @@ var KTUsersViewMain = function () {
             e.preventDefault();
 
             Swal.fire({
-                text: "Are you sure you would like to cancel?",
+                text: "Seguro que quieres cerrar?   cancel?",
                 icon: "warning",
                 showCancelButton: true,
                 buttonsStyling: false,
-                confirmButtonText: "Yes, cancel it!",
-                cancelButtonText: "No, return",
+                confirmButtonText: "Si,cancelalo!",
+                cancelButtonText: "No,regresar",
                 customClass: {
                     confirmButton: "btn btn-primary",
                     cancelButton: "btn btn-active-light"
@@ -203,7 +203,7 @@ var KTUsersViewMain = function () {
                     form.reset(); // Reset form				
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
-                        text: "Your form has not been cancelled!.",
+                        text: "Tu formulario no ha sido cancelado!.",
                         icon: "error",
                         buttonsStyling: false,
                         confirmButtonText: "Ok, got it!",

@@ -31,7 +31,7 @@ var KTSubscriptionsProducts = function () {
 
             // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
             Swal.fire({
-                text: "Are you sure you want to delete " + productName + "?",
+                text: "Seguro que quieres cerrar? want to delete " + productName + "?",
                 icon: "warning",
                 showCancelButton: true,
                 buttonsStyling: false,
@@ -82,12 +82,12 @@ var KTSubscriptionsProducts = function () {
             e.preventDefault();
 
 			Swal.fire({
-				text: "Are you sure you would like to cancel?",
+				text: "Seguro que quieres cerrar?   cancel?",
 				icon: "warning",
 				showCancelButton: true,
 				buttonsStyling: false,
-				confirmButtonText: "Yes, cancel it!",
-				cancelButtonText: "No, return",
+				confirmButtonText: "Si,cancelalo!",
+				cancelButtonText: "No,regresar",
 				customClass: {
 					confirmButton: "btn btn-primary",
 					cancelButton: "btn btn-active-light"
@@ -97,7 +97,7 @@ var KTSubscriptionsProducts = function () {
 					modal.hide(); // Hide modal				
 				} else if (result.dismiss === 'cancel') {
 					Swal.fire({
-						text: "Your form has not been cancelled!.",
+						text: "Tu formulario no ha sido cancelado!.",
 						icon: "error",
 						buttonsStyling: false,
 						confirmButtonText: "Ok, got it!",

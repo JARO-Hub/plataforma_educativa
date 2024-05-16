@@ -1,7 +1,6 @@
 <?php 
 
 require_once __DIR__ . '/../includes/app.php';
-
 use MVC\Router;
 use Controllers\APIController;
 use Controllers\CitaController;
@@ -10,11 +9,13 @@ use Controllers\LoginController;
 use Controllers\EducadorController;
 use Controllers\ServicioController;
 use Controllers\EstudianteController;
+use Controllers\UsuarioController;
+
 $router = new Router();
 
 // Iniciar Sesión
-$router->get('/', [LoginController::class, 'login']);
-$router->post('/', [LoginController::class, 'login']);
+//$router->get('/', [LoginController::class, 'login']);
+//$router->post('/', [LoginController::class, 'login']);
 $router->get('/logout', [LoginController::class, 'logout']);
 
 // Recuperar Password
@@ -68,6 +69,10 @@ $router->post('/servicios/crear', [ServicioController::class, 'crear']);
 $router->get('/servicios/actualizar', [ServicioController::class, 'actualizar']);
 $router->post('/servicios/actualizar', [ServicioController::class, 'actualizar']);
 $router->post('/servicios/eliminar', [ServicioController::class, 'eliminar']);
+// CRUD de Usuarios
+
+$router->get('/Usuarios', [UsuarioController::class, 'invoke']);
+
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

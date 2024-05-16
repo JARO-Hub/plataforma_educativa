@@ -44,7 +44,7 @@ var KTAccountSettingsDeactivateAccount = function () {
                 if (status == 'Valid') {
 
                     swal.fire({
-                        text: "Are you sure you would like to deactivate your account?",
+                        text: "Seguro que quieres cerrar?   deactivate your account?",
                         icon: "warning",
                         buttonsStyling: false,
                         showDenyButton: true,

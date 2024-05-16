@@ -115,7 +115,7 @@ var KTAppEcommerceSalesListing = function () {
 
                 // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
                 Swal.fire({
-                    text: "Are you sure you want to delete order: " + orderID + "?",
+                    text: "Seguro que quieres cerrar? want to delete order: " + orderID + "?",
                     icon: "warning",
                     showCancelButton: true,
                     buttonsStyling: false,

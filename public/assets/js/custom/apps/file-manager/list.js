@@ -128,7 +128,7 @@ var KTFileManagerList = function () {
 
                 // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
                 Swal.fire({
-                    text: "Are you sure you want to delete " + fileName + "?",
+                    text: "Seguro que quieres cerrar? want to delete " + fileName + "?",
                     icon: "warning",
                     showCancelButton: true,
                     buttonsStyling: false,
@@ -195,7 +195,7 @@ var KTFileManagerList = function () {
         deleteSelected.addEventListener('click', function () {
             // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
             Swal.fire({
-                text: "Are you sure you want to delete selected files or folders?",
+                text: "Seguro que quieres cerrar? want to delete selected files or folders?",
                 icon: "warning",
                 showCancelButton: true,
                 buttonsStyling: false,
@@ -537,7 +537,7 @@ var KTFileManagerList = function () {
                     if (status == 'Valid') {
                         // Pop up confirmation
                         Swal.fire({
-                            text: "Are you sure you want to rename " + nameValue + "?",
+                            text: "Seguro que quieres cerrar? want to rename " + nameValue + "?",
                             icon: "warning",
                             showCancelButton: true,
                             buttonsStyling: false,
@@ -719,12 +719,12 @@ var KTFileManagerList = function () {
         // Setup the button for remove all files
         dropzone.querySelector(".dropzone-remove-all").addEventListener('click', function () {
             Swal.fire({
-                text: "Are you sure you would like to remove all files?",
+                text: "Seguro que quieres cerrar?   remove all files?",
                 icon: "warning",
                 showCancelButton: true,
                 buttonsStyling: false,
                 confirmButtonText: "Yes, remove it!",
-                cancelButtonText: "No, return",
+                cancelButtonText: "No,regresar",
                 customClass: {
                     confirmButton: "btn btn-primary",
                     cancelButton: "btn btn-active-light"
@@ -842,12 +842,12 @@ var KTFileManagerList = function () {
                         setTimeout(function () {
 
                             Swal.fire({
-                                text: "Are you sure you would like to move to this folder",
+                                text: "Seguro que quieres cerrar?   move to this folder",
                                 icon: "warning",
                                 showCancelButton: true,
                                 buttonsStyling: false,
                                 confirmButtonText: "Yes, move it!",
-                                cancelButtonText: "No, return",
+                                cancelButtonText: "No,regresar",
                                 customClass: {
                                     confirmButton: "btn btn-primary",
                                     cancelButton: "btn btn-active-light"
