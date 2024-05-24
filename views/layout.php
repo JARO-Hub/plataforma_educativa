@@ -135,9 +135,6 @@
             </div>
             <!--end::Header-->
             <!--begin::Wrapper-->
-            <?php
-            include  __DIR__ . '/templates/wrapper.php';
-            ?>
             <!--end::Wrapper-->
         </div>
         <!--end::Page-->

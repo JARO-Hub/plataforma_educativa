@@ -13,8 +13,7 @@ class IdentidadController{
         $alertas = [];
 
         if($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $router->render('servicios/index', [
-                
+            $router->render('identidad/index', [
                 'servicio' => 'hola',
                 'alertas' => $alertas
             ]);

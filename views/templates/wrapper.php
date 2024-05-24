@@ -92,7 +92,7 @@
                                     <!--end::Export-->
                                     <!--begin::Add user-->
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
-                                        <i class="ki-duotone ki-plus fs-2"></i>Add User</button>
+                                        <i class="ki-duotone ki-plus fs-2"></i>Añadir recurso</button>
                                     <!--end::Add user-->
                                 </div>
                                 <!--end::Toolbar-->

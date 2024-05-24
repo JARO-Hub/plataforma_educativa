@@ -1,4 +1,3 @@
-
 <?php
     $css = [
             '/assets/plugins/custom/datatables/datatables.bundle.css',
@@ -16,7 +15,5 @@
 
 <?php
 include_once __DIR__ . '/../templates/alertas.php';
-include_once __DIR__ .'/../templates/wrapper.php';
+include_once __DIR__ .'/templates/Inicio.php';
 ?>
-
-

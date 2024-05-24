@@ -14,7 +14,7 @@
 <body>
     <div id=UsuarioContenido> 
       <!--begin::Wrapper container-->
-      <div class="app-container container-xxl d-flex flex-row flex-column-fluid">
+        <div class="app-container container-xxl d-flex flex-row flex-column-fluid">
                 <!--begin::Main-->
                     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
                         <!--begin::Content wrapper-->
@@ -568,9 +568,9 @@
                                 </div>
                         <!--end::Footer-->
                         
-                    </div>
-                <!--end:::Main-->
-            </div>
+                </div>
+            <!--end:::Main-->
+        </div>
         <!--end::Wrapper container-->  
     </div>
 </body>
