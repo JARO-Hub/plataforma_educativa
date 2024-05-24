@@ -1,7 +1,7 @@
 <?php
 namespace Controllers;
 
-use Model\Identidad;
+use Model\IdentidadModelo;
 use MVC\Router;
 use Model\ActiveRecord as SambaShare;
 
