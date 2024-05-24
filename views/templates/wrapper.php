@@ -470,13 +470,13 @@
                                 </div>
                                 <!--begin::Botones_dentro_modal-->
                                 <div style="margin-top: 480px">
-                                    <button type="Button" class="btn btn-light" id="Boton_añadir" data-bs-stacked-modal="#kt_modal_stacked_2">Añadir</button>
+                                    <button type="Button" class="btn btn-success" id="Boton_añadir" data-bs-stacked-modal="#kt_modal_stacked_2">Añadir</button>
                                     <button type="Button" class="btn btn-light" id="Boton_editar" data-bs-stacked-modal="#Modal_editar">Editar</button>
-                                    <button type="Button" class="btn btn-light" id="Boton_suprimir" data-bs-stacked-modal="#Modal_suprimir">Suprimir</button>
+                                    <button type="Button" class="btn btn-danger" id="Boton_suprimir" data-bs-stacked-modal="#Modal_suprimir">Suprimir</button>
                                 </div>
                                 <!--end::Botones_dentro_modal-->
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                                     <button type="button" class="btn btn-primary">Guardar cambios</button>
                                 </div>
 

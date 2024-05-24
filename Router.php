@@ -6,7 +6,6 @@ use Controllers\ServicioController;
 
 class Router
 {
-
     public $getRoutes = array();
     public  $postRoutes = array();
 

@@ -5,6 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Identidad</title>
+    <script>
+        $(document).ready(function() {
+            // Realizar la solicitud AJAX para obtener el grupo de trabajo
+            $.ajax({
+                url: '/identidad/workgroup', // Asegúrate de que la URL coincida con tu ruta
+                method: 'GET',
+                success: function(response) {
+                    if (response.workgroup) {
+                        $('#workgroup-input').val(response.workgroup); // Establecer el valor del input
+                    } else if (response.error) {
+                        alert('Error: ' + response.error); // Mostrar mensaje de error si hay
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert('Error al recuperar el grupo de trabajo: ' + error); // Manejo de errores
+                }
+            });
+
+            // Manejar el evento de clic del botón Aplicar
+            $('#BotonAplicar').click(function() {
+                var workgroup = $('#workgroup-input').val();
+                // Aquí puedes añadir la lógica para guardar el workgroup si es necesario
+                alert('Grupo de trabajo actualizado a: ' + workgroup);
+            });
+        });
+    </script>
 
 </head>
 
@@ -89,7 +115,7 @@
                                                         
                                                     <!--begin::Identidad-->
                                                     <h2>Nombre de grupo de trabajo o dominio</h2>
-                                                    <input type="text" class="form-control" placeholder="" value="WORKGROUP">
+                                                    <input type="text" id="workgroup-input" class="form-control" placeholder="" value="">
                                                         <button type="button" id=BotonAplicar class="btn btn-success">
                                                         Aplicar
                                                         </button>
