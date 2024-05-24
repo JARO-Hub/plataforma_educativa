@@ -103,7 +103,29 @@ class ActiveRecord {
             . escapeshellarg($guestOk) . ' '
             . escapeshellarg($createMask) . ' '
             . escapeshellarg($directoryMask) . ' '
-            . escapeshellarg($readOnly ? 'true' : 'false') . ' '
+            . escapeshellarg($readOnly ? 'yes' : 'No') . ' '
+            . escapeshellarg($password));
+
+        // Verificar si la función se ejecutó correctamente
+        if (trim($result) === "true") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function modifySharedDirectory($shareName, $shareComment, $sharePath, $writable, $browseable, $guestOk, $createMask, $directoryMask, $readOnly, $password) {
+        // Llama al script shell con los parámetros adecuados, incluyendo la contraseña
+        $result = shell_exec(__DIR__ . '/../scripts/modify_share.sh '
+            . escapeshellarg($shareName) . ' '
+            . escapeshellarg($shareComment) . ' '
+            . escapeshellarg($sharePath) . ' '
+            . escapeshellarg($writable) . ' '
+            . escapeshellarg($browseable) . ' '
+            . escapeshellarg($guestOk) . ' '
+            . escapeshellarg($createMask) . ' '
+            . escapeshellarg($directoryMask) . ' '
+            . escapeshellarg($readOnly ? 'yes' : 'No') . ' '
             . escapeshellarg($password));
 
         // Verificar si la función se ejecutó correctamente
@@ -115,12 +137,13 @@ class ActiveRecord {
     }
 
 
+    public static function deleteSharedDirectory($shareName, $password) {
+        $result = shell_exec(__DIR__ . '/../scripts/delete_share.sh '
+            . escapeshellarg($shareName) . ' '
+            . escapeshellarg($password));
 
-
-
-
-
-
+        return trim($result) === "true";
+    }
 
 
 

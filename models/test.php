@@ -4,16 +4,17 @@
 require_once 'ActiveRecord.php'; // Intenta incluir el archivo sin usar __DIR__
 
 $shareName = 'misfotos';
-$shareComment = 'fotos 2023';
+$shareComment = 'fotos vacaciones 2023 vacaciones';
 $sharePath = '/path/to/share';
 $writable = 'yes';
 $browseable = 'yes';
 $guestOk = 'yes';
-$createMask = '0775';
-$directoryMask = '0775';
-$readOnly = false; // o true, dependiendo del caso
+$createMask = '0700';
+$directoryMask = '0700';
+$readOnly = 'yes'; // o true, dependiendo del caso
 $password = '2018';
 
+/*
 $result = \Model\ActiveRecord::createSharedDirectory($shareName, $shareComment, $sharePath, $writable, $browseable, $guestOk, $createMask, $directoryMask, $readOnly, $password);
 
 if ($result) {
@@ -21,7 +22,7 @@ if ($result) {
 } else {
     echo "Failed to create shared directory.";
 }
-
+*/
 
 
 $shares = \Model\ActiveRecord::all();
@@ -35,5 +36,15 @@ $shares = \Model\ActiveRecord::all();
   //  echo "Escribible: " . $share->writable . PHP_EOL;
    // echo PHP_EOL; // Agregar una línea en blanco para separar cada recurso compartido
 //}
+
+/*
+$modify = \Model\ActiveRecord::modifySharedDirectory($shareName, $shareComment, $sharePath, $writable, $browseable, $guestOk, $createMask, $directoryMask, $readOnly, $password);
+echo $modify ? "La modificación se realizó correctamente." : "Hubo un error al modificar el recurso compartido.";
+*/
+
+
+
+$delete = \Model\ActiveRecord::deleteSharedDirectory($shareName,$password);
+echo $delete
 
 ?>
