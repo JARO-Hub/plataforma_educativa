@@ -106,7 +106,7 @@ var KTSubscriptionsList = function () {
 
                 // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
                 Swal.fire({
-                    text: "Are you sure you want to delete " + customerName + "?",
+                    text: "Seguro que quieres cerrar? want to delete " + customerName + "?",
                     icon: "warning",
                     showCancelButton: true,
                     buttonsStyling: false,
@@ -175,7 +175,7 @@ var KTSubscriptionsList = function () {
         deleteSelected.addEventListener('click', function () {
             // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
             Swal.fire({
-                text: "Are you sure you want to delete selected customers?",
+                text: "Seguro que quieres cerrar? want to delete selected customers?",
                 icon: "warning",
                 showCancelButton: true,
                 buttonsStyling: false,

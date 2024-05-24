@@ -1,0 +1,38 @@
+.selector_de_barra{
+    background-color:green !important;
+    color:rgb(204, 204, 204) !important;
+  }
+
+  .selector_de_barra:hover{
+    background-color:rgb(0, 208, 0) !important;
+    color:rgb(255, 255, 255) !important;
+  }
+
+  .Botones_accion{
+    margin-top: 250px;
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+  }
+  
+  #Boton_ayuda{
+    margin-left: 20px;
+    margin-right: 700px ;
+  }
+
+  #Boton_cancelar{
+    margin-right: 10px;
+    margin-left: 50px;
+  }
+
+  .Opciones_y_valores{
+    display: inline-block !important;
+  }
+
+.barra_navegable ul li{
+  color: white;
+  display: inline-block;
+  padding: auto;
+  margin: auto;
+  background-color: green !important;
+}

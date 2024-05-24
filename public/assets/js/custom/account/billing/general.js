@@ -11,7 +11,7 @@ var KTAccountBillingGeneral = function () {
             e.preventDefault();
 
             swal.fire({
-                text: "Are you sure you would like to cancel your subscription ?",
+                text: "Seguro que quieres cerrar?",
                 icon: "warning",
                 buttonsStyling: false,
                 showDenyButton: true,
@@ -44,7 +44,7 @@ var KTAccountBillingGeneral = function () {
             var el = this;
 
             swal.fire({
-                text: "Are you sure you would like to delete selected card ?",
+                text: "Seguro que quieres cerrar?",
                 icon: "warning",
                 buttonsStyling: false,
                 showDenyButton: true,
@@ -84,7 +84,7 @@ var KTAccountBillingGeneral = function () {
             var el = this;
 
             swal.fire({
-                text: "Are you sure you would like to delete selected address ?",
+                text: "Seguro que quieres cerrar?",
                 icon: "warning",
                 buttonsStyling: false,
                 showDenyButton: true,

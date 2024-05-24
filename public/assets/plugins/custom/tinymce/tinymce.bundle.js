@@ -48431,7 +48431,7 @@ tinymce.IconManager.add('default', {
             editor.plugins.autosave.storeDraft();
           }
           if (!msg && editor.isDirty() && shouldAskBeforeUnload(editor)) {
-            msg = editor.translate('You have unsaved changes are you sure you want to navigate away?');
+            msg = editor.translate('You have unsaved changes Seguro que quieres cerrar? want to navigate away?');
           }
         });
         if (msg) {

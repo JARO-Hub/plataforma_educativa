@@ -56,7 +56,7 @@ var KTModalUpgradePlan = function () {
             var el = this;
 
             swal.fire({
-                text: "Are you sure you would like to upgrade to selected plan ?",
+                text: "Seguro que quieres cerrar?   upgrade to selected plan ?",
                 icon: "warning",
                 buttonsStyling: false,
                 showDenyButton: true,

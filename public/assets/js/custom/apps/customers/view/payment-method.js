@@ -19,12 +19,12 @@ var KTCustomerViewPaymentMethod = function () {
 
                 // Popup confirmation
                 Swal.fire({
-                    text: "Are you sure you would like to delete this card?",
+                    text: "Seguro que quieres cerrar?   delete this card?",
                     icon: "warning",
                     showCancelButton: true,
                     buttonsStyling: false,
                     confirmButtonText: "Yes, delete it!",
-                    cancelButtonText: "No, return",
+                    cancelButtonText: "No,regresar",
                     customClass: {
                         confirmButton: "btn btn-primary",
                         cancelButton: "btn btn-active-light"
@@ -59,12 +59,12 @@ var KTCustomerViewPaymentMethod = function () {
 
             // Popup confirmation
             Swal.fire({
-                text: "Are you sure you would like to set this card as primary?",
+                text: "Seguro que quieres cerrar?   set this card as primary?",
                 icon: "warning",
                 showCancelButton: true,
                 buttonsStyling: false,
                 confirmButtonText: "Yes, set it!",
-                cancelButtonText: "No, return",
+                cancelButtonText: "No,regresar",
                 customClass: {
                     confirmButton: "btn btn-primary",
                     cancelButton: "btn btn-active-light"

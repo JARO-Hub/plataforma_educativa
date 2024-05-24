@@ -443,6 +443,156 @@
                 <!--end::Content-->
             </div>
             <!--end::Content wrapper-->
+                <!--end::Botones_accion-->
+                <div style="margin-top: 100px;">
+                    <button type="button" class="btn btn-light" id="Editar" data-bs-toggle="modal" data-bs-stacked-modal="#kt_modal_stacked_1">Editar</button>
+                    <button type="button" class="btn btn-light" id="Suprimir" data-bs-toggle="modal" data-bs-target="#Modal_suprimir2">Suprimir</button>
+                </div>
+                <!--end::Botones_accion-->
+                <!--begin::Modal_1-->
+                <div>
+                    <div class="modal bg-body fade" tabindex="-1" id="kt_modal_stacked_1">
+                        <div class="modal-dialog modal-fullscreen">
+                            <div class="modal-content shadow-none">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Recurso compartido
+                                        <script></script>
+                                    </h5>
+                                    <!--begin::Close-->
+                                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                        <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                                    </div>
+                                    <!--end::Close-->
+                                </div>
+                                <div class="Opciones_y_valores">
+                                    <span class="Opciones_y_valores">Opción</span>
+                                    <span class="Opciones_y_valores">Valor</span>
+                                </div>
+                                <!--begin::Botones_dentro_modal-->
+                                <div style="margin-top: 480px">
+                                    <button type="Button" class="btn btn-light" id="Boton_añadir" data-bs-stacked-modal="#kt_modal_stacked_2">Añadir</button>
+                                    <button type="Button" class="btn btn-light" id="Boton_editar" data-bs-stacked-modal="#Modal_editar">Editar</button>
+                                    <button type="Button" class="btn btn-light" id="Boton_suprimir" data-bs-stacked-modal="#Modal_suprimir">Suprimir</button>
+                                </div>
+                                <!--end::Botones_dentro_modal-->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-primary">Guardar cambios</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Modal_1-->
+                <!--begin::Modal_2-->
+                <div class="modal fade" tabindex="-1" id="kt_modal_stacked_2">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Yast2</h3>
+
+                                <!--begin::Close-->
+                                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+
+                            <div class="modal-body">
+                                <h6>Opcion seleccionada</h6>
+                                <select class="form-select" data-control="select2" style="display: inline-block !important">
+                                    <option></option>
+                                    <script>
+                                    </script>
+                                </select>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-success">Aceptar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Modal_2-->
+                <!--begin::Modal_3-->
+                <div class="modal fade" tabindex="-1" id="Modal_editar">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Yast2</h3>
+                                <!--begin::Close-->
+                                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <div class="modal-body">
+                                <h6>Opcion actual: <script></script></h6>
+                                <script></script>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-success">Aceptar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Modal_3-->
+                <!--begin::Modal_4-->
+                <div class="modal fade" tabindex="-1" id="Modal_suprimir">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Yast2</h3>
+                                <!--begin::Close-->
+                                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <div class="modal-body">
+                                <h6>¿Desea suprimir la opción seleccionada?</h6>
+                                <script></script>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-success">Aceptar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Modal_4-->
+                <!--begin::Modal_5-->
+                <div>
+                    <div class="modal fade" tabindex="-1" id="Modal_suprimir2">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                            <div class="modal-content shadow-none">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Yast2</h5>
+                                    <!--begin::Close-->
+                                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                        <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                                    </div>
+                                    <!--end::Close-->
+                                </div>
+                                <div class="modal-body">
+                                    <h6>Si suprime el recurso compartido <script></script>,
+                                        se perderán todos sus ajustes.
+                                        ¿Seguro de que desea suprimirlo?</h6>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                                    <button type="button" class="btn btn-success">Si</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Modal_5-->
             <!--begin::Footer-->
             <div id="kt_app_footer" class="app-footer align-items-center justify-content-center justify-content-md-between flex-column flex-md-row py-3 py-lg-6">
                 <!--begin::Copyright-->

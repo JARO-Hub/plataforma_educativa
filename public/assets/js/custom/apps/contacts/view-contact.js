@@ -22,7 +22,7 @@ var KTAppContactView = function () {
                 buttonsStyling: false,
                 showCancelButton: true,
                 confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, return",
+                cancelButtonText: "No,regresar",
                 customClass: {
                     confirmButton: "btn btn-danger",
                     cancelButton: "btn btn-active-light"
