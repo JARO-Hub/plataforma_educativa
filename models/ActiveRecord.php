@@ -7,6 +7,11 @@ class ActiveRecord {
     public  $guestOk;
     public  $comment;
     public  $writable;
+    public $browseable;
+    public $createMask;
+    public $directoryMask;
+    public $readOnly;
+
 
     private static $configPath = '/etc/samba/smb.conf';
 
@@ -69,5 +74,54 @@ class ActiveRecord {
 
         return $shares;
     }
+
+
+
+    /**
+     * Crea un nuevo recurso compartido de directorio en Samba.
+     *
+     * @param String $contrasena
+     * @param string $shareName Nombre del recurso compartido.
+     * @param String $shareComment Comentario del recurso compartido.
+     * @param string $sharePath Ruta del directorio a compartir.
+     * @param string $writable Indica si el recurso compartido es escribible.
+     * @param string $browseable Indica si el recurso compartido es visible para los usuarios.
+     * @param string $guestOk Permite el acceso de invitados al recurso compartido.
+     * @param string $createMask Define los permisos de los archivos creados dentro del recurso compartido.
+     * @param string $directoryMask Define los permisos de los directorios creados dentro del recurso compartido.
+     * @param bool $readOnly Indica si el recurso compartido es de solo lectura.
+     * @return bool Devuelve true si se creó el recurso compartido correctamente, false en caso contrario.
+     */
+    public static function createSharedDirectory($shareName, $shareComment, $sharePath, $writable, $browseable, $guestOk, $createMask, $directoryMask, $readOnly, $password) {
+        // Llama al script shell con los parámetros adecuados, incluyendo la contraseña
+        $result = shell_exec(__DIR__ . '/../scripts/create_share.sh '
+            . escapeshellarg($shareName) . ' '
+            . escapeshellarg($shareComment) . ' '
+            . escapeshellarg($sharePath) . ' '
+            . escapeshellarg($writable) . ' '
+            . escapeshellarg($browseable) . ' '
+            . escapeshellarg($guestOk) . ' '
+            . escapeshellarg($createMask) . ' '
+            . escapeshellarg($directoryMask) . ' '
+            . escapeshellarg($readOnly ? 'true' : 'false') . ' '
+            . escapeshellarg($password));
+
+        // Verificar si la función se ejecutó correctamente
+        if (trim($result) === "true") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 
 }
