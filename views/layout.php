@@ -140,6 +140,7 @@
         <!--end::Page-->
     </div>
     <!--end::App-->
+    <?php echo $contenido  ?>
 
 
 
