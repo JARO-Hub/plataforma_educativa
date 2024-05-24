@@ -75,8 +75,6 @@ class ActiveRecord {
         return $shares;
     }
 
-
-
     /**
      * Crea un nuevo recurso compartido de directorio en Samba.
      *
