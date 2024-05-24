@@ -15,5 +15,5 @@
 
 <?php
 include_once __DIR__ . '/../templates/alertas.php';
-include_once __DIR__ .'/templates/Inicio.php';
+include_once __DIR__ .'/../templates/Inicio.php';
 ?>
