@@ -2,12 +2,12 @@
 
 namespace Controllers;
 
-use Model\Usuario;
+use Model\Inicio;
 use MVC\Router;
 use Model\ActiveRecord as SambaShare;
 
 
-class UsuarioController {
+class InicioController {
     public static function index(Router $router) {
         if (session_status() !== PHP_SESSION_ACTIVE) {
             session_start();
@@ -58,7 +58,7 @@ class UsuarioController {
         $alertas = [];
 
         if($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $router->render('Usuarios/inicio', [
+            $router->render('Inicio/index', [
                 
                 'Usuario' => 'hola',
                 'alertas' => $alertas
@@ -87,11 +87,11 @@ class UsuarioController {
 
             if(empty($alertas)) {
                 $Usuario->guardar();
-                header('Location: /Usuarios');
+                header('Location: /Inicio');
             }
         }
 
-        $router->render('Usuarios/actualizar', [
+        $router->render('Inicio/actualizar', [
             'nombre' => $_SESSION['nombre'],
             'Usuario' => $Usuario,
             'alertas' => $alertas
@@ -106,7 +106,7 @@ class UsuarioController {
             $id = $_POST['id'];
             $Usuario = Usuario::find($id);
             $Usuario->eliminar();
-            header('Location: /Usuarios');
+            header('Location: /Inicio');
         }
     }
 }

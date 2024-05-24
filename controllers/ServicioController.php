@@ -80,10 +80,7 @@ class ServicioController {
                 'alertas' => $alertas
             ]);
         }
-
         return;
-
-
     }
 
     public static function actualizar(Router $router) {

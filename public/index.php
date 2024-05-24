@@ -7,8 +7,10 @@ use Controllers\CitaController;
 use Controllers\AdminController;
 use Controllers\LoginController;
 use Controllers\EducadorController;
-use Controllers\ServicioController;
 use Controllers\EstudianteController;
+use Controllers\ServicioController;
+use Controllers\InicioController;
+use Controllers\IdentidadController;
 use Controllers\UsuarioController;
 
 $router = new Router();
@@ -62,17 +64,24 @@ $router->post('/api/eliminar', [APIController::class, 'eliminar']);
 
 
 
-// CRUD de Servicios
+// CRUD de Compartir
 $router->post('/servicios', [ServicioController::class, 'index']);
 $router->get('/servicios', [ServicioController::class, 'invoke']);
 $router->post('/servicios/crear', [ServicioController::class, 'crear']);
 $router->get('/servicios/actualizar', [ServicioController::class, 'actualizar']);
 $router->post('/servicios/actualizar', [ServicioController::class, 'actualizar']);
 $router->post('/servicios/eliminar', [ServicioController::class, 'eliminar']);
-// CRUD de Usuarios
+// CRUD de Inicio
+$router->post('/inicio', [InicioController::class, 'index']);
+$router->get('/inicio', [InicioController::class, 'invoke']);
 
-$router->get('/Usuarios', [UsuarioController::class, 'invoke']);
+//CRUD de Identidad
+$router->post('/identidad', [IdentidadController::class, 'index']);
+$router->get('/identidad', [IdentidadController::class, 'invoke']);
 
+//CRUD de Usuarios
+$router->post('/usuario', [UsuarioController::class, 'index']);
+$router->get('/usuario', [UsuarioController::class, 'invoke']);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

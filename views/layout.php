@@ -52,12 +52,13 @@
                 </div>
                 <!--end::Header primary-->
                 <!--begin::Header secondary-->
-                <div class="app-header-secondary" style="background-color: green">
+                <div class="app-header-secondary">
                     <div class="barra_navegable">
                                     <ul>
                                         <li><a href="#" id="Inicio">Inicio</a></li>
                                         <li><a href="#" id="RecursosCompartidos">Recursos compartidos</a></li>
-                                        <li><a href="#" id="Configuración">Configuración</a></li>
+                                        <li><a href="#" id="Configuración">Identidad</a></li>
+                                        <li><a href="#" id="Usuarios_samba">Usuarios Samba</a></li>
                                     </ul>
                     </div>
                     <!--begin::Header secondary container-->
@@ -736,6 +737,7 @@
             include __DIR__ .'/templates/Inicio.php';
             include  __DIR__ . '/templates/wrapper.php';
             include __DIR__ .'/templates/Identidad.php';
+            include __DIR__ .'/templates/usuarios_samba.php';
             ?>
             <!--end::Wrapper-->
         </div>
@@ -761,6 +763,7 @@
             document.getElementById('InicioContenido').style.display = 'block';
             document.getElementById('RecursosCompartidosContenido').style.display = 'none';
             document.getElementById('ConfiguraciónContenido').style.display = 'none';
+            document.getElementById('UsuarioContenido').style.display = 'none';
         });
 
         // Maneja el clic en el enlace de Acerca de
@@ -768,12 +771,21 @@
             document.getElementById('InicioContenido').style.display = 'none';
             document.getElementById('RecursosCompartidosContenido').style.display = 'block';
             document.getElementById('ConfiguraciónContenido').style.display = 'none';
+            document.getElementById('UsuarioContenido').style.display = 'none';
         });
 
         document.getElementById('Configuración').addEventListener('click', function() {
             document.getElementById('InicioContenido').style.display = 'none';
             document.getElementById('RecursosCompartidosContenido').style.display = 'none';
             document.getElementById('ConfiguraciónContenido').style.display = 'block';
+            document.getElementById('UsuarioContenido').style.display = 'none';
+        });
+
+        document.getElementById('Usuarios_samba').addEventListener('click', function() {
+            document.getElementById('InicioContenido').style.display = 'none';
+            document.getElementById('RecursosCompartidosContenido').style.display = 'none';
+            document.getElementById('ConfiguraciónContenido').style.display = 'none';
+            document.getElementById('UsuarioContenido').style.display = 'block';
         });
     </script>
 

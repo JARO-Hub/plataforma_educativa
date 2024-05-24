@@ -25,25 +25,14 @@
     margin-left: 50px;
   }
 
-  .app-header-secondary{
-    list-style-type: none;
-    background-color: green;
-    padding:0px; 
-    margin: 0px;
-    color: white !important;
-    text-decoration:none ;
-    display: block;
-   }
-
-   .vl {
-    border-left: 6px solid green;
-    height: 500px;
-    position: absolute;
-    left: 50%;
-    margin-left: -3px;
-    top: 0;
-  }
-
   .Opciones_y_valores{
     display: inline-block !important;
   }
+
+.barra_navegable ul li{
+  color: white;
+  display: inline-block;
+  padding: auto;
+  margin: auto;
+  background-color: green !important;
+}
