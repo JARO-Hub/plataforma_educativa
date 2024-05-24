@@ -58,7 +58,7 @@ class InicioController {
         $alertas = [];
 
         if($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $router->render('Inicio/index', [
+            $router->render('inicio/index', [
                 
                 'Usuario' => 'hola',
                 'alertas' => $alertas
