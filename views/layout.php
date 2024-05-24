@@ -69,6 +69,12 @@
                                         'usuarios' => $_SERVER['REQUEST_URI']=== '/usuarios' ? 'here' : '',
 
                                 ];
+                                $url = [
+                                        'inicio' => 'http://' . $_SERVER['HTTP_HOST'] . '/inicio',
+                                        'recursos' => 'http://' . $_SERVER['HTTP_HOST'] . '/servicios',
+                                        'identidad' => 'http://' . $_SERVER['HTTP_HOST'] . '/identidad',
+                                        'usuarios' => 'http://' . $_SERVER['HTTP_HOST'] . '/usuarios',
+                                ]
 
                             ?>
                             <div class="d-flex justify-content-between align-items-center menu menu-rounded menu-active-bg menu-state-primary menu-column menu-lg-row menu-title-gray-700 menu-icon-gray-500 menu-arrow-gray-500 menu-bullet-gray-500 my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0" id="kt_app_header_menu" data-kt-menu="true">
@@ -76,7 +82,7 @@
                                 <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="<?= $menu['inicio'] ?> menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
                                     <!--begin:Menu link-->
                                     <span class="menu-link">
-											<span class="menu-title"><a class="text-gray-700" href="">Inicio</a></span>
+											<span class="menu-title"><a class="text-gray-700" href="<?= $url['inicio'] ?>">Inicio</a></span>
 											<span class="menu-arrow d-lg-none"></span>
 										</span>
                                     <!--end:Menu link-->
@@ -309,7 +315,7 @@
                                 <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="<?= $menu['recursos'] ?> menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
                                     <!--begin:Menu link-->
                                     <span class="menu-link">
-                                        <span class="menu-title"><a class="text-gray-700" href="">Recursos Compartidos</a></span>
+                                        <span class="menu-title"><a class="text-gray-700" href="<?= $url['recursos'] ?>">Recursos Compartidos</a></span>
 											<span class="menu-arrow d-lg-none"></span>
 										</span>
                                     <!--end:Menu link-->
@@ -438,7 +444,7 @@
                                 <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="<?= $menu['identidad'] ?> menu-item menu-lg-down-accordion me-0 me-lg-2">
                                     <!--begin:Menu link-->
                                     <span class="menu-link">
-                                        <span class="menu-title"><a class="text-gray-700" href="">Identidad</a></span>
+                                        <span class="menu-title"><a class="text-gray-700" href="<?= $url['identidad'] ?>">Identidad</a></span>
 											<span class="menu-arrow d-lg-none"></span>
 										</span>
                                     <!--end:Menu link-->
@@ -536,7 +542,7 @@
                                 <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="<?= $menu['usuarios'] ?> menu-item menu-lg-down-accordion me-lg-1">
                                     <!--begin:Menu link-->
                                     <span class="menu-link">
-                                        <span class="menu-title"><a class="text-gray-700" href="">Usuarios</a></span>
+                                        <span class="menu-title"><a class="text-gray-700" href="<?= $url['usuarios'] ?>">Usuarios</a></span>
 											<span class="menu-arrow d-lg-none"></span>
 										</span>
                                     <!--end:Menu link-->
