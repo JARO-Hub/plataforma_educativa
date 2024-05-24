@@ -14,7 +14,7 @@ class IdentidadController{
         $alertas = [];
 
         if($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $workgroup = Identidad::getWorkgroupName();
+            $workgroup = IdentidadModelo::getWorkgroupName();
             $router->render('identidad/index', [
                 'identidad' => $workgroup,
                 'alertas' => $alertas
