@@ -48,8 +48,7 @@ class UserSamba extends Servicio
 
             $command = $this->buildCommand(self::$createUserCommand, $params);
 
-            $output = shell_exec($command);
-            $exitCode = (int)$?;
+            exec($command, $output, $exitCode);
             if ($exitCode !== 0) {
                 throw new \Exception('Error al ejecutar el comando para crear el usuario de Samba: ' . implode("\n", $output));
             }
