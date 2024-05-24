@@ -167,7 +167,4 @@
                     <!--end::Toolbar container-->
                 </div>
             <!--end::Toolbar-->
-            <!--begin::Identidad-->
-                <h2>Nombre de grupo de trabajo o dominio</h2>
-                <input type="text" class="form-control" placeholder="" value="WORKGROUP">
-            <!--end::Identidad-->
+           
