@@ -80,8 +80,8 @@ $router->post('/identidad', [IdentidadController::class, 'index']);
 $router->get('/identidad', [IdentidadController::class, 'invoke']);
 
 //CRUD de Usuarios
-$router->post('/usuario', [UsuarioController::class, 'index']);
-$router->get('/usuario', [UsuarioController::class, 'invoke']);
+$router->post('/usuarios', [UsuarioController::class, 'index']);
+$router->get('/usuarios', [UsuarioController::class, 'invoke']);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();
