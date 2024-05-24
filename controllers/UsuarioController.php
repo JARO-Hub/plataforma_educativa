@@ -13,7 +13,7 @@ class UsuarioController{
         $alertas = [];
 
         if($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $router->render('usuario/index', [
+            $router->render('usuarios/index', [
                 'servicio' => 'hola',
                 'alertas' => $alertas
             ]);
