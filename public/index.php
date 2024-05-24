@@ -72,15 +72,15 @@ $router->get('/servicios/actualizar', [ServicioController::class, 'actualizar'])
 $router->post('/servicios/actualizar', [ServicioController::class, 'actualizar']);
 $router->post('/servicios/eliminar', [ServicioController::class, 'eliminar']);
 // CRUD de Inicio
-$router->post('/inicio', [InicioController::class, 'index']);
+
 $router->get('/inicio', [InicioController::class, 'invoke']);
 
 //CRUD de Identidad
-$router->post('/identidad', [IdentidadController::class, 'index']);
+
 $router->get('/identidad', [IdentidadController::class, 'invoke']);
 
 //CRUD de Usuarios
-$router->post('/usuarios', [UsuarioController::class, 'index']);
+
 $router->get('/usuarios', [UsuarioController::class, 'invoke']);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
