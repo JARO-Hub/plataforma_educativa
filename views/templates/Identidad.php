@@ -5,12 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Identidad</title>
-    <style>
-        /* Oculta el contenido de Acerca de por defecto */
-        #ConfiguraciónContenido {
-            display: none;
-        }
-    </style>
+
 </head>
 
 <body>

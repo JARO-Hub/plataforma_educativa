@@ -4,12 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuarios Samba</title>
-    <style>
-        /* Oculta el contenido de Acerca de por defecto */
-        #UsuarioContenido {
-            display: none;
-        }
-    </style>
+   
 </head>
 <body>
     <div id=UsuarioContenido> 
