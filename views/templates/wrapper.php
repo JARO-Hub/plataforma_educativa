@@ -433,7 +433,8 @@
                                         <tbody class="text-gray-600 fw-semibold">
 
                                         </tbody>
-                                    </table></div>
+                                    </table>
+                            </div>
                                  <!--end::Table-->
                         </div>
                         <!--end::Card body-->

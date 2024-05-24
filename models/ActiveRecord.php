@@ -12,7 +12,7 @@ class ActiveRecord {
     public $directoryMask;
     public $readOnly;
 
-
+    
     private static $configPath = '/etc/samba/smb.conf';
 
     public function __construct($name, $path, $guestOk, $comment, $writable)
@@ -75,8 +75,6 @@ class ActiveRecord {
         return $shares;
     }
 
-
-
     /**
      * Crea un nuevo recurso compartido de directorio en Samba.
      *
@@ -113,15 +111,4 @@ class ActiveRecord {
             return false;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 }
