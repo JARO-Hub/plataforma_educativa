@@ -134,7 +134,7 @@ class UserSamba extends Servicio
                 throw new \Exception('El nombre de usuario y la contraseña no pueden estar vacíos.');
             }
             // password, sambapassword_new, sambauser_new, sambauser_old
-            $params = [$this->getPassword(), $this->sambapassword, $this->sambauser, $this->getSambauser()];
+            $params = [$this->getPassword(), $this->sambapassword, $this->getSambauser(), $this->getUsername()];
 
             $command = $this->buildCommand(self::$updateUserCommand, $params);
 

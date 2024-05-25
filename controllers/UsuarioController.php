@@ -138,7 +138,7 @@ class UsuarioController{
             if (empty($_POST['user_name']) || empty($_POST['password']) || empty($_POST['smbpassword'])){
                 $alertas[] = 'El nombre de usuario y la contraseña no pueden estar vacíos.';
             }
-            $usuario = new UserSamba('root', $_POST['password'], $_POST['user_name'], $_POST['smbpassword']);
+            $usuario = new UserSamba($id, $_POST['password'], $_POST['user_name'], $_POST['smbpassword']);
             try {
                 if(empty($alertas)) {
                     $result = $usuario->updateUser();
@@ -164,13 +164,14 @@ class UsuarioController{
         }else{
             try {
                 $usuario = new UserSamba('root', '', $id, '');
-                $router->render('usuarios/edit', [
+                $user = array_filter($usuario->searchAllUsers(), function ($usersamba) use ($id) {
+                                    return $usersamba->getSambauser() === $id;
+                                });
+                $router->render('usuarios/form', [
                     'servicio' => 'hola',
                     'alertas' => $alertas,
-                    'user' =>  array_filter($usuario->searchAllUsers(), function ($usersamba) use ($id) {
-                        return $usersamba->getSambauser() === $id;
-                    }),
-                    'action_form' => '/usuarios',
+                    'user' =>  $user[0],
+                    'action_form' => '/usuarios/update/',
                     'url_update' => '/usuarios/update/',
                     'url_delete' => '/usuarios/delete/',
                 ]);
