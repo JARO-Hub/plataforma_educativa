@@ -40,7 +40,8 @@ var KTUsersList = function () {
             "columns": [
                 { "data": "id" },
                 { "data": "user_name" },
-                { "data": "password" }
+                { "data": "password" },
+                { "data": null  },
 
             ],
             "columnDefs": [
