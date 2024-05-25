@@ -199,7 +199,7 @@ class UsuarioController{
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $usuario = new UserSamba('root', $_POST['password'], $id, $_POST['smbpassword']);
+            $usuario = new UserSamba('root', $_POST['password'], $id, '');
             try {
                 if(empty($alertas)) {
                     $user = array_filter($usuario->searchAllUsers(), function ($usersamba) use ($id) {

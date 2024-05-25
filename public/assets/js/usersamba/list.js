@@ -108,7 +108,7 @@ var KTUsersList = function () {
                                     </li>
                                     <!-- Opción Eliminar -->
                                     <li class="menu-item px-3">
-                                        <a class="menu-link px-3" href="#" name="${row.user_name}" delete-url="${usersamba_delete_get_web.replace("|id|", row.id)}" data-kt-usersamba-table-filter="delete_row">
+                                        <a class="menu-link px-3" href="#" name="${row.user_name}" delete-url="${usersamba_delete_get_web.replace("|id|", row.user_name)}" data-kt-usersamba-table-filter="delete_row">
                                             Delete
                                         </a>
                                     </li>
@@ -279,12 +279,12 @@ var KTUsersList = function () {
                             confirmButtonText: 'Eliminar',
                             showLoaderOnConfirm: true,
                             preConfirm: (password) => {
-                                return fetch('/usuarios/delete', {
+                                return fetch(element.getAttribute('delete-url'), {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json',
                                     },
-                                    body: JSON.stringify({ id: element.getAttribute('delete-url'), password: password })
+                                    body: JSON.stringify({ id: element.getAttribute('name'), password: password })
                                 })
                                     .then(response => {
                                         if (!response.ok) {
@@ -303,7 +303,7 @@ var KTUsersList = function () {
                             if (result.isConfirmed) {
                                 Swal.fire({
                                     title: `Usuario eliminado`,
-                                    html: `El usuario ${element.getAttribute('delete-url')} ha sido eliminado`,
+                                    html: `El usuario ${element.getAttribute('name')} ha sido eliminado`,
                                     confirmButtonText: 'Ok'
                                 }).then(() => {
                                     window.location.reload();
