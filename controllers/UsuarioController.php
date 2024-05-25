@@ -163,7 +163,7 @@ class UsuarioController{
 
         }else{
             try {
-                $usuario = new UserSamba('root', '', $id, '');
+                $usuario = new UserSamba('root', 'admin123', $id, '');
                 $user = array_filter($usuario->searchAllUsers(), function ($usersamba) use ($id) {
                                     return $usersamba->getSambauser() === $id;
                                 });
