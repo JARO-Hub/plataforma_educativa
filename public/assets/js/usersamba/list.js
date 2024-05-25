@@ -81,6 +81,12 @@ var KTUsersList = function () {
                     }
                 },
                 {
+                    "targets": [3],
+                    "render": function(data, type, row) {
+                        return `<span class="badge badge-light"></span>`;
+                    },
+                },
+                {
                     "targets": -1,
                     "orderable": false,
                     "searchable": false,

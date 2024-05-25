@@ -351,7 +351,7 @@
                                                             <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer"
                                                                 id="kt_table_usersamba">
                                                                 <thead>
-                                                                    <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                                                                    <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0" >
                                                                         <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1"
                                                                             aria-label="" style="width: 29.890625px;">
                                                                             <div
@@ -362,7 +362,7 @@
                                                                                     value="1">
                                                                             </div>
                                                                         </th>
-                                                                        <th class="min-w-125px sorting text-center" tabindex="0"
+                                                                        <th class="min-w-125px sorting " tabindex="0"
                                                                             aria-controls="kt_table_usersamba" rowspan="1" colspan="1"
                                                                             aria-label="User: activate to sort column ascending"
                                                                             style="width: 276.90625px;">
@@ -370,7 +370,7 @@
                                                                         </th>
                                                                         
                                                                        
-                                                                        <th class="min-w-125px sorting text-center" tabindex="0"
+                                                                        <th class="min-w-125px sorting " tabindex="0"
                                                                             aria-controls="kt_table_usersamba" rowspan="1" colspan="1"
                                                                             aria-label="Joined Date: activate to sort column ascending"
                                                                             style="width: 210.953125px;">
@@ -379,7 +379,7 @@
 
                                                                         <th class="min-w-125px sorting " tabindex="0"
                                                                             aria-controls="kt_table_usersamba" rowspan="1" colspan="1"
-                                                                            aria-label="Joined Date: activate to sort column ascending"
+                                                                            aria-label="Acciones"
                                                                             style="width: 210.953125px;">
                                                                             Accciones
                                                                         </th>
