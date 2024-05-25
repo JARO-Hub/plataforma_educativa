@@ -76,7 +76,11 @@ class UsuarioController{
                 $draw = $_POST['draw'] ?? 1;
 
                 $shares = UserSamba::searchAllUsers();
+
+                echo "<pre>";
                 var_dump($shares);
+                echo "</pre>";
+                exit;
                 if (!empty($search)) {
                     $filteredShares = array_filter($shares, function ($share) use ($search) {
                         return stripos($share->getSambauser(), $search) !== false;
