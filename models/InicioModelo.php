@@ -21,21 +21,21 @@ class InicioModelo
 
         exec("bash $command", $output, $returnCode);
 
+            // Añadir mensajes de depuración
+        error_log("Comando ejecutado: bash $command");
+        error_log("Código de retorno: $returnCode");
+        error_log("Salida: " . implode("\n", $output));
         // Verificar si se obtuvo una salida válida
         if (empty($output) || $returnCode !== 0) {
             return 'Error al obtener el estado';
         }
 
         // Convertir array de salida a string
-        $status = implode("\n", $output);
+        $estadoSamba = implode("\n", $output);
 
-        // Verificar el resultado del comando
-        if (stripos($status, 'active') !== false) {
-            return 'Activo';
-        } elseif (stripos($status, 'inactive') !== false) {
-            return 'Inactivo';
-        } else {
-            return 'Estado desconocido'; // Opcional: manejar otros casos
-        }
+        // Retornar la salida del script directamente
+        return $estadoSamba;
     }
 }
+
+?>
