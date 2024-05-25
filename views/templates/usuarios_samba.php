@@ -378,7 +378,7 @@
                                                                         </th>
 
                                                                         <th class="min-w-125px sorting " tabindex="0"
-                                                                            aria-controls="kt_table_usersamba" rowspan="1" colspan="1"
+                                                                            rowspan="1" colspan="1"
                                                                             aria-label="Acciones"
                                                                             style="width: 132.953125px;">
                                                                             Accciones
