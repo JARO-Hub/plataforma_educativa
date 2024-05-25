@@ -199,9 +199,13 @@ class UsuarioController{
         ini_set('memory_limit', '512M');
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            $usuario = new UserSamba('root', $_POST['password'], $id, '');
             try {
+                $data = json_decode(file_get_contents('php://input'), true);
+                if ($data === null || !array_key_exists('password', $data)) {
+                    throw new \Exception('Ingrese la contraseña por favor');
+                }
+                $usuario = new UserSamba('root', $data['password'], $id, '');
+
                 if(empty($alertas)) {
                     $user = array_filter($usuario->searchAllUsers(), function ($usersamba) use ($id) {
                         return $usersamba->getSambauser() === $id;
@@ -221,7 +225,7 @@ class UsuarioController{
             } catch (\Exception $e) {
                 $alertas['error'][] = $e->getMessage();
             }
-
+            header('Location: /usuarios');
             $router->render('usuarios/index', [
                 'servicio' => 'hola',
                 'alertas' => $alertas,
