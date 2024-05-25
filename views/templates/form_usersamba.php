@@ -1,5 +1,6 @@
 
 <!--begin::Form-->
+<div class="app-content pb-0">
 <form id="kt_modal_add_user_form" method="POST" enctype="multipart/form-data"
       class="form fv-plugins-bootstrap5 fv-plugins-framework" action="<?php $action_form ?>">
     <!--begin::Scroll-->
@@ -22,7 +23,7 @@
             <!--begin::Input-->
             <input type="text" name="user_name"
                    class="form-control form-control-solid mb-3 mb-lg-0"
-                   placeholder="Nombre" value="<?php $user->getSambauser() ?? '' ?>">
+                   placeholder="Nombre" value="<?php echo $user->getSambauser() ?? '' ?>">
             <!--end::Input-->
             <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
 
@@ -75,3 +76,8 @@
     <!--end::Actions-->
 </form>
 <!--end::Form-->
+</div>
+<script>
+    var usersamba_update_get_web = '<?php echo $url_update.'|id|'; ?>';
+    var usersamba_delete_get_web = '<?php echo $url_delete.'|id|'; ?>';
+</script>
