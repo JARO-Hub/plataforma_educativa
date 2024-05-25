@@ -1,6 +1,6 @@
 
 <!--begin::Form-->
-<div class="app-content pb-0">
+<div class="app-content pb-0 m-12" id="kt_modal_add_user">
 <form id="kt_modal_add_user_form" method="POST" enctype="multipart/form-data"
       class="form fv-plugins-bootstrap5 fv-plugins-framework" action="<?php echo $action_form ?>">
     <!--begin::Scroll-->
