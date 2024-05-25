@@ -14,6 +14,10 @@ class InicioController {
 
         $alertas = [];
         $estadoSamba = InicioModelo::getStatus();
+        echo "<pre>";
+        var_dump($estadoSamba);
+        echo "</pre>";
+
         
         if($_SERVER['REQUEST_METHOD'] === 'GET') {
             $router->render('inicio/index', [
