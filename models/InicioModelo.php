@@ -28,10 +28,10 @@ class InicioModelo
         }
 
         // Convertir array de salida a string
-        $estadoSamba = implode("\n", $output);
+        $estado = implode("\n", $output);
 
         // Retornar la salida del script directamente
-        return $estadoSamba;
+        return $estado;
     }
 }
 ?>
