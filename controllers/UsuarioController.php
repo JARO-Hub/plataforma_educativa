@@ -17,7 +17,9 @@ class UsuarioController{
             $router->render('usuarios/index', [
                 'servicio' => 'hola',
                 'alertas' => $alertas,
-                'action_form' => '/usuarios'
+                'action_form' => '/usuarios',
+                'url_update' => '/usuarios/update/',
+                'url_delete' => '/usuarios/delete/',
             ]);
         }
         return;
