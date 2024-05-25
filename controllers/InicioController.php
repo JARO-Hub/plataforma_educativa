@@ -1,7 +1,7 @@
 <?php
 
 namespace Controllers;
-
+use Model\IdentidadModelo;
 use Model\InicioModelo;
 use MVC\Router;
 
