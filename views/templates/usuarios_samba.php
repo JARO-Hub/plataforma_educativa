@@ -365,7 +365,7 @@
                                                                         <th class="min-w-125px sorting " tabindex="0"
                                                                             aria-controls="kt_table_usersamba" rowspan="1" colspan="1"
                                                                             aria-label="User: activate to sort column ascending"
-                                                                            style="width: 276.90625px;">
+                                                                            style="width: 176.90625px;">
                                                                             Nombre
                                                                         </th>
                                                                         
@@ -373,14 +373,14 @@
                                                                         <th class="min-w-125px sorting " tabindex="0"
                                                                             aria-controls="kt_table_usersamba" rowspan="1" colspan="1"
                                                                             aria-label="Joined Date: activate to sort column ascending"
-                                                                            style="width: 210.953125px;">
+                                                                            style="width: 110.953125px;">
                                                                             Contraseña
                                                                         </th>
 
                                                                         <th class="min-w-125px sorting " tabindex="0"
                                                                             aria-controls="kt_table_usersamba" rowspan="1" colspan="1"
                                                                             aria-label="Acciones"
-                                                                            style="width: 210.953125px;">
+                                                                            style="width: 132.953125px;">
                                                                             Accciones
                                                                         </th>
                                                                         
