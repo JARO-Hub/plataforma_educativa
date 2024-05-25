@@ -1,6 +1,6 @@
 <?php
 // Ruta al script estado_samba.sh
-$getStatusCommand = __DIR__ . '/../scripts/inicio/estado_samba.sh';
+$getStatusCommand = __DIR__ . '/scripts/inicio/estado_samba.sh';
 
 // Ejecutar el comando
 exec($getStatusCommand, $output, $returnCode);
