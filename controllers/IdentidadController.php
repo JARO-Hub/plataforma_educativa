@@ -18,15 +18,23 @@ class IdentidadController{
                 'identidad' => $workgroup,
                 'alertas' => $alertas
             ]);
-        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        }
+
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nuevoWorkgroup = $_POST['workgroup'] ?? '';
             if (!empty($nuevoWorkgroup)) {
-                IdentidadModelo::setWorkgroupName($nuevoWorkgroup); // Establecer el nuevo nombre del grupo de trabajo
-                $workgroup = IdentidadModelo::getWorkgroupName(); // Obtener el nuevo nombre del grupo de trabajo para actualizar la vista
-                $alertas[] = 'Nombre del grupo de trabajo actualizado correctamente.';
+                $resultado=IdentidadModelo::setWorkgroupName($nuevoWorkgroup); // Establecer el nuevo nombre del grupo de trabajo
+                if ($resultado) {
+                    $alertas[] = "El nombre del grupo de trabajo se ha actualizado correctamente.";
+                } else {
+                    $alertas[] = "Hubo un error al actualizar el nombre del grupo de trabajo.";
+                }
             } else {
-                $alertas[] = 'El nombre del grupo de trabajo no puede estar vacío.';
+                $alertas[] = "El nombre del grupo de trabajo no puede estar vacío.";
             }
+
+            $workgroup = IdentidadModelo::getWorkgroupName();
             $router->render('identidad/index', [
                 'identidad' => $workgroup, // Pasar la variable a la vista
                 'alertas' => $alertas

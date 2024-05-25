@@ -80,7 +80,7 @@
                                                         <!--begin::Identidad-->
                                                         
                                                                   
-                                                        <form method="POST" action="" id="kt_modal_add_permission_form" class="form fv-plugins-bootstrap5 fv-plugins-framework">
+                                                        <form method="POST" action="/identidad" id="kt_modal_add_permission_form" class="form fv-plugins-bootstrap5 fv-plugins-framework">
                                                             <h2>Nombre de grupo de trabajo o dominio</h2>    
                                                             <!--<input type="text" class="form-control" placeholder="" value="<?php echo $identidad; ?>">-->
                                                             <div class="fv-row mb-7 fv-plugins-icon-container fv-plugins-bootstrap5-row-invalid">
