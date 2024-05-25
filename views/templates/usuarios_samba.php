@@ -374,6 +374,13 @@
                                                                             style="width: 210.953125px;">
                                                                             Contraseña
                                                                         </th>
+
+                                                                        <th class="min-w-125px sorting " tabindex="0"
+                                                                            aria-controls="kt_table_usersamba" rowspan="1" colspan="1"
+                                                                            aria-label="Joined Date: activate to sort column ascending"
+                                                                            style="width: 210.953125px;">
+                                                                            Accciones
+                                                                        </th>
                                                                         
                                                                     </tr>
                                                                 </thead>
