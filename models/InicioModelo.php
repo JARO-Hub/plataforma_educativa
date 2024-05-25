@@ -2,6 +2,7 @@
 namespace Model;
 
 class InicioModelo{
+    private static $getStatusCommand = __DIR__ . '/../scripts/inicio/estado_samba.sh';
     private static $configPath = '/etc/samba/smb.conf';
         /**
      * Obtiene el estado actual del servicio Samba.
@@ -11,8 +12,8 @@ class InicioModelo{
     public static function getStatus(){
     //Verificar el estado del servicio Samba
              // Ejecutar el comando para verificar el estado del servicio
-             $command = "sudo /bin/systemctl is-active smbd";
-             $output = shell_exec($command);
+             $command = $getStatusCommand;
+             exec($command,[],$ouput);
              // Verificar si se obtuvo una salida válida
     if ($output === null || $output === "") {
         return 'Error al obtener el estado';
