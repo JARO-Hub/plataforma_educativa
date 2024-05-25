@@ -56,7 +56,9 @@ class UsuarioController{
             $router->render('usuarios/index', [
                 'servicio' => 'hola',
                 'alertas' => $alertas,
-                'action_form' => '/usuarios'
+                'action_form' => '/usuarios',
+                'url_update' => '/usuarios/update/',
+                'url_delete' => '/usuarios/delete/',
             ]);
 
         }
@@ -117,6 +119,124 @@ class UsuarioController{
         }
 
 
+    }
+
+
+    public static function update(Router $router, $id)
+    {
+        $alertas = [];
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+        ini_set('max_execution_time', 300); // 5 minutos
+        ini_set('memory_limit', '512M');
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            if (empty($_POST['user_name']) || empty($_POST['password']) || empty($_POST['smbpassword'])){
+                $alertas[] = 'El nombre de usuario y la contraseña no pueden estar vacíos.';
+            }
+            $usuario = new UserSamba('root', $_POST['password'], $_POST['user_name'], $_POST['smbpassword']);
+            try {
+                if(empty($alertas)) {
+                    $result = $usuario->updateUser();
+                    if($result){
+                        $alertas['succes'][] = 'Usuario actualizado correctamente';
+                    }else{
+                        $alertas['error'][] = 'Error al actualizar el usuario';
+
+                    }
+                }
+            } catch (\Exception $e) {
+                $alertas['error'][] = $e->getMessage();
+            }
+
+            $router->render('usuarios/index', [
+                'servicio' => 'hola',
+                'alertas' => $alertas,
+                'action_form' => '/usuarios',
+                'url_update' => '/usuarios/update/',
+                'url_delete' => '/usuarios/delete/',
+            ]);
+
+        }else{
+            try {
+                $usuario = new UserSamba('root', '', $id, '');
+                $router->render('usuarios/edit', [
+                    'servicio' => 'hola',
+                    'alertas' => $alertas,
+                    'user' =>  array_filter($usuario->searchAllUsers(), function ($usersamba) use ($id) {
+                        return $usersamba->getSambauser() === $id;
+                    }),
+                    'action_form' => '/usuarios',
+                    'url_update' => '/usuarios/update/',
+                    'url_delete' => '/usuarios/delete/',
+                ]);
+            }catch (\Exception $e) {
+                $alertas['error'][] = $e->getMessage();
+                $router->render('usuarios/index', [
+                    'servicio' => 'hola',
+                    'alertas' => $alertas,
+                    'action_form' => '/usuarios',
+                    'url_update' => '/usuarios/update/',
+                    'url_delete' => '/usuarios/delete/',
+                ]);
+            }
+
+        }
+    }
+
+    public static function delete(Router $router, $id)
+    {
+        $alertas = [];
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+        ini_set('max_execution_time', 300); // 5 minutos
+        ini_set('memory_limit', '512M');
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $usuario = new UserSamba('root', $_POST['password'], $id, $_POST['smbpassword']);
+            try {
+                if(empty($alertas)) {
+                    $user = array_filter($usuario->searchAllUsers(), function ($usersamba) use ($id) {
+                        return $usersamba->getSambauser() === $id;
+                    });
+                    if (empty($user)) {
+                        $alertas['error'][] = 'Usuario no encontrado';
+                    }
+
+                    $result = $usuario->deleteUser();
+                    if($result){
+                        $alertas['succes'][] = 'Usuario eliminado correctamente';
+                    }else{
+                        $alertas['error'][] = 'Error al eliminar el usuario';
+
+                    }
+                }
+            } catch (\Exception $e) {
+                $alertas['error'][] = $e->getMessage();
+            }
+
+            $router->render('usuarios/index', [
+                'servicio' => 'hola',
+                'alertas' => $alertas,
+                'action_form' => '/usuarios',
+                'url_update' => '/usuarios/update/',
+                'url_delete' => '/usuarios/delete/',
+            ]);
+
+        }else{
+            $alertas['error'][] = 'Ingrese la contraseña por favor';
+            $router->render('usuarios/index', [
+                'servicio' => 'hola',
+                'alertas' => $alertas,
+                'action_form' => '/usuarios',
+                'url_update' => '/usuarios/update/',
+                'url_delete' => '/usuarios/delete/',
+            ]);
+        }
     }
 
 }

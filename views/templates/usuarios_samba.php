@@ -539,3 +539,7 @@
         </div>
         <!--end::Wrapper container-->  
     </div>
+      <script>
+          var usersamba_update_get_web = '<?php echo $url_update.'|id|'; ?>';
+          var usersamba_delete_get_web = '<?php echo $url_delete.'|id|'; ?>';
+      </script>

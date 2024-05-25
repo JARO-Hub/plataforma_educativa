@@ -10,6 +10,7 @@ var KTUsersList = function () {
 
     // Private functions
     var initUserTable = function () {
+
         // Set date data order
         const tableRows = table.querySelectorAll('tbody tr');
 
@@ -101,13 +102,13 @@ var KTUsersList = function () {
                                 <ul class="dropdown-menu menu-sub menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" aria-labelledby="dropdownMenuButton">
                                     <!-- Opción Editar -->
                                     <li class="menu-item px-3">
-                                        <a class="menu-link px-3" href="#">
+                                        <a class="menu-link px-3" href="${usersamba_update_get_web.replace("|id|", row.user_name)}" >
                                             Edit
                                         </a>
                                     </li>
                                     <!-- Opción Eliminar -->
                                     <li class="menu-item px-3">
-                                        <a class="menu-link px-3" href="#" data-kt-users-table-filter="delete_row">
+                                        <a class="menu-link px-3" href="#" name="${row.user_name}" delete-url="${usersamba_delete_get_web.replace("|id|", row.id)}" data-kt-usersamba-table-filter="delete_row">
                                             Delete
                                         </a>
                                     </li>
@@ -124,6 +125,7 @@ var KTUsersList = function () {
         // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
         datatable.on('draw', function () {
             initToggleToolbar();
+            deleteUser();
             handleDeleteRows();
             toggleToolbars();
         });
@@ -248,7 +250,72 @@ var KTUsersList = function () {
         });
     }
 
+    var deleteUser = function () {
+        table.querySelectorAll('[data-kt-usersamba-table-filter="delete_row"]').forEach((e => {
+            var element = e;
+            e.addEventListener("click", (function (e) {
+                e.preventDefault();
+                Swal.fire({
+                    text: "¿Esta seguro de eliminar el usuario " + this.name + "?",
+                    icon: "warning",
+                    showCancelButton: !0,
+                    buttonsStyling: !1,
+                    confirmButtonText: "Si, ¡eliminar!",
+                    cancelButtonText: "No, cancelar",
+                    customClass: {
+                        confirmButton: "btn fw-bold btn-danger",
+                        cancelButton: "btn fw-bold btn-active-light-primary"
+                    }
+                }).then((function (e) {
+                    if (e.value) {
+                        // Ponemos al post un input con el id del usuario a eliminar
+                        Swal.fire({
+                            text: "Ingrese la contraseña del sistema",
+                            input: 'password',
+                            inputAttributes: {
+                                autocapitalize: 'off'
+                            },
+                            showCancelButton: true,
+                            confirmButtonText: 'Eliminar',
+                            showLoaderOnConfirm: true,
+                            preConfirm: (password) => {
+                                return fetch('/usuarios/delete', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({ id: element.getAttribute('delete-url'), password: password })
+                                })
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error(response.statusText)
+                                        }
+                                        return response.json()
+                                    })
+                                    .catch(error => {
+                                        Swal.showValidationMessage(
+                                            `Request failed: ${error}`
+                                        )
+                                    })
+                            },
+                            allowOutsideClick: () => !Swal.isLoading()
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire({
+                                    title: `Usuario eliminado`,
+                                    html: `El usuario ${element.getAttribute('delete-url')} ha sido eliminado`,
+                                    confirmButtonText: 'Ok'
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            }
 
+                        });
+                    }
+                }));
+            }));
+        }));
+    }
 
     // Toggle toolbars
     const toggleToolbars = () => {
@@ -368,6 +435,7 @@ var KTUsersList = function () {
             handleResetForm();
             handleDeleteRows();
             handleFilterDatatable();
+            deleteUser();
 
         }
     }

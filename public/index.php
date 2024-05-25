@@ -87,6 +87,10 @@ $router->get('/identidad', [IdentidadController::class, 'invoke']);
 $router->get('/usuarios', [UsuarioController::class, 'invoke']);
 $router->post('/usuarios', [UsuarioController::class, 'postCreateUserSamba']);
 $router->post('/usuarios/all', [UsuarioController::class, 'searchAll']);
+$router->get('/usuarios/update/{id}', [UsuarioController::class, 'update']);
+$router->post('/usuarios/update/', [UsuarioController::class, 'update']);
+$router->post('/usuarios/delete/{id}', [UsuarioController::class, 'delete']);
+
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

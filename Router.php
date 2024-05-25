@@ -10,7 +10,7 @@ class Router
     public $getRoutes = array();
     public  $postRoutes = array();
 
-    public function get($url, $fn) {
+    public function  get($url, $fn) {
         $this->getRoutes[$url] = $fn;
     }
 
@@ -23,14 +23,14 @@ class Router
         $method = $_SERVER['REQUEST_METHOD'];
 
         if ($method === 'GET') {
-            $fn = $this->getRoutes[$currentUrl] ?? null;
+            $fn = $this->matchRoute($currentUrl, $this->getRoutes);
         } else {
-            $fn = $this->postRoutes[$currentUrl] ?? null;
+            $fn = $this->matchRoute($currentUrl, $this->postRoutes);
         }
-        
-        if ( $fn ) {
-            // Call user fn va a llamar una función cuando no sabemos cual sera
-            call_user_func($fn, $this); // This es para pasar argumentos
+
+        if ($fn) {
+            // Call the matched function and pass the parameters
+            call_user_func_array($fn['fn'], array_merge([$this], $fn['params']));
         } else {
             echo "Página No Encontrada o Ruta no válida";
         }
@@ -65,6 +65,18 @@ class Router
 
         return $response;       
 
+    }
+
+    private function matchRoute($url, $routes) {
+        foreach ($routes as $route => $fn) {
+            $routePattern = preg_replace('/\{[^\}]+\}/', '([^/]+)', $route);
+            $routePattern = str_replace('/', '\/', $routePattern);
+            if (preg_match('/^' . $routePattern . '$/', $url, $matches)) {
+                array_shift($matches); // Remove the full match
+                return ['fn' => $fn, 'params' => $matches];
+            }
+        }
+        return null;
     }
 }
 
