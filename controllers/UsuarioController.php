@@ -152,7 +152,7 @@ class UsuarioController{
             } catch (\Exception $e) {
                 $alertas['error'][] = $e->getMessage();
             }
-
+            header('Location: /usuarios');
             $router->render('usuarios/index', [
                 'servicio' => 'hola',
                 'alertas' => $alertas,
@@ -176,6 +176,7 @@ class UsuarioController{
                 ]);
             }catch (\Exception $e) {
                 $alertas['error'][] = $e->getMessage();
+                header('Location: /usuarios');
                 $router->render('usuarios/index', [
                     'servicio' => 'hola',
                     'alertas' => $alertas,
