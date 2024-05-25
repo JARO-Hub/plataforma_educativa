@@ -80,7 +80,7 @@
                                                         <!--begin::Identidad-->
                                                         
                                                                   
-                                                        <form id="kt_modal_add_permission_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
+                                                        <form method="POST" action="" id="kt_modal_add_permission_form" class="form fv-plugins-bootstrap5 fv-plugins-framework">
                                                             <h2>Nombre de grupo de trabajo o dominio</h2>    
                                                             <!--<input type="text" class="form-control" placeholder="" value="<?php echo $identidad; ?>">-->
                                                             <div class="fv-row mb-7 fv-plugins-icon-container fv-plugins-bootstrap5-row-invalid">
@@ -88,7 +88,7 @@
                                                             <input class="form-control form-control-solid" placeholder="" value="<?php echo $identidad; ?>">
                                                             <!--end::Input-->
                                                             <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"><div data-field="permission_name" data-validator="notEmpty">No se permiten espacios en blanco</div></div></div>
-                                                            <button type="submit" class="btn btn-success" data-kt-permissions-modal-action="submit">
+                                                            <button type="submit" id="BotonAplicar" class="btn btn-success">
                                                                     <span class="indicator-label">
                                                                         Aplicar
                                                                     </span>

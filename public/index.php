@@ -78,6 +78,7 @@ $router->get('/inicio', [InicioController::class, 'invoke']);
 //CRUD de Identidad
 
 $router->get('/identidad', [IdentidadController::class, 'invoke']);
+$router->post('/identidad', [IdentidadController::class, 'invoke']);
 
 //CRUD de Usuarios
 
