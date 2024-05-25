@@ -14,10 +14,6 @@ class InicioController {
 
         $alertas = [];
        
-        echo "<pre>";
-        var_dump($estadoSamba);
-        echo "</pre>";
-
         
         if($_SERVER['REQUEST_METHOD'] === 'GET') {
             $estadoSamba = InicioModelo::getStatus();

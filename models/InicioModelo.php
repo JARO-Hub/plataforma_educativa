@@ -28,16 +28,10 @@ class InicioModelo
         }
 
         // Convertir array de salida a string
-        $status = implode("\n", $output);
+        $estado = implode("\n", $output);
 
-                // Verificar el resultado del comando
-                if (stripos($status, 'active') !== false) {
-                    return 'Activo';
-                } elseif (stripos($status, 'inactive') !== false) {
-                    return 'Inactivo';
-                } else {
-                    return 'Estado desconocido'; // Opcional: manejar otros casos
-                }
+        // Retornar la salida del script directamente
+        return $estado;
     }
 }
 ?>
