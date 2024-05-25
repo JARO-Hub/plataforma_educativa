@@ -164,13 +164,24 @@ class UsuarioController{
         }else{
             try {
                 $usuario = new UserSamba('root', 'admin123', $id, '');
-                $user = array_filter($usuario->searchAllUsers(), function ($usersamba) use ($id) {
-                                    return $usersamba->getSambauser() === $id;
-                                });
+                $usuarioEncontrado = null;
+                foreach ($usuario->searchAllUsers() as $usersamba) {
+                    if ($usersamba->getSambauser() === $id) {
+                        $usuarioEncontrado = $usersamba;
+                        break;
+                    }
+                }
+
+                if ($usuarioEncontrado === null) {
+                    $alertas['error'][] = 'Usuario no encontrado';
+                    throw new \Exception('Usuario no encontrado');
+                } else {
+                    $user = $usuarioEncontrado;
+                }
                 $router->render('usuarios/form', [
                     'servicio' => 'hola',
                     'alertas' => $alertas,
-                    'user' =>  $user[0],
+                    'user' =>  $user,
                     'action_form' => '/usuarios/update/',
                     'url_update' => '/usuarios/update/',
                     'url_delete' => '/usuarios/delete/',
