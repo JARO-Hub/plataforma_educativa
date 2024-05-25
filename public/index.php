@@ -75,8 +75,8 @@ $router->post('/servicios/eliminar', [ServicioController::class, 'eliminar']);
 // CRUD de Inicio
 
 
-$router->get('/', [InicioController::class, 'invoke']);
 $router->get('/inicio', [InicioController::class, 'invoke']);
+$router->post('/inicio', [InicioController::class, 'invoke']);
 
 //CRUD de Identidad
 
