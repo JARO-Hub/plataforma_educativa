@@ -377,7 +377,7 @@
                                                                             Contraseña
                                                                         </th>
 
-                                                                        <th class="min-w-125px sorting " tabindex="0"
+                                                                        <th class="text-end min-w-100px sorting_disabled"
                                                                             rowspan="1" colspan="1"
                                                                             aria-label="Acciones"
                                                                             style="width: 132.953125px;">
