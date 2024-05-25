@@ -306,7 +306,8 @@ var KTUsersList = function () {
                                     html: `El usuario ${element.getAttribute('name')} ha sido eliminado`,
                                     confirmButtonText: 'Ok'
                                 }).then(() => {
-                                    window.location.reload();
+                                    //redireccionar a /usuarios
+                                    window.location = '/usuarios';
                                 });
                             }
 

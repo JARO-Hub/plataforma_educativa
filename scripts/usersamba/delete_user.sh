@@ -9,10 +9,16 @@ handle_error() {
     exit 1
 }
 
-# Editamos el usuario en el sistema
+# Verificar que el nombre de usuario no esté vacío
 if [ ! -z "$sambausername" ]; then
+    # Eliminar el usuario de Samba
     echo "$passw" | sudo -S smbpasswd -x "$sambausername" || handle_error "No se pudo eliminar el usuario de Samba"
-    echo "$passw" | sudo -S userdel "$sambausername"  || handle_error "No se pudo eliminar el usuario del sistema"
+
+    # Eliminar el usuario del sistema
+    echo "$passw" | sudo -S userdel "$sambausername" || handle_error "No se pudo eliminar el usuario del sistema"
+
+    # Eliminar el directorio home del usuario
+    echo "$passw" | sudo -S rm -rf /home/"$sambausername" || handle_error "No se pudo eliminar el directorio home del usuario"
 fi
 
 echo "Usuario eliminado correctamente"
