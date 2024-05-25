@@ -216,38 +216,29 @@ class UsuarioController{
 
                     $result = $usuario->deleteUser();
                     if($result){
-                        $alertas['succes'][] = 'Usuario eliminado correctamente';
+                        $alertas['success'][] = 'Usuario eliminado correctamente';
                     }else{
                         $alertas['error'][] = 'Error al eliminar el usuario';
-
                     }
                 }
             } catch (\Exception $e) {
                 $alertas['error'][] = $e->getMessage();
             }
-            http_response_code(200);
-            header('Location: /usuarios');
-            
-            $router->render('usuarios/index', [
-                'servicio' => 'hola',
-                'alertas' => $alertas,
-                'action_form' => '/usuarios',
-                'url_update' => '/usuarios/update/',
-                'url_delete' => '/usuarios/delete/',
-            ]);
-            echo json_encode(['status' => 'ok']);
-            return;
 
-        }else{
-            $alertas['error'][] = 'Ingrese la contraseña por favor';
-            $router->render('usuarios/index', [
-                'servicio' => 'hola',
-                'alertas' => $alertas,
-                'action_form' => '/usuarios',
-                'url_update' => '/usuarios/update/',
-                'url_delete' => '/usuarios/delete/',
-            ]);
+            // Establecer el código de respuesta HTTP
+            http_response_code(empty($alertas['error']) ? 200 : 400);
+
+            // Devolver la respuesta como JSON
+            header('Content-Type: application/json');
+            echo json_encode(['alertas' => $alertas]);
+            return;
+        } else {
+            $alertas['error'][] = 'Método no permitido';
+            http_response_code(405); // Método no permitido
         }
+
+        header('Content-Type: application/json');
+        echo json_encode(['alertas' => $alertas]);
     }
 
 }

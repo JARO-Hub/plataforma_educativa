@@ -12,6 +12,7 @@ handle_error() {
 # Verificar que el nombre de usuario no esté vacío
 if [ ! -z "$sambausername" ]; then
     # Eliminar el usuario de Samba
+    echo "$passw" | sudo -S smbpasswd -x "$sambausername" || handle_error "No se pudo eliminar el usuario de Samba"
     echo "$passw" | sudo -S pdbedit -x -u "$sambausername" || handle_error "No se pudo eliminar el usuario de Samba"
 
     # Eliminar el usuario del sistema

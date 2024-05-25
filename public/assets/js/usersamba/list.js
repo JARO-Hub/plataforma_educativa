@@ -251,24 +251,22 @@ var KTUsersList = function () {
     }
 
     var deleteUser = function () {
-        table.querySelectorAll('[data-kt-usersamba-table-filter="delete_row"]').forEach((e => {
-            var element = e;
-            e.addEventListener("click", (function (e) {
+        document.querySelectorAll('[data-kt-usersamba-table-filter="delete_row"]').forEach((element) => {
+            element.addEventListener("click", (e) => {
                 e.preventDefault();
                 Swal.fire({
-                    text: "¿Esta seguro de eliminar el usuario " + this.name + "?",
+                    text: "¿Esta seguro de eliminar el usuario " + element.getAttribute('name') + "?",
                     icon: "warning",
-                    showCancelButton: !0,
-                    buttonsStyling: !1,
+                    showCancelButton: true,
+                    buttonsStyling: false,
                     confirmButtonText: "Si, ¡eliminar!",
                     cancelButtonText: "No, cancelar",
                     customClass: {
                         confirmButton: "btn fw-bold btn-danger",
                         cancelButton: "btn fw-bold btn-active-light-primary"
                     }
-                }).then((function (e) {
-                    if (e.value) {
-                        // Ponemos al post un input con el id del usuario a eliminar
+                }).then((result) => {
+                    if (result.value) {
                         Swal.fire({
                             text: "Ingrese la contraseña del sistema",
                             input: 'password',
@@ -288,24 +286,15 @@ var KTUsersList = function () {
                                 })
                                     .then(response => {
                                         if (!response.ok) {
-                                            throw new Error(response.statusText)
+                                            throw new Error(response.statusText);
                                         }
-                                        return response.json()
-                                    })
-                                    .then(data => {
-                                        if (data.status === 'error') {
-                                            Swal.showValidationMessage(
-                                                `Request failed: ${data.message}`
-                                            )
-                                        }
-                                         return data
-
+                                        return response.json();
                                     })
                                     .catch(error => {
                                         Swal.showValidationMessage(
                                             `Request failed: ${error}`
-                                        )
-                                    })
+                                        );
+                                    });
                             },
                             allowOutsideClick: () => !Swal.isLoading()
                         }).then((result) => {
@@ -315,17 +304,15 @@ var KTUsersList = function () {
                                     html: `El usuario ${element.getAttribute('name')} ha sido eliminado`,
                                     confirmButtonText: 'Ok'
                                 }).then(() => {
-                                    //redireccionar a /usuarios
-                                    window.location = '/usuarios';
+                                    window.location.reload();
                                 });
                             }
-
                         });
                     }
-                }));
-            }));
-        }));
-    }
+                });
+            });
+        });
+    };
 
     // Toggle toolbars
     const toggleToolbars = () => {
