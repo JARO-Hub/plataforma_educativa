@@ -18,9 +18,8 @@ class IdentidadController{
                 'identidad' => $workgroup,
                 'alertas' => $alertas
             ]);
+            return;
         }
-
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nuevoWorkgroup = $_POST['workgroup'] ?? '';
             if (!empty($nuevoWorkgroup)) {
@@ -33,14 +32,9 @@ class IdentidadController{
             } else {
                 $alertas['error'] = "El nombre del grupo de trabajo no puede estar vacío.";
             }
-
-            $workgroup = IdentidadModelo::getWorkgroupName();
-            $router->render('identidad/index', [
-                'identidad' => $workgroup, // Pasar la variable a la vista
-                'alertas' => $alertas
-            ]);
-        }
-        return;
+            // Después de procesar el POST, redirigir a una nueva URL para evitar reenvío de formulario
+             header('Location: ' . $_SERVER['REQUEST_URI']);
+            exit;
+        } 
     } 
-
 }

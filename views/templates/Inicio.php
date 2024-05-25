@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
-</head>
-<body>
+
     <!--begin::Inicio-->
         <div id=InicioContenido class="pt-lg-9 pt-6">
                 <div class="app-container container-xxl d-flex flex-row flex-column-fluid">
                     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
                         <h1 class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2x my-0">Configuración del servicio</h1>
-                        <h5>Estado actual:Activo</h5>
+                        <h5>Estado actual:<?php echo $estadoSamba;?></h5>
                         <h5>Después de escribir la configuración:</h5>
                         <div>
                         <select class="selector_de_barra">
@@ -93,6 +86,3 @@
                 </div>
             </div>
     <!--end::Modal Inicio-->
-</body>
-</html>
-
