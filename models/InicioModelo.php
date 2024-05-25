@@ -22,9 +22,6 @@ class InicioModelo
         exec("bash $command", $output, $returnCode);
 
             // Añadir mensajes de depuración
-        error_log("Comando ejecutado: bash $command");
-        error_log("Código de retorno: $returnCode");
-        error_log("Salida: " . implode("\n", $output));
         // Verificar si se obtuvo una salida válida
         if (empty($output) || $returnCode !== 0) {
             return 'Error al obtener el estado';
@@ -37,5 +34,4 @@ class InicioModelo
         return $estadoSamba;
     }
 }
-
 ?>

@@ -13,8 +13,6 @@ status=$($command)
 echo "Estado del servicio: '$status'"
 
 if [ $? -eq 0 ]; then
-    # Imprimir la salida para depuración
-    echo "Estado del servicio: '$status'"
 
     # Verificar el estado del servicio
     if [ "$status" = "active" ]; then
