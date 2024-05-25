@@ -1,6 +1,7 @@
 <?php
 namespace Controllers;
 
+use Model\UserSamba;
 use Model\Usuario;
 use MVC\Router;
 use Model\ActiveRecord as SambaShare;
@@ -34,22 +35,31 @@ class UsuarioController{
 
             //validamos data "user_name" y "password"
             $alertas = [];
-            if (empty($_POST['user_name']) || empty($_POST['password'])) {
+            if (empty($_POST['user_name']) || empty($_POST['password']) || empty($_POST['smbpassword'])){
                 $alertas[] = 'El nombre de usuario y la contraseña no pueden estar vacíos.';
             }
-            $usuario = new Usuario('root', $_POST['password'], $_POST['sambauser'], $_POST['sambapassword']);
+            $usuario = new UserSamba('root', $_POST['password'], $_POST['user_name'], $_POST['smbpassword']);
+             try {
+                if(empty($alertas)) {
+                    $result = $usuario->createUser();
+                    if($result){
+                        $alertas['succes'][] = 'Usuario creado correctamente';
+                    }else{
+                        $alertas['error'][] = 'Error al crear el usuario';
 
-            if(empty($alertas)) {
-                $usuario->guardar();
-                header('Location: /usuarios');
-            }
+                    }
+                }
+             } catch (\Exception $e) {
+                $alertas['error'][] = $e->getMessage();
+             }
+
+            $router->render('usuarios/index', [
+                'servicio' => 'hola',
+                'alertas' => $alertas,
+                'action_form' => '/usuarios'
+            ]);
+
         }
-
-        $router->render('usuarios/crear', [
-            'nombre' => $_SESSION['nombre'],
-            'usuario' => $usuario,
-            'alertas' => $alertas
-        ]);
     }
 }
 
