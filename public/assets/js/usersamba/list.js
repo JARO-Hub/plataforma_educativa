@@ -40,9 +40,8 @@ var KTUsersList = function () {
             "columns": [
                 { "data": "id" },
                 { "data": "user_name" },
-                { "data": "password" },
+                { "data": "password" }
 
-                // Puedes definir otras columnas aquí
             ],
             "columnDefs": [
                 {
@@ -122,7 +121,6 @@ var KTUsersList = function () {
 
         // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
         datatable.on('draw', function () {
-            initToggleToolbar();
             handleDeleteRows();
             toggleToolbars();
         });
@@ -288,7 +286,7 @@ var KTUsersList = function () {
             }
 
             initUserTable();
-            
+
             handleSearchDatatable();
             handleResetForm();
             handleDeleteRows();
