@@ -15,6 +15,7 @@ use Controllers\UsuarioController;
 
 $router = new Router();
 
+
 // Iniciar Sesión
 //$router->get('/', [LoginController::class, 'login']);
 //$router->post('/', [LoginController::class, 'login']);
@@ -73,6 +74,8 @@ $router->post('/servicios/actualizar', [ServicioController::class, 'actualizar']
 $router->post('/servicios/eliminar', [ServicioController::class, 'eliminar']);
 // CRUD de Inicio
 
+
+$router->get('/', [InicioController::class, 'invoke']);
 $router->get('/inicio', [InicioController::class, 'invoke']);
 
 //CRUD de Identidad
@@ -82,6 +85,7 @@ $router->get('/identidad', [IdentidadController::class, 'invoke']);
 //CRUD de Usuarios
 
 $router->get('/usuarios', [UsuarioController::class, 'invoke']);
+$router->post('/usuarios', [UsuarioController::class, 'postCreateUserSamba']);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();
