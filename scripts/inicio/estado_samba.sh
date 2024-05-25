@@ -6,6 +6,5 @@ handle_error() {
 }
 
 echo systemctl is-active smbd || handle_error "No se pudo obtener el estado"
-echo "true"
 exit 0
 
