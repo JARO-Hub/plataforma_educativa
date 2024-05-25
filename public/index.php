@@ -86,6 +86,7 @@ $router->get('/identidad', [IdentidadController::class, 'invoke']);
 
 $router->get('/usuarios', [UsuarioController::class, 'invoke']);
 $router->post('/usuarios', [UsuarioController::class, 'postCreateUserSamba']);
+$router->post('/usuarios/all', [UsuarioController::class, 'searchAll']);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

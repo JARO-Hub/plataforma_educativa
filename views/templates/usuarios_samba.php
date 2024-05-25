@@ -347,7 +347,7 @@
                                                     <div id="kt_table_users_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                                                         <div class="table-responsive">
                                                             <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer"
-                                                                id="kt_table_users">
+                                                                id="kt_table_usersamba">
                                                                 <thead>
                                                                     <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                                                         <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1"
@@ -356,23 +356,23 @@
                                                                                 class="form-check form-check-sm form-check-custom form-check-solid me-3">
                                                                                 <input class="form-check-input" type="checkbox"
                                                                                     data-kt-check="true"
-                                                                                    data-kt-check-target="#kt_table_users .form-check-input"
+                                                                                    data-kt-check-target="#kt_table_usersamba .form-check-input"
                                                                                     value="1">
                                                                             </div>
                                                                         </th>
-                                                                        <th class="min-w-125px sorting" tabindex="0"
-                                                                            aria-controls="kt_table_users" rowspan="1" colspan="1"
+                                                                        <th class="min-w-125px sorting text-center" tabindex="0"
+                                                                            aria-controls="kt_table_usersamba" rowspan="1" colspan="1"
                                                                             aria-label="User: activate to sort column ascending"
                                                                             style="width: 276.90625px;">
                                                                             Nombre
                                                                         </th>
                                                                         
                                                                        
-                                                                        <th class="min-w-125px sorting" tabindex="0"
-                                                                            aria-controls="kt_table_users" rowspan="1" colspan="1"
+                                                                        <th class="min-w-125px sorting text-center" tabindex="0"
+                                                                            aria-controls="kt_table_usersamba" rowspan="1" colspan="1"
                                                                             aria-label="Joined Date: activate to sort column ascending"
                                                                             style="width: 210.953125px;">
-                                                                            Estado
+                                                                            Contraseña
                                                                         </th>
                                                                         
                                                                     </tr>
