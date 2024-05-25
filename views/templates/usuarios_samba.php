@@ -234,7 +234,7 @@
                                                             <!--end::Export-->
                                                             <!--begin::Add user-->
                                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                                data-bs-target="#AñadirUsuarioSamba">
+                                                                data-bs-target="#kt_modal_add_user">
                                                                 <i class="ki-duotone ki-plus fs-2"></i>Añadir usuario Samba</button>
                                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                                                 data-bs-target="#EliminarUsuarioSamba">
@@ -402,18 +402,18 @@
                             </div>    
                         <!--end::Content wrapper-->
                         <!--begin::Modal 1-->
-                            <div class="modal fade" tabindex="-1" id="AñadirUsuarioSamba">
+                            <div class="modal fade" tabindex="-1" id="kt_modal_add_user" aria-modal="true" role="dialog">
                                 <div class="modal-dialog modal-dialog-centered mw-650px">
                                                                 <!--begin::Modal content-->
                                                                 <div class="modal-content">
                                                                     <!--begin::Modal header-->
-                                                                    <div class="modal-header" id="kt_modal_add_user_header">
+                                                                    <div class="modal-header" >
                                                                         <!--begin::Modal title-->
                                                                         <h2 class="fw-bold">Nuevo usuario Samba</h2>
                                                                         <!--end::Modal title-->
                                                                         <!--begin::Close-->
                                                                         <div class="btn btn-icon btn-sm btn-active-icon-primary"
-                                                                            data-kt-users-modal-action="close">
+                                                                             data-bs-dismiss="modal">
                                                                             <i class="ki-duotone ki-cross fs-1">
                                                                                 <span class="path1"></span>
                                                                                 <span class="path2"></span>
@@ -426,7 +426,7 @@
                                                                     <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                                                         <!--begin::Form-->
                                                                         <form id="kt_modal_add_user_form"
-                                                                            class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
+                                                                            class="form fv-plugins-bootstrap5 fv-plugins-framework" action="<?php $action_form ?>">
                                                                             <!--begin::Scroll-->
                                                                             <div class="d-flex flex-column scroll-y me-n7 pe-7"
                                                                                 id="kt_modal_add_user_scroll" data-kt-scroll="true"
@@ -449,7 +449,21 @@
                                                                                         class="form-control form-control-solid mb-3 mb-lg-0"
                                                                                         placeholder="Nombre">
                                                                                     <!--end::Input-->
+                                                                                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
                                                                                     
+                                                                                </div>
+                                                                                <!--end::Input group-->
+                                                                                <!--begin::Input group-->
+                                                                                <div class="fv-row mb-7 fv-plugins-icon-container">
+                                                                                    <!--begin::Label-->
+                                                                                    <label class="required fw-semibold fs-6 mb-2">Contraseña</label>
+                                                                                    <!--end::Label-->
+                                                                                    <!--begin::Input-->
+                                                                                    <input type="password" name="password"
+                                                                                           class="form-control form-control-solid mb-3 mb-lg-0"
+                                                                                           placeholder="Nombre">
+                                                                                    <!--end::Input-->
+                                                                                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
                                                                                 </div>
                                                                                 <!--end::Input group-->
                                                                                
@@ -457,8 +471,7 @@
                                                                             <!--end::Scroll-->
                                                                             <!--begin::Actions-->
                                                                             <div class="text-center pt-15">
-                                                                                <button type="reset" class="btn btn-light me-3"
-                                                                                data-bs-dismiss="modal">Cancelar</button>
+                                                                                <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Cancelar</button>
                                                                                 <button type="submit" class="btn btn-success"
                                                                                     data-kt-users-modal-action="submit">
                                                                                     <span class="indicator-label">Guardar</span>
@@ -477,66 +490,7 @@
                                 </div>
                             </div>
                         <!--end::Modal 1-->
-                        <!--begin::Modal 2-->
-                        <div class="modal fade" id="EliminarUsuarioSamba" tabindex="-1" aria-hidden="true">
-                                                            <!--begin::Modal dialog-->
-                                                            <div class="modal-dialog modal-dialog-centered mw-650px">
-                                                                <!--begin::Modal content-->
-                                                                <div class="modal-content">
-                                                                    <!--begin::Modal header-->
-                                                                    <div class="modal-header" id="kt_modal_add_user_header">
-                                                                        <!--begin::Modal title-->
-                                                                        <h2 class="fw-bold">¿Seguro que quiere eliminar al usuario?</h2>
-                                                                        <!--end::Modal title-->
-                                                                        <!--begin::Close-->
-                                                                        <div class="btn btn-icon btn-sm btn-active-icon-primary"
-                                                                            data-kt-users-modal-action="close">
-                                                                            <i class="ki-duotone ki-cross fs-1">
-                                                                                <span class="path1"></span>
-                                                                                <span class="path2"></span>
-                                                                            </i>
-                                                                        </div>
-                                                                        <!--end::Close-->
-                                                                    </div>
-                                                                    <!--end::Modal header-->
-                                                                    <!--begin::Modal body-->
-                                                                    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                                                                        <!--begin::Form-->
-                                                                        <form id="kt_modal_add_user_form"
-                                                                            class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
-                                                                            <!--begin::Scroll-->
-                                                                            <div class="d-flex flex-column scroll-y me-n7 pe-7"
-                                                                                id="kt_modal_add_user_scroll" data-kt-scroll="true"
-                                                                                data-kt-scroll-activate="{default: false, lg: true}"
-                                                                                data-kt-scroll-max-height="auto"
-                                                                                data-kt-scroll-dependencies="#kt_modal_add_user_header"
-                                                                                data-kt-scroll-wrappers="#kt_modal_add_user_scroll"
-                                                                                data-kt-scroll-offset="300px" style="max-height: 449px;">
-                                                                            </div>
-                                                                            <!--end::Scroll-->
-                                                                            <!--begin::Actions-->
-                                                                            <div class="text-center pt-15">
-                                                                                <button type="reset" class="btn btn-light me-3"
-                                                                                data-bs-dismiss="modal">Cancelar</button>
-                                                                                <button type="submit" class="btn btn-primary"
-                                                                                    data-kt-users-modal-action="submit">
-                                                                                    <span class="indicator-label">Guardar</span>
-                                                                                    <span class="indicator-progress">Por favor espere...
-                                                                                        <span
-                                                                                            class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <!--end::Actions-->
-                                                                        </form>
-                                                                        <!--end::Form-->
-                                                                    </div>
-                                                                    <!--end::Modal body-->
-                                                                </div>
-                                                                <!--end::Modal content-->
-                                                            </div>
-                                                            <!--end::Modal dialog-->
-                                                        </div>
-                        <!--end::Modal 2-->
+
                         <!--begin::Footer-->
                                 <div id="kt_app_footer"
                                     class="app-footer align-items-center justify-content-center justify-content-md-between flex-column flex-md-row py-3 py-lg-6">

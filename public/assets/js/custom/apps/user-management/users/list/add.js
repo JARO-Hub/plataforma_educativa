@@ -29,6 +29,24 @@ var KTUsersAddUser = function () {
                             }
                         }
                     },
+                    'password': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Contraseña es requerida'
+                            },
+                            stringLength: {
+                                min: 5,
+                                message: 'La contraseña debe tener al menos 5 caracteres'
+                            },
+                            regexp: {
+                                //Ejemplo de contraseña "Admine2.)s23"
+                                regexp: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{5,}$/,
+                                message: 'La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número'
+                            }
+
+                        }
+                    },
+
                 },
 
                 plugins: {
@@ -58,9 +76,13 @@ var KTUsersAddUser = function () {
 
                         // Disable button to avoid multiple click 
                         submitButton.disabled = true;
+                        //obtengo el action del formulario
+                        e.setAttribute('action', form.getAttribute('action'));
+                        // Simulate form submission
+                        form.submit();
 
                         // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                        setTimeout(function () {
+
                             // Remove loading indication
                             submitButton.removeAttribute('data-kt-indicator');
 
@@ -69,25 +91,34 @@ var KTUsersAddUser = function () {
 
                             // Show popup confirmation 
                             Swal.fire({
-                                text: "Form has been successfully submitted!",
-                                icon: "success",
-                                buttonsStyling: false,
-                                confirmButtonText: "Ok, got it!",
+                                text: "Ingrese la contraseña del sistema para ejecutar dicha accion!",
+                                icon: "warning",
+                                html: ` <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña del sistema" required>`,
+                                confirmButtonText: "ok",
                                 customClass: {
                                     confirmButton: "btn btn-primary"
                                 }
                             }).then(function (result) {
                                 if (result.isConfirmed) {
-                                    modal.hide();
+                                    // agregamos el input al formulario
+                                    var input = document.createElement("input");
+                                    input.setAttribute("type", "hidden");
+                                    input.setAttribute("name", "password");
+                                    input.setAttribute("value", document.getElementById('password').value);
+                                    form.appendChild(input);
+                                    // Submit form
+                                    form.submit();
                                 }
                             });
 
-                            //form.submit(); // Submit form
-                        }, 2000);
+
+                        
+
+
                     } else {
                         // Show popup warning. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({
-                            text: "Sorry, looks like there are some errors detected, please try again.",
+                            text: "Lo siento, parece que hay algunos errores en el formulario. Por favor, inténtelo de nuevo.",
                             icon: "error",
                             buttonsStyling: false,
                             confirmButtonText: "Ok, got it!",
