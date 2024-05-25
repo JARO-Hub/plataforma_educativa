@@ -1,10 +1,24 @@
-<?php
-// Ruta al script estado_samba.sh
-$getStatusCommand = __DIR__ . '/scripts/inicio/estado_samba.sh';
+¡<?php
 
-// Ejecutar el comando
-exec($getStatusCommand, $output, $returnCode);
+// Comando para obtener el estado del servicio Samba
+$command = 'systemctl is-active smbd';
 
-// Imprimir salida y código de retorno para depuración
-var_dump($output);
-echo "Return code: $returnCode\n";
+// Ejecutar el comando y capturar la salida
+exec($command, $output, $returnCode);
+
+// Verificar si se ejecutó correctamente el comando
+if ($returnCode === 0 && !empty($output)) {
+    $status = implode("\n", $output); // Convertir el array de salida a string
+    if (stripos($status, 'active') !== false) {
+        echo 'Estado del servicio Samba: Activo';
+    } elseif (stripos($status, 'inactive') !== false) {
+        echo 'Estado del servicio Samba: Inactivo';
+    } else {
+        echo 'Estado del servicio Samba: Desconocido'; // En caso de estado no reconocido
+    }
+} else {
+    echo 'Error al obtener el estado del servicio Samba'; // En caso de error al ejecutar el comando
+}
+
+?>
+
