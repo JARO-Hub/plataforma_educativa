@@ -80,12 +80,7 @@ var KTUsersList = function () {
                         return `<strong>${row.password}</strong>`;
                     }
                 },
-                {
-                    "targets": [3],
-                    "render": function(data, type, row) {
-                        return `<span class="badge badge-light"></span>`;
-                    },
-                },
+
                 {
                     "targets": -1,
                     "orderable": false,
