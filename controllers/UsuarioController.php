@@ -226,8 +226,8 @@ class UsuarioController{
                 $alertas['error'][] = $e->getMessage();
             }
             http_response_code(200);
-            header('Content-Type: application/json');
-
+            header('Location: /usuarios');
+            
             $router->render('usuarios/index', [
                 'servicio' => 'hola',
                 'alertas' => $alertas,
@@ -235,7 +235,8 @@ class UsuarioController{
                 'url_update' => '/usuarios/update/',
                 'url_delete' => '/usuarios/delete/',
             ]);
-            echo json_encode(['alertas' => $alertas]);
+            echo json_encode(['status' => 'ok']);
+            return;
 
         }else{
             $alertas['error'][] = 'Ingrese la contraseña por favor';

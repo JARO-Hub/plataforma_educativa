@@ -292,6 +292,15 @@ var KTUsersList = function () {
                                         }
                                         return response.json()
                                     })
+                                    .then(data => {
+                                        if (data.status === 'error') {
+                                            Swal.showValidationMessage(
+                                                `Request failed: ${data.message}`
+                                            )
+                                        }
+                                         return data
+
+                                    })
                                     .catch(error => {
                                         Swal.showValidationMessage(
                                             `Request failed: ${error}`
