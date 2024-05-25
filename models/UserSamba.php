@@ -177,7 +177,7 @@ class UserSamba extends Servicio
                 throw new \Exception('El nombre de usuario no puede estar vacío.');
             }
 
-            $params = [$this->sambauser];
+            $params = [$this->getPassword(), $this->getSambauser() ];
             $command = $this->buildCommand(self::$deleteUserCommand, $params);
 
             exec($command, $output, $exitCode);
