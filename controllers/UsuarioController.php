@@ -75,12 +75,9 @@ class UsuarioController{
                 $search = $_POST['search']['value'] ?? ''; // DataTables envía 'search' como parte de un array
                 $draw = $_POST['draw'] ?? 1;
 
-                $shares = UserSamba::searchAllUsers();
+                $shares = new UserSamba('root', 'admin123', '', '');
+                $shares = $shares->searchAllUsers();
 
-                echo "<pre>";
-                var_dump($shares);
-                echo "</pre>";
-                exit;
                 if (!empty($search)) {
                     $filteredShares = array_filter($shares, function ($share) use ($search) {
                         return stripos($share->getSambauser(), $search) !== false;
