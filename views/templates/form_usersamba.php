@@ -2,7 +2,7 @@
 <!--begin::Form-->
 <div class="app-content pb-0">
 <form id="kt_modal_add_user_form" method="POST" enctype="multipart/form-data"
-      class="form fv-plugins-bootstrap5 fv-plugins-framework" action="<?php $action_form ?>">
+      class="form fv-plugins-bootstrap5 fv-plugins-framework" action="<?php echo $action_form ?>">
     <!--begin::Scroll-->
     <div class="d-flex flex-column scroll-y me-n7 pe-7"
          id="kt_modal_add_user_scroll" data-kt-scroll="true"
