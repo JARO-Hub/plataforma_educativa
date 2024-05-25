@@ -1,7 +1,7 @@
 <?php
 namespace Model;
 
-class InicioModelo{
+class InicioModelo extends Servicio{
     private static $getStatusCommand = __DIR__ . '/../scripts/inicio/estado_samba.sh';
     private static $configPath = '/etc/samba/smb.conf';
         /**
@@ -12,7 +12,7 @@ class InicioModelo{
     public static function getStatus(){
     //Verificar el estado del servicio Samba
              // Ejecutar el comando para verificar el estado del servicio
-             $command = $getStatusCommand;
+             $command = $this->buildCommand(self::$getStatusCommand,[]);
              exec($command,[],$ouput);
              // Verificar si se obtuvo una salida válida
     if ($output === null || $output === "") {
