@@ -5,6 +5,8 @@ namespace Model;
 class InicioModelo
 {
     private static $getStatusCommand = __DIR__ . '/../scripts/inicio/estado_samba.sh';
+    private static $getRestartCommand = __DIR__ . '/../scripts/inicio/reiniciar_samba.sh';
+    private static $getStopCommand = __DIR__ . '/../scripts/inicio/parar_samba.sh';
     private static $configPath = '/etc/samba/smb.conf';
 
     /**
@@ -32,6 +34,15 @@ class InicioModelo
 
         // Retornar la salida del script directamente
         return $estado;
+    }
+
+    public static function StopService(){
+        $command = self::$getStopCommand;
+        exec("bash $command");
+    }
+    public static function RestartService(){
+        $command = self::$getRestartCommand;
+        exec("bash $command");
     }
 }
 ?>

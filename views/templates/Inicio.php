@@ -4,7 +4,7 @@
                 <div class="app-container container-xxl d-flex flex-row flex-column-fluid">
                     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
                         <h1 class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2x my-0">Configuración del servicio</h1>
-                        <h5>Estado actual:<?php echo $estadoSamba;?></h5>
+                        <h5><?php echo $estadoSamba;?></h5>
                         <h5>Después de escribir la configuración:</h5>
                         <div>
                         <select class="selector_de_barra">
@@ -21,11 +21,13 @@
                             <option value="opcion No iniciar el servicio">No iniciar el servicio</option>
                             </select>
                         </div>
+                        <form action="/inicio" method="post">
                         <div>
                             <button type="button" class="Botones_accion btn btn-success" id="Boton_ayuda" data-bs-toggle="modal" data-bs-target="#kt_modal_1">Ayuda</button>
                             <button type="button" class="Botones_accion btn btn-danger" id=Boton_cancelar>Cancelar</button> 
-                            <button type="button" class="Botones_accion btn btn-primary" id=Boton_aceptar>Aceptar</button>  
+                            <button type="submit" class="Botones_accion btn btn-primary" id=Boton_aceptar>Aceptar</button>  
                         </div>  
+                        </form>
                         <!--begin::Footer-->
                         <div id="kt_app_footer"
                                     class="app-footer align-items-center justify-content-center justify-content-md-between flex-column flex-md-row py-3 py-lg-6">

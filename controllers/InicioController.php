@@ -22,6 +22,10 @@ class InicioController {
                 'alertas' => $alertas
             ]);
         }
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            
+        }
     }
 
     
