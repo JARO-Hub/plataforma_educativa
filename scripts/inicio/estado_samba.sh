@@ -5,6 +5,7 @@ handle_error() {
     exit 1
 }
 
-echo systemctl is-active smbd || handle_error "No se pudo obtener el estado"
+status=$(systemctl is-active smbd) || handle_error "No se pudo obtener el estado"
+echo "$status"
 exit 0
 
