@@ -26,12 +26,12 @@ class IdentidadController{
             if (!empty($nuevoWorkgroup)) {
                 $resultado=IdentidadModelo::setWorkgroupName($nuevoWorkgroup); // Establecer el nuevo nombre del grupo de trabajo
                 if ($resultado) {
-                    $alertas[] = "El nombre del grupo de trabajo se ha actualizado correctamente.";
+                    $alertas['exito'] = "El nombre del grupo de trabajo se ha actualizado correctamente.";
                 } else {
-                    $alertas[] = "Hubo un error al actualizar el nombre del grupo de trabajo.";
+                    $alertas['error'] = "Hubo un error al actualizar el nombre del grupo de trabajo.";
                 }
             } else {
-                $alertas[] = "El nombre del grupo de trabajo no puede estar vacío.";
+                $alertas['error'] = "El nombre del grupo de trabajo no puede estar vacío.";
             }
 
             $workgroup = IdentidadModelo::getWorkgroupName();

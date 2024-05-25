@@ -39,7 +39,7 @@ class IdentidadModelo {
         return null;
     }
 
-    
+
     /**
      * Establece el nuevo nombre del grupo de trabajo en el archivo de configuración de Samba.
      *
@@ -80,6 +80,9 @@ class IdentidadModelo {
             error_log("No se pudo escribir el archivo smb.conf.");
             return false;
         }
+
+        // Reiniciar el servicio de Samba para aplicar los cambios
+        shell_exec('sudo systemctl restart smbd');
 
         return true;
     }

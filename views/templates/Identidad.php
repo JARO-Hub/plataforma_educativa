@@ -85,7 +85,7 @@
                                                             <!--<input type="text" class="form-control" placeholder="" value="<?php echo $identidad; ?>">-->
                                                             <div class="fv-row mb-7 fv-plugins-icon-container fv-plugins-bootstrap5-row-invalid">
                                                             <!--begin::Input-->
-                                                            <input class="form-control form-control-solid" placeholder="" value="<?php echo $identidad; ?>">
+                                                            <input class="form-control form-control-solid" name="workgroup" placeholder="" value="<?php echo $identidad; ?>">
                                                             <!--end::Input-->
                                                             <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"><div data-field="permission_name" data-validator="notEmpty">No se permiten espacios en blanco</div></div></div>
                                                             <button type="submit" id="BotonAplicar" class="btn btn-success">
