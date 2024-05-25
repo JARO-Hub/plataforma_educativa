@@ -22,7 +22,7 @@
             <!--begin::Input-->
             <input type="text" name="user_name"
                    class="form-control form-control-solid mb-3 mb-lg-0"
-                   placeholder="Nombre" value="<?php echo $user->getSambauser() ?? '' ?>">
+                   placeholder="Nombre" value="<?php $user->getSambauser() ?? '' ?>">
             <!--end::Input-->
             <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
 
