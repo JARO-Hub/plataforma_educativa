@@ -12,7 +12,7 @@
          data-kt-scroll-wrappers="#kt_modal_add_user_scroll"
          data-kt-scroll-offset="300px" style="max-height: 449px;">
         <!--begin::Input group-->
-
+        <input type="hidden"  name="user_old" value="<?php echo $user->getSambauser() ?? '' ?>">
         <!--end::Input group-->
         <!--begin::Input group-->
         <div class="fv-row mb-7 fv-plugins-icon-container">

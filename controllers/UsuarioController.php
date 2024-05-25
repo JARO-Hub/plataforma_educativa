@@ -133,12 +133,62 @@ class UsuarioController{
         ini_set('max_execution_time', 300); // 5 minutos
         ini_set('memory_limit', '512M');
 
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+
+            try {
+                $usuario = new UserSamba('root', 'admin123', $id, '');
+                $usuarioEncontrado = null;
+                foreach ($usuario->searchAllUsers() as $usersamba) {
+                    if ($usersamba->getSambauser() === $id) {
+                        $usuarioEncontrado = $usersamba;
+                        break;
+                    }
+                }
+
+                if ($usuarioEncontrado === null) {
+                    $alertas['error'][] = 'Usuario no encontrado';
+                    throw new \Exception('Usuario no encontrado');
+                } else {
+                    $user = $usuarioEncontrado;
+                }
+                $router->render('usuarios/form', [
+                    'servicio' => 'hola',
+                    'alertas' => $alertas,
+                    'user' => $user,
+                    'action_form' => '/usuarios/update/post',
+                    'url_update' => '/usuarios/update/',
+                    'url_delete' => '/usuarios/delete/',
+                ]);
+            } catch (\Exception $e) {
+                $alertas['error'][] = $e->getMessage();
+                header('Location: /usuarios');
+                $router->render('usuarios/index', [
+                    'servicio' => 'hola',
+                    'alertas' => $alertas,
+                    'action_form' => '/usuarios',
+                    'url_update' => '/usuarios/update/',
+                    'url_delete' => '/usuarios/delete/',
+                ]);
+            }
+        }
+
+
+    }
+    public static function updatepost(Router $router)
+    {
+        $alertas = [];
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+        ini_set('max_execution_time', 300); // 5 minutos
+        ini_set('memory_limit', '512M');
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            if (empty($_POST['user_name']) || empty($_POST['password']) || empty($_POST['smbpassword'])){
+            if (empty($_POST['user_name']) || empty($_POST['password']) || empty($_POST['smbpassword']) || empty($_POST['user_old'])) {
                 $alertas[] = 'El nombre de usuario y la contraseña no pueden estar vacíos.';
             }
-            $usuario = new UserSamba($id, $_POST['password'], $_POST['user_name'], $_POST['smbpassword']);
+            $usuario = new UserSamba($_POST['user_old'], $_POST['password'], $_POST['user_name'], $_POST['smbpassword']);
             try {
                 if(empty($alertas)) {
                     $result = $usuario->updateUser();
@@ -161,45 +211,18 @@ class UsuarioController{
                 'url_delete' => '/usuarios/delete/',
             ]);
 
-        }else{
-            try {
-                $usuario = new UserSamba('root', 'admin123', $id, '');
-                $usuarioEncontrado = null;
-                foreach ($usuario->searchAllUsers() as $usersamba) {
-                    if ($usersamba->getSambauser() === $id) {
-                        $usuarioEncontrado = $usersamba;
-                        break;
-                    }
-                }
-
-                if ($usuarioEncontrado === null) {
-                    $alertas['error'][] = 'Usuario no encontrado';
-                    throw new \Exception('Usuario no encontrado');
-                } else {
-                    $user = $usuarioEncontrado;
-                }
-                $router->render('usuarios/form', [
-                    'servicio' => 'hola',
-                    'alertas' => $alertas,
-                    'user' =>  $user,
-                    'action_form' => '/usuarios/update/',
-                    'url_update' => '/usuarios/update/',
-                    'url_delete' => '/usuarios/delete/',
-                ]);
-            }catch (\Exception $e) {
-                $alertas['error'][] = $e->getMessage();
-                header('Location: /usuarios');
-                $router->render('usuarios/index', [
-                    'servicio' => 'hola',
-                    'alertas' => $alertas,
-                    'action_form' => '/usuarios',
-                    'url_update' => '/usuarios/update/',
-                    'url_delete' => '/usuarios/delete/',
-                ]);
-            }
-
+            return;
         }
+        header('Location: /usuarios');
+        $router->render('usuarios/index', [
+            'servicio' => 'hola',
+            'alertas' => $alertas,
+            'action_form' => '/usuarios',
+            'url_update' => '/usuarios/update/',
+            'url_delete' => '/usuarios/delete/',
+        ]);
     }
+
 
     public static function delete(Router $router, $id)
     {
