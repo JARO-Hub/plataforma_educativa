@@ -1,22 +1,25 @@
 <?php
+
+declare(strict_types=1);
 namespace Model;
-class ActiveRecord {
+use Model\Servicio;
+
+
+class ActiveRecord extends Servicio {
 
     public  $name;
     public  $path;
     public  $guestOk;
     public  $comment;
     public  $writable;
-    public $browseable;
-    public $createMask;
-    public $directoryMask;
     public $readOnly;
 
 
     private static $configPath = '/etc/samba/smb.conf';
 
-    public function __construct($name, $path, $guestOk, $comment, $writable)
+    public function __construct(string $username, string $password,$name, $path, $guestOk, $comment, $writable)
     {
+        parent::__construct($username, $password);
         $this->name = $name;
         $this->path = $path;
         $this->guestOk = $guestOk;
@@ -90,34 +93,106 @@ class ActiveRecord {
      * @param bool $readOnly Indica si el recurso compartido es de solo lectura.
      * @return bool Devuelve true si se creó el recurso compartido correctamente, false en caso contrario.
      */
-    public static function createSharedDirectory($shareName, $shareComment, $sharePath, $writable, $browseable, $guestOk, $createMask, $directoryMask, $readOnly, $password) {
-        // Llama al script shell con los parámetros adecuados, incluyendo la contraseña
-        $result = shell_exec(__DIR__ . '/../scripts/create_share.sh '
-            . escapeshellarg($shareName) . ' '
-            . escapeshellarg($shareComment) . ' '
-            . escapeshellarg($sharePath) . ' '
-            . escapeshellarg($writable) . ' '
-            . escapeshellarg($browseable) . ' '
-            . escapeshellarg($guestOk) . ' '
-            . escapeshellarg($createMask) . ' '
-            . escapeshellarg($directoryMask) . ' '
-            . escapeshellarg($readOnly ? 'true' : 'false') . ' '
-            . escapeshellarg($password));
 
-        // Verificar si la función se ejecutó correctamente
-        if (trim($result) === "true") {
-            return true;
-        } else {
-            return false;
+    public  function createSharedDirectory($shareName, $shareComment, $sharePath, $writable, $browseable, $guestOk, $createMask, $directoryMask, $readOnly) {
+        try {
+            // Validar la existencia y ejecutabilidad del script para crear el recurso compartido
+            if (!file_exists(__DIR__ . '/../scripts/create_share.sh') || !is_executable(__DIR__ . '/../scripts/create_share.sh')) {
+                throw new \Exception('El script para crear el recurso compartido no existe o no es ejecutable.');
+            }
+
+            // Validar que el nombre de usuario y la contraseña no estén vacíos
+            if (empty($shareName) || empty($shareComment) || empty($sharePath) || empty($this->password)) {
+                throw new \Exception('Todos los campos son obligatorios.');
+            }
+
+            // Llama al script shell con los parámetros adecuados, incluyendo la contraseña
+            $result = shell_exec(__DIR__ . '/../scripts/create_share.sh '
+                . escapeshellarg($shareName) . ' '
+                . escapeshellarg($shareComment) . ' '
+                . escapeshellarg($sharePath) . ' '
+                . escapeshellarg($writable) . ' '
+                . escapeshellarg($browseable) . ' '
+                . escapeshellarg($guestOk) . ' '
+                . escapeshellarg($createMask) . ' '
+                . escapeshellarg($directoryMask) . ' '
+                . escapeshellarg($readOnly ? 'yes' : 'No') . ' '
+                . escapeshellarg($this->password));
+
+            // Verificar si la función se ejecutó correctamente
+            if (trim($result) === "true") {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            // Capturar y relanzar cualquier excepción como una nueva excepción
+            throw new \Exception('No se pudo crear el recurso compartido: ' . $e->getMessage());
+        }
+    }
+
+    public  function modifySharedDirectory($shareName, $shareComment, $sharePath, $writable, $browseable, $guestOk, $createMask, $directoryMask, $readOnly) {
+        try {
+            // Validar la existencia y ejecutabilidad del script para modificar el recurso compartido
+            if (!file_exists(__DIR__ . '/../scripts/modify_share.sh') || !is_executable(__DIR__ . '/../scripts/modify_share.sh')) {
+                throw new \Exception('El script para modificar el recurso compartido no existe o no es ejecutable.');
+            }
+
+            // Validar que el nombre de usuario y la contraseña no estén vacíos
+            if (empty($shareName) || empty($shareComment) || empty($sharePath) || empty($this->password)) {
+                throw new \Exception('Todos los campos son obligatorios.');
+            }
+
+            // Llama al script shell con los parámetros adecuados, incluyendo la contraseña
+            $result = shell_exec(__DIR__ . '/../scripts/modify_share.sh '
+                . escapeshellarg($shareName) . ' '
+                . escapeshellarg($shareComment) . ' '
+                . escapeshellarg($sharePath) . ' '
+                . escapeshellarg($writable) . ' '
+                . escapeshellarg($browseable) . ' '
+                . escapeshellarg($guestOk) . ' '
+                . escapeshellarg($createMask) . ' '
+                . escapeshellarg($directoryMask) . ' '
+                . escapeshellarg($readOnly ? 'yes' : 'No') . ' '
+                . escapeshellarg($this->password));
+
+            // Verificar si la función se ejecutó correctamente
+            if (trim($result) === "true") {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            // Capturar y relanzar cualquier excepción como una nueva excepción
+            throw new \Exception('No se pudo modificar el recurso compartido: ' . $e->getMessage());
         }
     }
 
 
+    public  function deleteSharedDirectory($shareName) {
+        try {
+            // Validar la existencia y ejecutabilidad del script para eliminar el recurso compartido
+            if (!file_exists(__DIR__ . '/../scripts/delete_share.sh') || !is_executable(__DIR__ . '/../scripts/delete_share.sh')) {
+                throw new \Exception('El script para eliminar el recurso compartido no existe o no es ejecutable.');
+            }
 
+            // Validar que el nombre de usuario y la contraseña no estén vacíos
+            if (empty($shareName) || empty($this->password)) {
+                throw new \Exception('El nombre de usuario y la contraseña son obligatorios.');
+            }
 
+            // Llama al script shell con los parámetros adecuados, incluyendo la contraseña
+            $result = shell_exec(__DIR__ . '/../scripts/delete_share.sh '
+                . escapeshellarg($shareName) . ' '
+                . escapeshellarg($this->password));
 
-
-
+            // Verificar si la función se ejecutó correctamente
+            return trim($result) === "true";
+        } catch (\Exception $e) {
+            // Capturar y relanzar cualquier excepción como una nueva excepción
+            throw new \Exception('No se pudo eliminar el recurso compartido: ' . $e->getMessage());
+        }
+    }
 
 
 

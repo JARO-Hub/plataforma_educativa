@@ -29,7 +29,7 @@ else
 fi
 
 # Agregar la configuración al archivo smb.conf usando la contraseña proporcionada
-# Usar printf para manejar correctamente las nuevas líneas
+
 echo "$password" | sudo -S bash -c "printf '$config' >> /etc/samba/smb.conf"
 
 # Verificar si la escritura en el archivo fue exitosa
