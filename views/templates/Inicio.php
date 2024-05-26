@@ -9,12 +9,11 @@
                         <div>
                         <form action="/inicio" method="post">
                         <select name="accion" class="selector_de_barra">
-                            <option value="opcion Parar">Parar</option>
-                            <option value="opcion Reiniciar">Reiniciar</option>
-                            <option value="opcion Recargar">Recargar</option>
-                            <option value="opcion Mantener estado actual">Mantener estado actual</option>
+                            <option value="parar">Parar</option>
+                            <option value="reiniciar">Reiniciar</option>
+                            <option value="recargar">Recargar</option>
+                            <option value="mantener">Mantener estado actual</option>
                         </select>
-                        </form>
                         </div>
                         <h5>Después de reiniciar</h5>
                         <div>
@@ -23,7 +22,6 @@
                             <option value="opcion No iniciar el servicio">No iniciar el servicio</option>
                             </select>
                         </div>
-                        <form action="/inicio" method="post">
                         <div>
                             <button type="button" class="Botones_accion btn btn-success" id="Boton_ayuda" data-bs-toggle="modal" data-bs-target="#kt_modal_1">Ayuda</button>
                             <button type="button" class="Botones_accion btn btn-danger" id=Boton_cancelar>Cancelar</button> 

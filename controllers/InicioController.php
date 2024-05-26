@@ -1,9 +1,10 @@
 <?php
-
 namespace Controllers;
-use Model\IdentidadModelo;
 use Model\InicioModelo;
 use MVC\Router;
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 
 class InicioController {
@@ -21,6 +22,7 @@ class InicioController {
                 'estadoSamba' => $estadoSamba,
                 'alertas' => $alertas
             ]);
+            return;
         }
 
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -50,6 +52,9 @@ class InicioController {
                         // Manejar caso no esperado
                         break;
                     }
+                // Redirigir después de procesar el formulario para evitar reenvío del formulario
+                header('Location: ' . $_SERVER['REQUEST_URI']);
+                exit;
                 }
             }
         }
