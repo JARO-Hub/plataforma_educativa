@@ -13,6 +13,7 @@ class UserSamba extends Servicio
     private static $createUserCommand = __DIR__ . '/../scripts/usersamba/create_user.sh';
     private static $updateUserCommand = __DIR__ . '/../scripts/usersamba/update_user.sh';
     private static $deleteUserCommand = __DIR__ . '/../scripts/usersamba/delete_user.sh';
+    private static $listUsersCommand = __DIR__ . '/../scripts/usersamba/list.sh';
     private static $configPath = '/etc/samba/smb.conf';
 
     public function __construct(string $username, string $password, string $sambauser, string $sambapassword)
@@ -69,15 +70,25 @@ class UserSamba extends Servicio
      * @return UserSamba[]
      * @throws \Exception
      */
-    public static function searchAllUsers(): array
+    public function searchAllUsers(): array
     {
         try {
             $output = [];
             $exitCode = 0;
 
-            $command = 'pdbedit -L -v';
+            if (!file_exists(self::$listUsersCommand) || !is_executable(self::$listUsersCommand)) {
+                throw new \Exception('El script para buscar usuarios de Samba no existe o no es ejecutable.');
+            }
 
+            $password = $this->getPassword();
+
+            $params = [$password];
+
+            $command = $this->buildCommand(self::$listUsersCommand, $params);
+
+            // Ejecutar el comando
             exec($command, $output, $exitCode);
+
 
             if ($exitCode !== 0) {
                 throw new \Exception('Error al ejecutar el comando para buscar los usuarios de Samba: ' . implode("\n", $output));
@@ -98,7 +109,7 @@ class UserSamba extends Servicio
             return $users;
 
         } catch (\Exception $e) {
-            throw new \Exception('No se pudo buscar los usuarios en Samba.');
+            throw new \Exception('No se pudo buscar los usuarios en Samba: ' . $e->getMessage());
         }
     }
 
@@ -123,7 +134,7 @@ class UserSamba extends Servicio
                 throw new \Exception('El nombre de usuario y la contraseña no pueden estar vacíos.');
             }
             // password, sambapassword_new, sambauser_new, sambauser_old
-            $params = [$this->getPassword(), $this->sambapassword, $this->sambauser, $this->getSambauser()];
+            $params = [$this->getPassword(), $this->getSambapassword(), $this->getSambauser(), $this->getUsername()];
 
             $command = $this->buildCommand(self::$updateUserCommand, $params);
 
@@ -166,7 +177,7 @@ class UserSamba extends Servicio
                 throw new \Exception('El nombre de usuario no puede estar vacío.');
             }
 
-            $params = [$this->sambauser];
+            $params = [$this->getPassword(), $this->getSambauser() ];
             $command = $this->buildCommand(self::$deleteUserCommand, $params);
 
             exec($command, $output, $exitCode);

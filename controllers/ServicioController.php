@@ -77,12 +77,134 @@ class ServicioController {
             $router->render('servicios/index', [
                 
                 'servicio' => 'hola',
-                'alertas' => $alertas
+                'alertas' => $alertas,
+                'url_delete' => '/servicios/delete/'
             ]);
         }
         return;
     }
 
+    public static function createPost(Router $router): void
+    {
+        $alertas= [];
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+        ini_set('max_execution_time', 300); // 5 minutos
+        ini_set('memory_limit', '512M');
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                //validamos data "user_name" y "password"
+                $alertas = [];
+                if (    empty($_POST['shareName'])
+                    || empty($_POST['sharePath'])
+                    || empty($_POST['shareComment'])
+                    || empty($_POST['writable'])
+                    || empty($_POST['browseable'])
+                    || empty($_POST['guestOk'])
+                    || empty($_POST['createMask'])
+                    || empty($_POST['directoryMask'])
+                    || empty($_POST['readOnly'])
+                ) {
+                    $alertas[] = 'Todos los campos son requeridos';
+                    $samba = new SambaShare('root' , $_POST['password'],
+                        $_POST['shareName'],
+                        $_POST['sharePath'],
+                        $_POST['guestOk'],
+                        $_POST['shareComment'],
+                        $_POST['writable'],
+                    );
+
+                    $result = $samba->createSharedDirectory(
+                        $_POST['shareName'],
+                        $_POST['shareComment'],
+                        $_POST['sharePath'],
+                        $_POST['writable'],
+                        $_POST['browseable'],
+                        $_POST['guestOk'],
+                        $_POST['createMask'],
+                        $_POST['directoryMask'],
+                        $_POST['readOnly']
+                    );
+
+                    if ($result) {
+                        $alertas['success'][] = 'Recurso compartido creado correctamente';
+                    } else {
+                        $alertas['error'][] = 'Error al crear el recurso compartido';
+                        throw new \Exception('Error al crear el recurso compartido');
+                    }
+                    $router->render('servicios/index', [
+                        'alertas' => $alertas
+
+                    ]);
+
+                }
+                return ;
+
+            }catch (\Exception $e) {
+                $alertas['error'][] = $e->getMessage();
+                $router->render('servicios/index', [
+                    'alertas' => $alertas,
+                    'url_delete' => '/servicios/delete/',
+                ]);
+                return;
+            }
+        }
+
+    }
+
+    public static function delete (Router $router, $id){
+        $alertas = [];
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+        ini_set('max_execution_time', 300); // 5 minutos
+        ini_set('memory_limit', '512M');
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $data = json_decode(file_get_contents('php://input'), true);
+                if ($data === null || !array_key_exists('password', $data)) {
+                    throw new \Exception('Ingrese la contraseña por favor');
+                }
+                $usuario = new SambaShare('root', $data['password'], $id, '', '', '', '');
+
+                if(empty($alertas)) {
+                    /** @var SambaShare $usersamba */
+                    $user = array_filter($usuario->all(), function ($usersamba) use ($id) {
+                        return $usersamba->name === $id;
+                    });
+                    if (empty($user)) {
+                        $alertas['error'][] = 'Recurso no encontrado';
+                    }
+
+                    $result = $usuario->deleteSharedDirectory($id);
+                    if($result){
+                        $alertas['success'][] = 'Usuario eliminado correctamente';
+                    }else{
+                        $alertas['error2'][] = 'Error al eliminar el usuario';
+                    }
+                }
+            } catch (\Exception $e) {
+                $alertas['error'][] = $e->getMessage();
+            }
+
+            // Establecer el código de respuesta HTTP
+            http_response_code(empty($alertas['error']) ? 200 : 400);
+
+            // Devolver la respuesta como JSON
+            header('Content-Type: application/json');
+            echo json_encode(['alertas' => $alertas]);
+            return;
+        } else {
+            $alertas['error'][] = 'Método no permitido';
+            http_response_code(405); // Método no permitido
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode(['alertas' => $alertas]);
+    }
     public static function actualizar(Router $router) {
         session_start();
         isAdmin();

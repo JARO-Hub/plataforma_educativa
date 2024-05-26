@@ -68,6 +68,9 @@ $router->post('/api/eliminar', [APIController::class, 'eliminar']);
 // CRUD de Compartir
 $router->post('/servicios', [ServicioController::class, 'index']);
 $router->get('/servicios', [ServicioController::class, 'invoke']);
+$router->post('/servicios/create', [ServicioController::class, 'createPost']);
+$router->post('/servicios/delete/{id}', [ServicioController::class, 'delete']);
+
 $router->post('/servicios/crear', [ServicioController::class, 'crear']);
 $router->get('/servicios/actualizar', [ServicioController::class, 'actualizar']);
 $router->post('/servicios/actualizar', [ServicioController::class, 'actualizar']);
@@ -87,6 +90,11 @@ $router->post('/identidad', [IdentidadController::class, 'invoke']);
 
 $router->get('/usuarios', [UsuarioController::class, 'invoke']);
 $router->post('/usuarios', [UsuarioController::class, 'postCreateUserSamba']);
+$router->post('/usuarios/all', [UsuarioController::class, 'searchAll']);
+$router->get('/usuarios/update/{id}', [UsuarioController::class, 'update']);
+$router->post('/usuarios/update/post', [UsuarioController::class, 'updatepost']);
+$router->post('/usuarios/delete/{id}', [UsuarioController::class, 'delete']);
+
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

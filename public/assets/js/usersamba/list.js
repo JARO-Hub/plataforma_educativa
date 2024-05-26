@@ -2,7 +2,7 @@
 
 var KTUsersList = function () {
     // Define shared variables
-    var table = document.getElementById('kt_table_users');
+    var table = document.getElementById('kt_table_usersamba');
     var datatable;
     var toolbarBase;
     var toolbarSelected;
@@ -10,6 +10,7 @@ var KTUsersList = function () {
 
     // Private functions
     var initUserTable = function () {
+
         // Set date data order
         const tableRows = table.querySelectorAll('tbody tr');
 
@@ -19,33 +20,6 @@ var KTUsersList = function () {
             let timeCount = 0;
             let timeFormat = 'minutes';
 
-            // Determine date & time format -- add more formats when necessary
-            if (lastLogin.includes('yesterday')) {
-                timeCount = 1;
-                timeFormat = 'days';
-            } else if (lastLogin.includes('mins')) {
-                timeCount = parseInt(lastLogin.replace(/\D/g, ''));
-                timeFormat = 'minutes';
-            } else if (lastLogin.includes('hours')) {
-                timeCount = parseInt(lastLogin.replace(/\D/g, ''));
-                timeFormat = 'hours';
-            } else if (lastLogin.includes('days')) {
-                timeCount = parseInt(lastLogin.replace(/\D/g, ''));
-                timeFormat = 'days';
-            } else if (lastLogin.includes('weeks')) {
-                timeCount = parseInt(lastLogin.replace(/\D/g, ''));
-                timeFormat = 'weeks';
-            }
-
-            // Subtract date/time from today -- more info on moment datetime subtraction: https://momentjs.com/docs/#/durations/subtract/
-            const realDate = moment().subtract(timeCount, timeFormat).format();
-
-            // Insert real date to last login attribute
-            dateRow[3].setAttribute('data-order', realDate);
-
-            // Set real date for joined column
-            const joinedDate = moment(dateRow[5].innerHTML, "DD MMM YYYY, LT").format(); // select date from 5th column in table
-            dateRow[5].setAttribute('data-order', joinedDate);
         });
 
         // Init datatable --- more info on datatables: https://datatables.net/manual/
@@ -56,7 +30,7 @@ var KTUsersList = function () {
             "lengthChange": false,
 
             "ajax": {
-                "url": "/servicios",  // Ruta del API que devuelve los datos
+                "url": "/usuarios/all",  // Ruta del API que devuelve los datos
                 "type": "POST",
                 "error": function (xhr, error, thrown) {
                     console.error("Error occurred:", error, thrown);
@@ -66,13 +40,10 @@ var KTUsersList = function () {
             },
             "columns": [
                 { "data": "id" },
-                { "data": "estado" },
-                { "data": "solo_lectura" },
-                { "data": "nombre" },
-                { "data": "ruta" },
-                { "data": "acceso_invitado" },
-                { "data": "comentario" }
-                // Puedes definir otras columnas aquí
+                { "data": "user_name" },
+                { "data": "password" },
+                { "data": null  },
+
             ],
             "columnDefs": [
                 {
@@ -99,7 +70,7 @@ var KTUsersList = function () {
                                 <!--begin::User details-->
                                 <div class="d-flex flex-column">
                                  
-                                    <span>${row.estado}</span>
+                                    <span>${row.user_name}</span>
                                 </div>
                                 <!--end::User details-->`;
 
@@ -108,37 +79,10 @@ var KTUsersList = function () {
                 {
                     "targets": [2],
                     "render": function(data, type, row) {
-                        return `<strong>${row.solo_lectura}</strong>`;
+                        return `<strong>${row.password}</strong>`;
                     }
                 },
-                {
-                    "targets": [3],
-                    "render": function(data, type, row) {
 
-                        return `<div class="badge badge-light fw-bold">${row.nombre}</div>`;
-
-                    },
-                },
-                {
-                    "targets": [4],
-                    "render": function(data, type, row) {
-                        /** @var {Object} status */
-                        let status = {
-                            "Si": { 'title': 'Activo', 'class': 'badge-light-success' },
-                            "No": { 'title': 'Inactivo', 'class': 'badge-light-danger' }
-                        };
-                        if (typeof row.status === 'undefined') {
-                            return data;
-                        }
-                        return `<div class="badge ${status[row.acceso_invitado].class } fw-bold">${ status[row.status].title }</div>`;
-                    }
-                },
-                {
-                    "targets": [5],
-                    "render": function(data, type, row) {
-                        return `<span class="badge badge-light">${row.comentario}</span>`;
-                    },
-                },
                 {
                     "targets": -1,
                     "orderable": false,
@@ -158,13 +102,13 @@ var KTUsersList = function () {
                                 <ul class="dropdown-menu menu-sub menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" aria-labelledby="dropdownMenuButton">
                                     <!-- Opción Editar -->
                                     <li class="menu-item px-3">
-                                        <a class="menu-link px-3" href="#">
+                                        <a class="menu-link px-3" href="${usersamba_update_get_web.replace("|id|", row.user_name)}" >
                                             Edit
                                         </a>
                                     </li>
                                     <!-- Opción Eliminar -->
                                     <li class="menu-item px-3">
-                                        <a class="menu-link px-3" href="#" name="${row.nombre}" delete-url="${samba_delete_get_web.replace("|id|", row.nombre)}" data-kt-users-table-filter="delete_row">
+                                        <a class="menu-link px-3" href="#" name="${row.user_name}" delete-url="${usersamba_delete_get_web.replace("|id|", row.user_name)}" data-kt-usersamba-table-filter="delete_row">
                                             Delete
                                         </a>
                                     </li>
@@ -181,8 +125,8 @@ var KTUsersList = function () {
         // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
         datatable.on('draw', function () {
             initToggleToolbar();
-            handleDeleteRows();
             deleteUser();
+            handleDeleteRows();
             toggleToolbars();
         });
     }
@@ -306,7 +250,99 @@ var KTUsersList = function () {
         });
     }
 
-    // Init toggle toolbar
+    var deleteUser = function () {
+        document.querySelectorAll('[data-kt-usersamba-table-filter="delete_row"]').forEach((element) => {
+            element.addEventListener("click", (e) => {
+                e.preventDefault();
+                Swal.fire({
+                    text: "¿Esta seguro de eliminar el usuario " + element.getAttribute('name') + "?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    buttonsStyling: false,
+                    confirmButtonText: "Si, ¡eliminar!",
+                    cancelButtonText: "No, cancelar",
+                    customClass: {
+                        confirmButton: "btn fw-bold btn-danger",
+                        cancelButton: "btn fw-bold btn-active-light-primary"
+                    }
+                }).then((result) => {
+                    if (result.value) {
+                        Swal.fire({
+                            text: "Ingrese la contraseña del sistema",
+                            input: 'password',
+                            inputAttributes: {
+                                autocapitalize: 'off'
+                            },
+                            showCancelButton: true,
+                            confirmButtonText: 'Eliminar',
+                            showLoaderOnConfirm: true,
+                            preConfirm: (password) => {
+                                return fetch(element.getAttribute('delete-url'), {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({ id: element.getAttribute('name'), password: password })
+                                })
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error(response.statusText);
+                                        }
+                                        return response.json();
+                                    })
+                                    .catch(error => {
+                                        Swal.showValidationMessage(
+                                            `Request failed: ${error}`
+                                        );
+                                    });
+                            },
+                            allowOutsideClick: () => !Swal.isLoading()
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire({
+                                    title: `Usuario eliminado`,
+                                    html: `El usuario ${element.getAttribute('name')} ha sido eliminado`,
+                                    confirmButtonText: 'Ok'
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    };
+
+    // Toggle toolbars
+    const toggleToolbars = () => {
+        // Select refreshed checkbox DOM elements
+        const allCheckboxes = table.querySelectorAll('tbody [type="checkbox"]');
+
+        // Detect checkboxes state & count
+        let checkedState = false;
+        let count = 0;
+
+        // Count checked boxes
+        allCheckboxes.forEach(c => {
+            if (c.checked) {
+                checkedState = true;
+                count++;
+            }
+        });
+
+        // Toggle toolbars
+        if (checkedState) {
+            selectedCount.innerHTML = count;
+            toolbarBase.classList.add('d-none');
+            toolbarSelected.classList.remove('d-none');
+        } else {
+            toolbarBase.classList.remove('d-none');
+            toolbarSelected.classList.add('d-none');
+        }
+    }
+
+    // Handle actions
     var initToggleToolbar = () => {
         // Toggle selected action toolbar
         // Select all checkboxes
@@ -381,99 +417,6 @@ var KTUsersList = function () {
             });
         });
     }
-
-    // Toggle toolbars
-    const toggleToolbars = () => {
-        // Select refreshed checkbox DOM elements
-        const allCheckboxes = table.querySelectorAll('tbody [type="checkbox"]');
-
-        // Detect checkboxes state & count
-        let checkedState = false;
-        let count = 0;
-
-        // Count checked boxes
-        allCheckboxes.forEach(c => {
-            if (c.checked) {
-                checkedState = true;
-                count++;
-            }
-        });
-
-        // Toggle toolbars
-        if (checkedState) {
-            selectedCount.innerHTML = count;
-            toolbarBase.classList.add('d-none');
-            toolbarSelected.classList.remove('d-none');
-        } else {
-            toolbarBase.classList.remove('d-none');
-            toolbarSelected.classList.add('d-none');
-        }
-    }
-
-    // Handle actions
-    var deleteUser = function () {
-        document.querySelectorAll('[data-kt-users-table-filter="delete_row"]').forEach((element) => {
-            element.addEventListener("click", (e) => {
-                e.preventDefault();
-                Swal.fire({
-                    text: "¿Esta seguro de eliminar el usuario " + element.getAttribute('name') + "?",
-                    icon: "warning",
-                    showCancelButton: true,
-                    buttonsStyling: false,
-                    confirmButtonText: "Si, ¡eliminar!",
-                    cancelButtonText: "No, cancelar",
-                    customClass: {
-                        confirmButton: "btn fw-bold btn-danger",
-                        cancelButton: "btn fw-bold btn-active-light-primary"
-                    }
-                }).then((result) => {
-                    if (result.value) {
-                        Swal.fire({
-                            text: "Ingrese la contraseña del sistema",
-                            input: 'password',
-                            inputAttributes: {
-                                autocapitalize: 'off'
-                            },
-                            showCancelButton: true,
-                            confirmButtonText: 'Eliminar',
-                            showLoaderOnConfirm: true,
-                            preConfirm: (password) => {
-                                return fetch(element.getAttribute('delete-url'), {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({ id: element.getAttribute('name'), password: password })
-                                })
-                                    .then(response => {
-                                        if (!response.ok) {
-                                            throw new Error(response.statusText);
-                                        }
-                                        return response.json();
-                                    })
-                                    .catch(error => {
-                                        Swal.showValidationMessage(
-                                            `Request failed: ${error}`
-                                        );
-                                    });
-                            },
-                            allowOutsideClick: () => !Swal.isLoading()
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                Swal.fire({
-                                    title: `Recurso eliminado`,
-                                    html: `El recurso ${element.getAttribute('name')} ha sido eliminado`,
-                                    confirmButtonText: 'Ok'
-                                }).then(() => {
-                                    window.location.reload();
-                                });
-                            }
-                        });
-                    }
-                });
-            });
-        });
-    };
 
 
     return {
