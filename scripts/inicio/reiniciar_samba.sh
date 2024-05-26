@@ -6,5 +6,5 @@ handle_error() {
     exit 1
 }
 
-command="service smbd restart"
+command="service smb restart"
 action=$($command)
