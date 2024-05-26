@@ -7,7 +7,7 @@
                         <h5><?php echo $estadoSamba;?></h5>
                         <h5>Después de escribir la configuración:</h5>
                         <div>
-                        <form action="/inicio" method="post">
+                        <form action="" method="post">
                         <select name="accion" class="selector_de_barra">
                             <option value="parar">Parar</option>
                             <option value="reiniciar">Reiniciar</option>

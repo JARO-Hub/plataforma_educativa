@@ -2,9 +2,6 @@
 namespace Controllers;
 use Model\InicioModelo;
 use MVC\Router;
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 
 class InicioController {
@@ -26,12 +23,12 @@ class InicioController {
         }
 
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
-            if (isset($_POST['accion'])) {
+            
                 
             // Verificar si se recibió una acción
             if (isset($_POST['accion'])) {
                 $accion = $_POST['accion'];
-                
+                error_log('Accion recibida: ' . $accion);
                 switch ($accion) {
                     case 'parar':
                         // Llamar a la función para parar el servicio
@@ -56,7 +53,6 @@ class InicioController {
                 header('Location: ' . $_SERVER['REQUEST_URI']);
                 exit;
                 }
-            }
         }
     }
 }
