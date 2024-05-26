@@ -6,7 +6,7 @@ use Controllers\ServicioController;
 
 class Router
 {
-
+    public $env;
     public $getRoutes = array();
     public  $postRoutes = array();
 
@@ -77,6 +77,14 @@ class Router
             }
         }
         return null;
+    }
+
+    public function getEnv() {
+        return $this->env;
+    }
+
+    public function setEnv($env) {
+        $this->env = $env;
     }
 }
 

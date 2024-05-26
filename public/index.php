@@ -1,6 +1,8 @@
 <?php 
 
 require_once __DIR__ . '/../includes/app.php';
+require __DIR__ . '/../vendor/autoload.php';
+use Dotenv\Dotenv;
 use MVC\Router;
 use Controllers\APIController;
 use Controllers\CitaController;
@@ -14,7 +16,9 @@ use Controllers\IdentidadController;
 use Controllers\UsuarioController;
 
 $router = new Router();
-
+$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
+$router->setEnv($dotenv);
 
 // Iniciar Sesión
 //$router->get('/', [LoginController::class, 'login']);
@@ -69,6 +73,7 @@ $router->post('/api/eliminar', [APIController::class, 'eliminar']);
 $router->post('/servicios', [ServicioController::class, 'index']);
 $router->get('/servicios', [ServicioController::class, 'invoke']);
 $router->post('/servicios/create', [ServicioController::class, 'createPost']);
+$router->get('/servicios/create', [ServicioController::class, 'createGet']);
 $router->post('/servicios/delete/{id}', [ServicioController::class, 'delete']);
 
 $router->post('/servicios/crear', [ServicioController::class, 'crear']);

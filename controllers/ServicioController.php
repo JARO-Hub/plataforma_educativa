@@ -78,6 +78,26 @@ class ServicioController {
                 
                 'servicio' => 'hola',
                 'alertas' => $alertas,
+                'create_url' => '/servicios/create',
+                'cancel_url' => '/servicios',
+                'url_delete' => '/servicios/delete/'
+            ]);
+        }
+        return;
+    }
+
+    public static function createGet(Router $router){
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+        $alertas = [];
+
+        if($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $router->render('servicios/form', [
+                'servicio' => 'hola',
+                'alertas' => $alertas,
+                'action_form' => '/servicios/create',
+                'cancel_url' => '/servicios',
                 'url_delete' => '/servicios/delete/'
             ]);
         }
@@ -97,15 +117,16 @@ class ServicioController {
             try {
                 //validamos data "user_name" y "password"
                 $alertas = [];
-                if (    empty($_POST['shareName'])
-                    || empty($_POST['sharePath'])
-                    || empty($_POST['shareComment'])
-                    || empty($_POST['writable'])
-                    || empty($_POST['browseable'])
-                    || empty($_POST['guestOk'])
-                    || empty($_POST['createMask'])
-                    || empty($_POST['directoryMask'])
-                    || empty($_POST['readOnly'])
+                if (        !empty($_POST['shareName']) ||
+                            !empty($_POST['sharePath']) ||
+                            !empty($_POST['guestOk']) ||
+                            !empty($_POST['shareComment']) ||
+                            !empty($_POST['writable']) ||
+                            !empty($_POST['browseable']) ||
+                            !empty($_POST['createMask']) ||
+                            !empty($_POST['directoryMask']) ||
+                            !empty($_POST['readOnly']) ||
+                            !empty($_POST['password'])
                 ) {
                     $alertas[] = 'Todos los campos son requeridos';
                     $samba = new SambaShare('root' , $_POST['password'],
@@ -134,6 +155,7 @@ class ServicioController {
                         $alertas['error'][] = 'Error al crear el recurso compartido';
                         throw new \Exception('Error al crear el recurso compartido');
                     }
+                    header('Location: /servicios');
                     $router->render('servicios/index', [
                         'alertas' => $alertas
 
@@ -144,6 +166,7 @@ class ServicioController {
 
             }catch (\Exception $e) {
                 $alertas['error'][] = $e->getMessage();
+                header('Location: /servicios');
                 $router->render('servicios/index', [
                     'alertas' => $alertas,
                     'url_delete' => '/servicios/delete/',
