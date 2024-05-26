@@ -7,12 +7,14 @@
                         <h5><?php echo $estadoSamba;?></h5>
                         <h5>Después de escribir la configuración:</h5>
                         <div>
-                        <select class="selector_de_barra">
+                        <form action="/inicio" method="post">
+                        <select name="accion" class="selector_de_barra">
                             <option value="opcion Parar">Parar</option>
                             <option value="opcion Reiniciar">Reiniciar</option>
                             <option value="opcion Recargar">Recargar</option>
                             <option value="opcion Mantener estado actual">Mantener estado actual</option>
                         </select>
+                        </form>
                         </div>
                         <h5>Después de reiniciar</h5>
                         <div>
