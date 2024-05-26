@@ -30,7 +30,7 @@ fi
 
 # Cambiar la contraseña del usuario de Samba
 if [ ! -z "$new_sambapassword" ]; then
-    echo "Cambiando la contraseña del usuario $username en Samba..."
+    echo "$passw" | sudo echo "Cambiando la contraseña del usuario $username en Samba..."
     echo -e "$new_sambapassword\n$new_sambapassword" | sudo -S smbpasswd -s "$username" || handle_error "No se pudo cambiar la contraseña del usuario de Samba"
 fi
 
