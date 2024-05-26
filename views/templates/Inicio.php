@@ -1,24 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
-</head>
-<body>
+
     <!--begin::Inicio-->
         <div id=InicioContenido class="pt-lg-9 pt-6">
                 <div class="app-container container-xxl d-flex flex-row flex-column-fluid">
                     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
                         <h1 class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2x my-0">Configuración del servicio</h1>
-                        <h5>Estado actual:Activo</h5>
+                        <h5><?php echo $estadoSamba;?></h5>
                         <h5>Después de escribir la configuración:</h5>
                         <div>
-                        <select class="selector_de_barra">
-                            <option value="opcion Parar">Parar</option>
-                            <option value="opcion Reiniciar">Reiniciar</option>
-                            <option value="opcion Recargar">Recargar</option>
-                            <option value="opcion Mantener estado actual">Mantener estado actual</option>
+                        <form action="" method="post">
+                        <select name="accion" class="selector_de_barra">
+                            <option value="parar">Parar</option>
+                            <option value="reiniciar">Reiniciar</option>
+                            <option value="recargar">Recargar</option>
+                            <option value="mantener">Mantener estado actual</option>
                         </select>
                         </div>
                         <h5>Después de reiniciar</h5>
@@ -31,8 +25,9 @@
                         <div>
                             <button type="button" class="Botones_accion btn btn-success" id="Boton_ayuda" data-bs-toggle="modal" data-bs-target="#kt_modal_1">Ayuda</button>
                             <button type="button" class="Botones_accion btn btn-danger" id=Boton_cancelar>Cancelar</button> 
-                            <button type="button" class="Botones_accion btn btn-primary" id=Boton_aceptar>Aceptar</button>  
+                            <button type="submit" class="Botones_accion btn btn-primary" id=Boton_aceptar>Aceptar</button>  
                         </div>  
+                        </form>
                         <!--begin::Footer-->
                         <div id="kt_app_footer"
                                     class="app-footer align-items-center justify-content-center justify-content-md-between flex-column flex-md-row py-3 py-lg-6">
@@ -93,6 +88,3 @@
                 </div>
             </div>
     <!--end::Modal Inicio-->
-</body>
-</html>
-

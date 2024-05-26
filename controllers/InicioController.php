@@ -1,112 +1,58 @@
 <?php
-
 namespace Controllers;
-
-use Model\Inicio;
+use Model\InicioModelo;
 use MVC\Router;
-use Model\ActiveRecord as SambaShare;
 
 
 class InicioController {
-    public static function index(Router $router) {
-        if (session_status() !== PHP_SESSION_ACTIVE) {
-            session_start();
-        }
-        ini_set('max_execution_time', 300); // 5 minutos
-        ini_set('memory_limit', '512M');
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            try {
-                $search = $_POST['search']['value'] ?? ''; // DataTables envía 'search' como parte de un array
-                $draw = $_POST['draw'] ?? 1;
-
-                $shares = SambaShare::all();
-                if (!empty($search)) {
-                    $filteredShares = array_filter($shares, function ($share) use ($search) {
-                        return stripos($share->name, $search) !== false;
-                    });
-                } else {
-                    $filteredShares = $shares;  // No aplicar filtro, usar todos los datos
-                }
-                $response = [
-                    'draw' => intval($draw),
-                    'recordsTotal' => count($shares),
-                    'recordsFiltered' => count($filteredShares),
-                    'data' => $data
-                ];
-                $json = json_encode($response);
-                header('Content-Type: application/json');
-                echo json_encode($response);
-            }catch (\Exception $e) {
-                http_response_code(500); // Error interno del servidor
-                return json_encode(['error' => $e->getMessage()]);
-            }
-        } else {
-            // Manejar otros tipos de métodos HTTP según sea necesario
-            http_response_code(405); // Método no permitido
-            return json_encode(['error' => 'Method Not Allowed']);
-
-        }
-
-
-    }
-
     public static function invoke(Router $router) {
         if (session_status() !== PHP_SESSION_ACTIVE) {
             session_start();
         }
-        $alertas = [];
 
+        $alertas = [];
+       
+        
         if($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $estadoSamba = InicioModelo::getStatus();
             $router->render('inicio/index', [
-                
-                'Usuario' => 'hola',
+                'estadoSamba' => $estadoSamba,
                 'alertas' => $alertas
             ]);
+            return;
         }
 
-        return;
-
-
-    }
-
-    public static function actualizar(Router $router) {
-        session_start();
-        isAdmin();
-
-        if(!is_numeric($_GET['id'])) return;
-
-        $Usuario = Usuario::find($_GET['id']);
-        $alertas = [];
-
-        
-        if($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $Usuario->sincronizar($_POST);
-
-            $alertas = $Usuario->validar();
-
-            if(empty($alertas)) {
-                $Usuario->guardar();
-                header('Location: /Inicio');
-            }
-        }
-
-        $router->render('Inicio/actualizar', [
-            'nombre' => $_SESSION['nombre'],
-            'Usuario' => $Usuario,
-            'alertas' => $alertas
-        ]);
-    }
-
-    public static function eliminar() {
-        session_start();
-        isAdmin();
-        
-        if($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = $_POST['id'];
-            $Usuario = Usuario::find($id);
-            $Usuario->eliminar();
-            header('Location: /Inicio');
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            
+                
+            // Verificar si se recibió una acción
+            if (isset($_POST['accion'])) {
+                $accion = $_POST['accion'];
+                error_log('Accion recibida: ' . $accion);
+                switch ($accion) {
+                    case 'parar':
+                        // Llamar a la función para parar el servicio
+                        InicioModelo::StopService();
+                        break;
+                    case 'reiniciar':
+                        // Llamar a la función para reiniciar el servicio
+                        InicioModelo::RestartService();
+                        break;
+                    case 'recargar':
+                        // Llamar a la función para recargar el servicio
+                        InicioModelo::RestartService();
+                        break;
+                    case 'mantener':
+                        // No se realiza ninguna acción adicional
+                        break;
+                    default:
+                        // Manejar caso no esperado
+                        break;
+                    }
+                // Redirigir después de procesar el formulario para evitar reenvío del formulario
+                header('Location: ' . $_SERVER['REQUEST_URI']);
+                exit;
+                }
         }
     }
 }

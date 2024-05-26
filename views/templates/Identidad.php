@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Identidad</title>
-
-</head>
-
-<body>
         <div id=ConfiguraciónContenido>
             <div class="app-container container-xxl d-flex flex-row flex-column-fluid">
                 <!--begin::Main-->
@@ -85,17 +75,33 @@
                                                 <div class="card-header border-0 pt-6">
                                                     
                                                     <!--begin::Card toolbar-->
-                                                    <div class="card-toolbar">
+                                                    <div class="card-toolbar" id="kt_modal_add_permission">
                                                         
-                                                    <!--begin::Identidad-->
-                                                    <h2>Nombre de grupo de trabajo o dominio</h2>
-                                                    <input type="text" class="form-control" placeholder="" value="WORKGROUP">
-                                                        <button type="button" id=BotonAplicar class="btn btn-success">
-                                                        Aplicar
-                                                        </button>
-                                                     <!--end::Identidad-->    
-                                                    
+                                                        <!--begin::Identidad-->
                                                         
+                                                                  
+                                                        <form method="POST" action="/identidad" id="kt_modal_add_permission_form" class="form fv-plugins-bootstrap5 fv-plugins-framework">
+                                                            <h2>Nombre de grupo de trabajo o dominio</h2>    
+                                                            <!--<input type="text" class="form-control" placeholder="" value="<?php echo $identidad; ?>">-->
+                                                            <div class="fv-row mb-7 fv-plugins-icon-container fv-plugins-bootstrap5-row-invalid">
+                                                            <!--begin::Input-->
+                                                            <input type="text" class="form-control form-control-solid" name="workgroup" placeholder="" value="<?php echo $identidad; ?>">
+                                                            <!--end::Input-->
+                                                            <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"><div data-field="permission_name" data-validator="notEmpty">No se permiten espacios en blanco</div></div></div>
+                                                            <button type="submit" id="BotonAplicar" class="btn btn-success">
+                                                                    <span class="indicator-label">
+                                                                        Aplicar
+                                                                    </span>
+                                                                    <span class="indicator-progress">
+                                                                        Por favor,espere... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                                                    </span>
+                                                            </button>
+                                                            <div class="text-center pt-15">
+                                                            </div>
+                                                        </form>
+
+                                                        <!--end::Identidad--> 
+
                                                     </div>
                                                     <!--end::Card toolbar-->
                                                 </div>
@@ -138,28 +144,7 @@
             <!--end:::Main-->
         </div>
         </div>
-</body>
 
-</html>
 
-<!--begin::Toolbar-->
-<div id="kt_app_toolbar" class="app-toolbar pt-lg-9 pt-6">
-                    <!--begin::Toolbar container-->
-                    <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack flex-wrap">
-                        <!--begin::Toolbar wrapper-->
-                        <div class="d-flex flex-stack flex-wrap gap-4 w-100">
-                            <!--begin::Page title-->
-                            <div class="page-title d-flex flex-column gap-3 me-3">
-                                <!--begin::Title-->
-                                <h1 class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2x my-0">
-                                    Configuración Básica</h1>
-                                <!--end::Title-->
-                            </div>
-                            <!--end::Page title-->
-                        </div>
-                        <!--end::Toolbar wrapper-->
-                    </div>
-                    <!--end::Toolbar container-->
-                </div>
-            <!--end::Toolbar-->
+
            

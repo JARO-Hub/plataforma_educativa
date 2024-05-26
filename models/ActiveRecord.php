@@ -18,7 +18,7 @@ class ActiveRecord extends Servicio {
     public $directoryMask;
 
 
-
+    
     private static $configPath = '/etc/samba/smb.conf';
 
     public function __construct(string $username, string $password,$name, $path, $guestOk, $comment, $writable)
