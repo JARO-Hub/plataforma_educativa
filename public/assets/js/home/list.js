@@ -164,7 +164,7 @@ var KTUsersList = function () {
                                     </li>
                                     <!-- Opción Eliminar -->
                                     <li class="menu-item px-3">
-                                        <a class="menu-link px-3" href="#" data-kt-users-table-filter="delete_row">
+                                        <a class="menu-link px-3" href="#" name="${row.nombre}" delete-url="${samba_delete_get_web.replace("|id|", row.nombre)}" data-kt-users-table-filter="delete_row">
                                             Delete
                                         </a>
                                     </li>
@@ -182,6 +182,7 @@ var KTUsersList = function () {
         datatable.on('draw', function () {
             initToggleToolbar();
             handleDeleteRows();
+            deleteUser();
             toggleToolbars();
         });
     }
@@ -410,6 +411,69 @@ var KTUsersList = function () {
     }
 
     // Handle actions
+    var deleteUser = function () {
+        document.querySelectorAll('[data-kt-users-table-filter="delete_row"]').forEach((element) => {
+            element.addEventListener("click", (e) => {
+                e.preventDefault();
+                Swal.fire({
+                    text: "¿Esta seguro de eliminar el usuario " + element.getAttribute('name') + "?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    buttonsStyling: false,
+                    confirmButtonText: "Si, ¡eliminar!",
+                    cancelButtonText: "No, cancelar",
+                    customClass: {
+                        confirmButton: "btn fw-bold btn-danger",
+                        cancelButton: "btn fw-bold btn-active-light-primary"
+                    }
+                }).then((result) => {
+                    if (result.value) {
+                        Swal.fire({
+                            text: "Ingrese la contraseña del sistema",
+                            input: 'password',
+                            inputAttributes: {
+                                autocapitalize: 'off'
+                            },
+                            showCancelButton: true,
+                            confirmButtonText: 'Eliminar',
+                            showLoaderOnConfirm: true,
+                            preConfirm: (password) => {
+                                return fetch(element.getAttribute('delete-url'), {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({ id: element.getAttribute('name'), password: password })
+                                })
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error(response.statusText);
+                                        }
+                                        return response.json();
+                                    })
+                                    .catch(error => {
+                                        Swal.showValidationMessage(
+                                            `Request failed: ${error}`
+                                        );
+                                    });
+                            },
+                            allowOutsideClick: () => !Swal.isLoading()
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire({
+                                    title: `Recurso eliminado`,
+                                    html: `El recurso ${element.getAttribute('name')} ha sido eliminado`,
+                                    confirmButtonText: 'Ok'
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    };
 
 
     return {
@@ -425,6 +489,7 @@ var KTUsersList = function () {
             handleResetForm();
             handleDeleteRows();
             handleFilterDatatable();
+            deleteUser();
 
         }
     }

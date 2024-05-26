@@ -622,4 +622,6 @@
     <!--end::Wrapper container-->
 </div>
 
-
+    <script>
+        var samba_delete_get_web = '<?php echo $url_delete.'|id|'; ?>';
+    </script>

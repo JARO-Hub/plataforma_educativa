@@ -68,6 +68,9 @@ $router->post('/api/eliminar', [APIController::class, 'eliminar']);
 // CRUD de Compartir
 $router->post('/servicios', [ServicioController::class, 'index']);
 $router->get('/servicios', [ServicioController::class, 'invoke']);
+$router->post('/servicios/create', [ServicioController::class, 'createPost']);
+$router->post('/servicios/delete/{id}', [ServicioController::class, 'delete']);
+
 $router->post('/servicios/crear', [ServicioController::class, 'crear']);
 $router->get('/servicios/actualizar', [ServicioController::class, 'actualizar']);
 $router->post('/servicios/actualizar', [ServicioController::class, 'actualizar']);

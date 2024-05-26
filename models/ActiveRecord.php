@@ -13,6 +13,10 @@ class ActiveRecord extends Servicio {
     public  $comment;
     public  $writable;
     public $readOnly;
+    public $browseable;
+    public $createMask;
+    public $directoryMask;
+
 
 
     private static $configPath = '/etc/samba/smb.conf';
@@ -41,7 +45,7 @@ class ActiveRecord extends Servicio {
         foreach ($contents as $line) {
             if (preg_match('/^\[(.+)\]$/', trim($line), $matches)) {
                 if ($currentShare) {
-                    $shares[] = new self($currentShare['name'], $currentShare['path'], $currentShare['guestOk'], $currentShare['comment'], $currentShare['writable']);
+                    $shares[] = new self('root','',$currentShare['name'], $currentShare['path'], $currentShare['guestOk'], $currentShare['comment'], $currentShare['writable']);
                 }
                 $currentShare = [
                     'name' => $matches[1],
@@ -72,7 +76,7 @@ class ActiveRecord extends Servicio {
             }
         }
         if ($currentShare) {
-            $shares[] = new self($currentShare['name'], $currentShare['path'], $currentShare['guestOk'], $currentShare['comment'], $currentShare['writable']);
+            $shares[] = new self('root','',$currentShare['name'], $currentShare['path'], $currentShare['guestOk'], $currentShare['comment'], $currentShare['writable']);
         }
 
         return $shares;
@@ -193,6 +197,8 @@ class ActiveRecord extends Servicio {
             throw new \Exception('No se pudo eliminar el recurso compartido: ' . $e->getMessage());
         }
     }
+
+
 
 
 
