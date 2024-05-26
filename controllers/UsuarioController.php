@@ -79,7 +79,7 @@ class UsuarioController{
                 $search = $_POST['search']['value'] ?? ''; // DataTables envía 'search' como parte de un array
                 $draw = $_POST['draw'] ?? 1;
 
-                $shares = new UserSamba('root', 'admin123', '', '');
+                $shares = new UserSamba('root', $_ENV['PASSWORD'], '', '');
                 $shares = $shares->searchAllUsers();
 
                 if (!empty($search)) {
@@ -136,7 +136,7 @@ class UsuarioController{
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
             try {
-                $usuario = new UserSamba('root', 'admin123', $id, '');
+                $usuario = new UserSamba('root', $_ENV['PASSWORD'], $id, '');
                 $usuarioEncontrado = null;
                 foreach ($usuario->searchAllUsers() as $usersamba) {
                     if ($usersamba->getSambauser() === $id) {
