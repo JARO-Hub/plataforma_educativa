@@ -6,13 +6,12 @@ password=$2 # La contraseña se pasa como el segundo parámetro
 
 # Ubicación del archivo smb.conf
 smbConf="/etc/samba/smb.conf"
-tempConf=$(mktemp) # Archivo temporal para almacenar el nuevo contenido
+tempConf=$(mktemp)
 
-# Leer el archivo smb.conf línea por línea y eliminar la sección correspondiente
 in_section=false
 
 while IFS= read -r line; do
-    # Verificar si es el inicio de una sección
+    #  inicio de una sección
     if [[ "$line" =~ ^\[(.+)\]$ ]]; then
         # Si estamos en la sección del recurso compartido, cambiar el estado
         if [[ "${BASH_REMATCH[1]}" == "$shareName" ]]; then
