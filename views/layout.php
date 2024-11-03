@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/plugins/global/plugins.bundle.css">
     <link rel="stylesheet" href="/assets/css/style.bundle.css">
+    <link rel="shortcut icon" href="/assets/media/logos/favicon.ico" sizes="30x30">
 
     <?php if (!empty($css)): ?>
         <?php foreach ($css as $stylesheet): ?>
@@ -40,7 +41,7 @@
                                 <!--begin::Logo-->
                                 <a href="#" class="d-flex align-items-center mb-1 mb-lg-0 pt-lg-1">
                                     <img alt="Logo" src="assets/media/logos/default-small.svg" class="d-block d-sm-none">
-                                    <img alt="Logo" src="assets/media/logos/default.svg" class="d-none d-sm-block">
+                                    <img alt="Logo" src="assets/media/logos/default.svg" class="symbol w-25 d-none d-sm-block">
                                 </a>
                                 <!--end::Logo-->
                             </div>

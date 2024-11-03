@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 11.20
--- Dumped by pg_dump version 11.20
+-- Dumped from database version 11.16 (Debian 11.16-1.pgdg90+1)
+-- Dumped by pg_dump version 11.16 (Debian 11.16-1.pgdg90+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -295,48 +295,300 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: roles; Type: TABLE; Schema: tbd_application; Owner: phpadmin
+-- Name: Atracciones; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE tbd_application.roles (
-    roles_id integer NOT NULL,
-    nombre character varying(100),
-    descripcion text
+CREATE TABLE public."Atracciones" (
+    id_atraccion integer NOT NULL,
+    nombre character varying(255) NOT NULL,
+    descripcion text,
+    id_pais integer NOT NULL,
+    url_foto text,
+    estado character varying(50),
+    maps text
 );
 
 
-ALTER TABLE tbd_application.roles OWNER TO phpadmin;
+ALTER TABLE public."Atracciones" OWNER TO postgres;
 
 --
--- Name: usuarios; Type: TABLE; Schema: tbd_application; Owner: phpadmin
+-- Name: educadores; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE tbd_application.usuarios (
+CREATE TABLE public.educadores (
+    educador_id integer NOT NULL,
+    especialidad character varying(255),
+    grado_academico character varying(100),
+    biografia text
+);
+
+
+ALTER TABLE public.educadores OWNER TO postgres;
+
+--
+-- Name: estudiantes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.estudiantes (
+    estudiante_id integer NOT NULL,
+    matricula character varying(50),
+    codigo integer,
+    carrera character varying(100)
+);
+
+
+ALTER TABLE public.estudiantes OWNER TO postgres;
+
+--
+-- Name: estudiantesgrupos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.estudiantesgrupos (
+    estudiante_id integer NOT NULL,
+    grupo_id integer NOT NULL,
+    educador_id integer NOT NULL
+);
+
+
+ALTER TABLE public.estudiantesgrupos OWNER TO postgres;
+
+--
+-- Name: grupos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.grupos (
+    educador_id integer NOT NULL,
+    grupo_id integer NOT NULL,
+    tipo_grupo_id integer NOT NULL,
+    nombre character varying(255),
+    descripcion text,
+    capacidad_maxima integer,
+    codigo_grupo character varying(500)
+);
+
+
+ALTER TABLE public.grupos OWNER TO postgres;
+
+--
+-- Name: grupos_grupo_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.grupos_grupo_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.grupos_grupo_id_seq OWNER TO postgres;
+
+--
+-- Name: grupos_grupo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.grupos_grupo_id_seq OWNED BY public.grupos.grupo_id;
+
+
+--
+-- Name: logs; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.logs (
+    id integer NOT NULL,
+    user_name character varying(255),
+    user_ip character varying(15),
+    action character varying(255),
+    details text,
+    "timestamp" timestamp without time zone
+);
+
+
+ALTER TABLE public.logs OWNER TO postgres;
+
+--
+-- Name: logs_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.logs_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.logs_id_seq OWNER TO postgres;
+
+--
+-- Name: logs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.logs_id_seq OWNED BY public.logs.id;
+
+
+--
+-- Name: roles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.roles (
+    rol_id integer NOT NULL,
+    nombre character varying(100)
+);
+
+
+ALTER TABLE public.roles OWNER TO postgres;
+
+--
+-- Name: roles_rol_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.roles_rol_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.roles_rol_id_seq OWNER TO postgres;
+
+--
+-- Name: roles_rol_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.roles_rol_id_seq OWNED BY public.roles.rol_id;
+
+
+--
+-- Name: tareas; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.tareas (
+    tarea_id integer NOT NULL,
+    educador_id integer NOT NULL,
+    grupo_id integer NOT NULL,
+    titulo character varying(255),
+    descripcion text,
+    fecha_limite date,
+    puntaje_maximo integer,
+    instrucciones text
+);
+
+
+ALTER TABLE public.tareas OWNER TO postgres;
+
+--
+-- Name: tareas_tarea_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.tareas_tarea_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tareas_tarea_id_seq OWNER TO postgres;
+
+--
+-- Name: tareas_tarea_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.tareas_tarea_id_seq OWNED BY public.tareas.tarea_id;
+
+
+--
+-- Name: tipo_grupo; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.tipo_grupo (
+    tipo_grupo_id integer NOT NULL,
+    descripcion text,
+    color_asociado character varying(20),
+    icono text,
+    prioridad integer
+);
+
+
+ALTER TABLE public.tipo_grupo OWNER TO postgres;
+
+--
+-- Name: tipo_grupo_tipo_grupo_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.tipo_grupo_tipo_grupo_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tipo_grupo_tipo_grupo_id_seq OWNER TO postgres;
+
+--
+-- Name: tipo_grupo_tipo_grupo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.tipo_grupo_tipo_grupo_id_seq OWNED BY public.tipo_grupo.tipo_grupo_id;
+
+
+--
+-- Name: user_roles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.user_roles (
     usuario_id integer NOT NULL,
-    nombre character varying(100),
-    apellido character varying(100),
-    email tbd_application.email_type,
-    contrasena tbd_application.password_type,
-    fecha_nacimiento date,
-    foto_perfil text,
-    CONSTRAINT ckc_email_usuarios CHECK (((email IS NULL) OR ((email)::text ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$'::text)))
+    rol_id integer NOT NULL
 );
 
 
-ALTER TABLE tbd_application.usuarios OWNER TO phpadmin;
+ALTER TABLE public.user_roles OWNER TO postgres;
 
 --
--- Name: usuariosroles; Type: TABLE; Schema: tbd_application; Owner: phpadmin
+-- Name: usuarios; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE tbd_application.usuariosroles (
-    rol_usuario_id integer NOT NULL,
+CREATE TABLE public.usuarios (
     usuario_id integer NOT NULL,
-    roles_id integer NOT NULL
+    nombre character varying(255) NOT NULL,
+    apellido character varying(255) NOT NULL,
+    email character varying(255) NOT NULL,
+    contrasena bytea NOT NULL,
+    fecha_creacion date NOT NULL
 );
 
 
-ALTER TABLE tbd_application.usuariosroles OWNER TO phpadmin;
+ALTER TABLE public.usuarios OWNER TO postgres;
+
+--
+-- Name: usuarios_usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.usuarios_usuario_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.usuarios_usuario_id_seq OWNER TO postgres;
+
+--
+-- Name: usuarios_usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.usuarios_usuario_id_seq OWNED BY public.usuarios.usuario_id;
+
 
 --
 -- Name: archivosestudiantestareas; Type: TABLE; Schema: tbd_application; Owner: postgres
@@ -445,7 +697,7 @@ CREATE TABLE tbd_application.documentosarchivostareas (
     grupo_id integer NOT NULL,
     extension tbd_application.extension_doc,
     contenido_url text,
-    CONSTRAINT ckc_extension_document CHECK (((extension IS NULL) OR ((extension)::text = ANY ((ARRAY['pdf'::character varying, 'epub'::character varying, 'txt'::character varying, 'doc'::character varying, 'docx'::character varying])::text[]))))
+    CONSTRAINT ckc_extension_document CHECK (((extension IS NULL) OR ((extension)::text = ANY (ARRAY[('pdf'::character varying)::text, ('epub'::character varying)::text, ('txt'::character varying)::text, ('doc'::character varying)::text, ('docx'::character varying)::text]))))
 );
 
 
@@ -679,7 +931,7 @@ CREATE TABLE tbd_application.imagenesarchivostareas (
     resolucion character varying(50),
     descripcion text,
     contenido_url text,
-    CONSTRAINT ckc_extension_imagenes CHECK (((extension IS NULL) OR ((extension)::text = ANY ((ARRAY['jpg'::character varying, 'jpeg'::character varying, 'png'::character varying, 'gif'::character varying, 'bmp'::character varying])::text[]))))
+    CONSTRAINT ckc_extension_imagenes CHECK (((extension IS NULL) OR ((extension)::text = ANY (ARRAY[('jpg'::character varying)::text, ('jpeg'::character varying)::text, ('png'::character varying)::text, ('gif'::character varying)::text, ('bmp'::character varying)::text]))))
 );
 
 
@@ -815,6 +1067,19 @@ ALTER TABLE tbd_application.rel_funciones_rel_funcion_id_seq OWNER TO phpadmin;
 
 ALTER SEQUENCE tbd_application.rel_funciones_rel_funcion_id_seq OWNED BY tbd_application.rel_funciones.rel_funcion_id;
 
+
+--
+-- Name: roles; Type: TABLE; Schema: tbd_application; Owner: phpadmin
+--
+
+CREATE TABLE tbd_application.roles (
+    roles_id integer NOT NULL,
+    nombre character varying(100),
+    descripcion text
+);
+
+
+ALTER TABLE tbd_application.roles OWNER TO phpadmin;
 
 --
 -- Name: roles_roles_id_seq; Type: SEQUENCE; Schema: tbd_application; Owner: phpadmin
@@ -954,6 +1219,24 @@ ALTER SEQUENCE tbd_application.tipo_grupo_tipo_grupo_id_seq OWNED BY tbd_applica
 
 
 --
+-- Name: usuarios; Type: TABLE; Schema: tbd_application; Owner: phpadmin
+--
+
+CREATE TABLE tbd_application.usuarios (
+    usuario_id integer NOT NULL,
+    nombre character varying(100),
+    apellido character varying(100),
+    email tbd_application.email_type,
+    contrasena tbd_application.password_type,
+    fecha_nacimiento date,
+    foto_perfil text,
+    CONSTRAINT ckc_email_usuarios CHECK (((email IS NULL) OR ((email)::text ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$'::text)))
+);
+
+
+ALTER TABLE tbd_application.usuarios OWNER TO phpadmin;
+
+--
 -- Name: usuarios_usuario_id_seq; Type: SEQUENCE; Schema: tbd_application; Owner: phpadmin
 --
 
@@ -974,6 +1257,19 @@ ALTER TABLE tbd_application.usuarios_usuario_id_seq OWNER TO phpadmin;
 
 ALTER SEQUENCE tbd_application.usuarios_usuario_id_seq OWNED BY tbd_application.usuarios.usuario_id;
 
+
+--
+-- Name: usuariosroles; Type: TABLE; Schema: tbd_application; Owner: phpadmin
+--
+
+CREATE TABLE tbd_application.usuariosroles (
+    rol_usuario_id integer NOT NULL,
+    usuario_id integer NOT NULL,
+    roles_id integer NOT NULL
+);
+
+
+ALTER TABLE tbd_application.usuariosroles OWNER TO phpadmin;
 
 --
 -- Name: usuariosroles_rol_usuario_id_seq; Type: SEQUENCE; Schema: tbd_application; Owner: phpadmin
@@ -1029,7 +1325,7 @@ CREATE TABLE tbd_application.videosarchivostareas (
     calidad character varying(50),
     extension tbd_application.extension_video,
     contenido_url text,
-    CONSTRAINT ckc_extension_videosar CHECK (((extension IS NULL) OR ((extension)::text = ANY ((ARRAY['mov'::character varying, 'mp4'::character varying, 'wmv'::character varying, 'avi'::character varying, 'avchd'::character varying, 'flv'::character varying])::text[]))))
+    CONSTRAINT ckc_extension_videosar CHECK (((extension IS NULL) OR ((extension)::text = ANY (ARRAY[('mov'::character varying)::text, ('mp4'::character varying)::text, ('wmv'::character varying)::text, ('avi'::character varying)::text, ('avchd'::character varying)::text, ('flv'::character varying)::text]))))
 );
 
 
@@ -1050,6 +1346,48 @@ CREATE VIEW tbd_application.view_roles_usuario AS
 
 
 ALTER TABLE tbd_application.view_roles_usuario OWNER TO phpadmin;
+
+--
+-- Name: grupos grupo_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.grupos ALTER COLUMN grupo_id SET DEFAULT nextval('public.grupos_grupo_id_seq'::regclass);
+
+
+--
+-- Name: logs id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.logs ALTER COLUMN id SET DEFAULT nextval('public.logs_id_seq'::regclass);
+
+
+--
+-- Name: roles rol_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.roles ALTER COLUMN rol_id SET DEFAULT nextval('public.roles_rol_id_seq'::regclass);
+
+
+--
+-- Name: tareas tarea_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tareas ALTER COLUMN tarea_id SET DEFAULT nextval('public.tareas_tarea_id_seq'::regclass);
+
+
+--
+-- Name: tipo_grupo tipo_grupo_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tipo_grupo ALTER COLUMN tipo_grupo_id SET DEFAULT nextval('public.tipo_grupo_tipo_grupo_id_seq'::regclass);
+
+
+--
+-- Name: usuarios usuario_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuarios ALTER COLUMN usuario_id SET DEFAULT nextval('public.usuarios_usuario_id_seq'::regclass);
+
 
 --
 -- Name: archivosestudiantestareas archivo_estudiante_tarea_; Type: DEFAULT; Schema: tbd_application; Owner: postgres
@@ -1157,265 +1495,494 @@ ALTER TABLE ONLY tbd_application.usuariosroles ALTER COLUMN rol_usuario_id SET D
 
 
 --
+-- Data for Name: Atracciones; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."Atracciones" (id_atraccion, nombre, descripcion, id_pais, url_foto, estado, maps) FROM stdin;
+\.
+
+
+--
+-- Data for Name: educadores; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.educadores (educador_id, especialidad, grado_academico, biografia) FROM stdin;
+2	\N	\N	\N
+18	\N	\N	\N
+\.
+
+
+--
+-- Data for Name: estudiantes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.estudiantes (estudiante_id, matricula, codigo, carrera) FROM stdin;
+1	\N	191789945	\N
+17	\N	611451639	\N
+\.
+
+
+--
+-- Data for Name: estudiantesgrupos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.estudiantesgrupos (estudiante_id, grupo_id, educador_id) FROM stdin;
+1	1	18
+\.
+
+
+--
+-- Data for Name: grupos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.grupos (educador_id, grupo_id, tipo_grupo_id, nombre, descripcion, capacidad_maxima, codigo_grupo) FROM stdin;
+18	1	1	Fisica-III	Fisica 2-2024	\N	494cf83
+\.
+
+
+--
+-- Data for Name: logs; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.logs (id, user_name, user_ip, action, details, "timestamp") FROM stdin;
+2	dede eded	127.0.0.1	insert	Insert: <Usuarios(usuario_id=17, nombre=dede, apellido=eded, email=dce@dd.com, fecha_creacion=2023-12-06)>	2023-12-06 18:55:00.21872
+3	Marcelo Flores	127.0.0.1	insert	Insert: <Tipo_grupo(tipo_grupo_id=1, descripcion=Fisica 2-2024, color_asociado=#1D1910, icono=/static/assets/img/Temp/bg/9.png, prioridad=5)>	2023-12-06 19:22:33.946315
+5	Julian Rodriguez	127.0.0.1	insert	Insert: <Estudiantesgrupos(estudiante_id=1, grupo_id=1, educador_id=18)>	2023-12-06 19:30:38.148064
+1	Marcelo Flores	127.0.0.1	insert	Insert: <Usuarios(usuario_id=18, nombre=Marcelo, apellido=Flores, email=floresM@gmail.com, fecha_creacion=2023-12-06)>	2023-12-06 18:55:00.21878
+4	Marcelo Flores	127.0.0.1	insert	Insert: <Grupos(educador_id=18, grupo_id=1, tipo_grupo_id=1, nombre=Fisica-III, descripcion=Fisica 2-2024, capacidad_maxima=None)>	2023-12-06 19:22:33.956041
+\.
+
+
+--
+-- Data for Name: roles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.roles (rol_id, nombre) FROM stdin;
+1	Administrador
+2	Estudiante
+3	Educador
+\.
+
+
+--
+-- Data for Name: tareas; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tareas (tarea_id, educador_id, grupo_id, titulo, descripcion, fecha_limite, puntaje_maximo, instrucciones) FROM stdin;
+\.
+
+
+--
+-- Data for Name: tipo_grupo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tipo_grupo (tipo_grupo_id, descripcion, color_asociado, icono, prioridad) FROM stdin;
+1	Fisica 2-2024	#1D1910	/static/assets/img/Temp/bg/9.png	5
+\.
+
+
+--
+-- Data for Name: user_roles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.user_roles (usuario_id, rol_id) FROM stdin;
+1	1
+2	3
+3	2
+4	3
+5	2
+6	2
+7	3
+8	3
+9	2
+10	2
+11	2
+12	3
+13	3
+14	2
+15	2
+16	2
+17	2
+18	3
+\.
+
+
+--
+-- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.usuarios (usuario_id, nombre, apellido, email, contrasena, fecha_creacion) FROM stdin;
+1	Julian	Rodriguez	juliancitobz13@gmail.com	\\x636632333133656230313234643433393930316561386231336235306264643739353438653765366235353862323431646532356437336431366130373838306337396139313634353333643133623032366163366637643962633962643835333266366666353834383236356231373535623031396535393164346431333832636430396163613762383936386464306662613731366531343535323364636430343439636634313433373063663735623661353437373161303837323737	2023-12-04
+2	Flores	Marcelo	flores@gmail.com	\\x653161316133653238316533653933343333383161363666633363383765393836343338373931636165643565313539653538643661356363643433633164623739376666626366663433396236333536663630383639323664383566613663356634323837646534653839633933333165303762333765333562346132646139356233346437353735623032343263303531663061373262653036346639653839353366613330633534346562666361653131646665306233363137613136	2023-12-05
+3	Daniel	Mendoza	danijo@gmail.com	\\x616432326231383161363236356234333334343432636539633232616330396664313034376131353238393330343466623133313636376535373331626566366431636133323437313733646463393939393031323665373030663931383136653739653938613937646432383731316265616666353238323364323437646535663831333335336630616534356330306633376663666135643139353137643033313033663461303864323266623631303033663835333932333339316365	2023-12-05
+4	Flores	Marcelo	marcelo@gmail.com	\\x303162646135373332633166333333346136663637326461333833613431383833643362323335383530376239623763613863346261616433626664303636643332386665643736316534383763313337386662663833386366366636663237633365333832653938643636383662636333633133386232393737306137333166633365653530303962643038366565303934343463393730663564616333333936626233633665643439343832396638643133376164326134343537303730	2023-12-05
+5	crcsr	rcsrc	crsc@hrcje.com	\\x663230653163393134653636303939326463643466323465326231343064663962666665356331336661396366663466616530653436623139626466386435343364636365646635313132643437376234346661636438613732333662376663633139353339303930333339646634373435623961333763383361623838343566323264316137616236363261353839633236336537343466383065306538663531613133343938613533333030326163623531353539323635386638386562	2023-12-05
+6	julian	ecxe	j@gmail.com	\\x373663666161653935626130313739373834363530636363616535313132636265663761323638623433666338633034373562656535323334336637356561326339633437356139396533633030343838663935616464636630303332383638623761366332373664323063343062623036363731626161346564616261383532306165646139306332336233666161373365316530346633376133386437303537376131393064363764623034333834353536663532356130643839363138	2023-12-05
+7	csc	ecec	cxe@cdsc.com	\\x336465633838613535396238393366306464386633313165373861363730386538393161323237393662626233356338376464336164343935613336303133633635623234663338613266326132393035333436633838663164663138366562613139336162646162373663383137383265333437336338666534396661616631666238356166303631393764356232663938663166623834663565333762623065313834353838623736633137336562643364376261663138326632336132	2023-12-06
+8	swx	wxqwx	cd@gmail.com	\\x613337396438316235343363313063346430653932643235343838626332386664373966313361633532666237613664363137316566333938353736636130646165626666393333373631346466616634363234633664386564386634303265323862636465626230323466373662356432623465643334323935636264636463333962393039663361343030323732656436633039346635393661633939353166393664383337356339323931393531303336306138376433316661653463	2023-12-06
+9	esfces	sefces	cszc@gmal.com	\\x613138326363333362646330616532373166613736396132326137653962633831633439363835313738326536383031323365626636623164373061343335356263323132633063626364613835333038633232633431373463393366646233616237343138616563633536306164373933643833376662636134633166636238333730663939396261613635323335373439616634303165656435333938666161353230343533323063636534306366363733363035323936323739306263	2023-12-06
+10	dsqwds	ds3qwd	dswq@sdqw	\\x623430623033633931663562363164396330646430613232396237663666366334333931666333376133636462366636633038653835366536343833653339336233633839623461616431326232646564396665356565383039393834383634326334653265386638376338643966333562313134396639396561393166633631353530306364613232643332366233643536623636343132346335333761353663633439626235316362663230336634316639303066353430363530303934	2023-12-06
+11	saa	aqq	qa@ss	\\x373832333061303439666462653863396266666232353830323634616131626566633339366335383936666437313433376632616134353139343634666663393663346262346536363230656339333063663730363161633962643137333334366236653663353764653033623366336563646663656136666562623863656234353439303636303634353331633239633738383263643336396335663364323764313538666364383030623038343131633565646437313635316531663138	2023-12-06
+12	dx	xcexc	edxe@xe.com	\\x386366623633656538306632383963626330316337356263386436313366303739636535646265306131613537613564326331373464393431323138613636643931303239613963313933306363666636653439333435633836616534393163656537356163313838376133346466396661633366306534313561633437383635373938346366373863363866316334656331336136626238386630323235363865393564616436653631363739303330643766386666346630623538323235	2023-12-06
+13	Flores	Marcelo	flore@gmail.com	\\x333361666435646365363732613265616564626666616133363036643834623938666137326638306163346466353431356264666139343838386236386138663338333563623939636366396562613433613933386134613335336432633666626534633238316463356362623435356532636563613033653739383530373030623136333465313036663735386535356535663664363933633161353661303936326336303332303533396438393165393432663238636135366535666336	2023-12-06
+14	ded	ede	de@jde.com	\\x623435373333623266306662616664383835616361316461666239613437363939383537346530663437636665633064306262316537643933306330353362653866323463666337346333353733363561323437626134336331386231363765626337646239646435386163396134626134313831383564353861666262653863333566633038636336666130383234643164613630383539303261363664636663626163373530376363383839343864386664373839316232653130346139	2023-12-06
+15	cedc	ced	21@cd	\\x383632643564346237623830623239663935613630306665383661356232346635343765633564383137303634666239646564626566656432656630366264316539303235393839626465303230646366663431336561313966323930393064636463303962323736346135393938363063333730353233393834376461396234383133636266633038353437363961633639623732616531626532363435353764376366363062636237336536343536653237333734316338636661343861	2023-12-06
+16	ece	cedc	ce@gmai.com	\\x643065343063353133316362646234373734616362343130643237326133363531663662373461333266363237613032353337643463633634626539373334363163323935373938663235613335643065346630303834323131393162383935326465386163656237303935616534353331323336356165636164663661666563333264343435383537383539303338643764326532356466616365333062393464613633313463306630353762646539323764653966356132643331623636	2023-12-06
+17	dede	eded	dce@dd.com	\\x343030653761393437313464333466343037393864623961613466616563336663613832666237336364323237323735623834646537666163666165336431623531356532363639363061356431363434326133336130656535353961306432373434363963313332336636633965366636646563663134306562353432363361386462366534343061663032616461383339303731356462346633616535346534666333323036363965643865663232323135626330346566623534303532	2023-12-06
+18	Marcelo	Flores	floresM@gmail.com	\\x346566363039343030353763306530373862356235353133373737313039396432643861323638646639653531303838353839653436373339656330333763383033323930306366646639336537613565313764356366323263656161366636636538303237383631616638393734303839623166383739373035366636313839323165646164363739333564653339383836396233613935313464613862336364613866383166313133636536663065333661393361313739393538353961	2023-12-06
+\.
+
+
+--
 -- Data for Name: archivosestudiantestareas; Type: TABLE DATA; Schema: tbd_application; Owner: postgres
 --
 
+COPY tbd_application.archivosestudiantestareas (archivo_estudiante_tarea_, estudiante_id, tarea_id, educador_id, grupo_id, fecha_subida, fecha_modificacion, tamano) FROM stdin;
+\.
 
 
 --
 -- Data for Name: archivostareas; Type: TABLE DATA; Schema: tbd_application; Owner: postgres
 --
 
+COPY tbd_application.archivostareas (archivo_tarea_id, tarea_id, educador_id, grupo_id, fecha_subida, fecha_modificacion, tamano) FROM stdin;
+\.
 
 
 --
 -- Data for Name: documentosarchivosestudiantesta; Type: TABLE DATA; Schema: tbd_application; Owner: postgres
 --
 
+COPY tbd_application.documentosarchivosestudiantesta (archivo_estudiante_tarea_, estudiante_id, tarea_id, educador_id, grupo_id, extension, contenido_url) FROM stdin;
+\.
 
 
 --
 -- Data for Name: documentosarchivostareas; Type: TABLE DATA; Schema: tbd_application; Owner: postgres
 --
 
+COPY tbd_application.documentosarchivostareas (archivo_tarea_id, tarea_id, educador_id, grupo_id, extension, contenido_url) FROM stdin;
+\.
 
 
 --
 -- Data for Name: educadores; Type: TABLE DATA; Schema: tbd_application; Owner: postgres
 --
 
+COPY tbd_application.educadores (educador_id, especialidad, grado_academico, biografia) FROM stdin;
+\.
 
 
 --
 -- Data for Name: estudiantes; Type: TABLE DATA; Schema: tbd_application; Owner: postgres
 --
 
+COPY tbd_application.estudiantes (estudiante_id, matricula, codigo, carrera) FROM stdin;
+\.
 
 
 --
 -- Data for Name: estudiantesgrupos; Type: TABLE DATA; Schema: tbd_application; Owner: postgres
 --
 
+COPY tbd_application.estudiantesgrupos (estudiante_grupo_id, educador_id, grupo_id, estudiante_id, fecha_registro, hora_registro) FROM stdin;
+\.
 
 
 --
 -- Data for Name: estudiantestareas; Type: TABLE DATA; Schema: tbd_application; Owner: postgres
 --
 
+COPY tbd_application.estudiantestareas (estudiante_id, tarea_id, educador_id, grupo_id, estado) FROM stdin;
+\.
 
 
 --
 -- Data for Name: funciones; Type: TABLE DATA; Schema: tbd_application; Owner: phpadmin
 --
 
-INSERT INTO tbd_application.funciones (funcion_id, nombre, descripcion, procedimiento, funcion) VALUES (1, 'tareas', '"Entity-Type" encargada del historico de <tareas> de un <educador>', false, false);
-INSERT INTO tbd_application.funciones (funcion_id, nombre, descripcion, procedimiento, funcion) VALUES (2, 'grupos', '"Entity-Type" encargada del historico de <grupos> de un <educador>', false, false);
-INSERT INTO tbd_application.funciones (funcion_id, nombre, descripcion, procedimiento, funcion) VALUES (3, 'estudiantestareas', '"Entity-Type" encargada del historico de <tareas> de un <estudiante>', false, false);
-INSERT INTO tbd_application.funciones (funcion_id, nombre, descripcion, procedimiento, funcion) VALUES (4, 'estudiantesgrupos', '"Entity-Type" encargada del historico de <grupos> de un <estudiante>', false, false);
-INSERT INTO tbd_application.funciones (funcion_id, nombre, descripcion, procedimiento, funcion) VALUES (5, 'get_rol', '"Function" encargada de leer los <roles> de un <usuario> registrado', false, true);
-INSERT INTO tbd_application.funciones (funcion_id, nombre, descripcion, procedimiento, funcion) VALUES (6, 'register_session', '"Function" de registrar las <sesiones> de un <usuario> ', false, true);
-INSERT INTO tbd_application.funciones (funcion_id, nombre, descripcion, procedimiento, funcion) VALUES (7, 'get_AccionesByRol', '"Funcion" encargada de leer las <funciones> de un <rol>', false, true);
-INSERT INTO tbd_application.funciones (funcion_id, nombre, descripcion, procedimiento, funcion) VALUES (9, 'get_TareasByGrupo', '"Funcion" encargada de leer las <tareas> de un <grupo>', false, true);
-INSERT INTO tbd_application.funciones (funcion_id, nombre, descripcion, procedimiento, funcion) VALUES (10, 'set_TareasEnUnGrupo', '"Procedure" encargada de registrar <tareas> en un <grupo>', true, false);
-INSERT INTO tbd_application.funciones (funcion_id, nombre, descripcion, procedimiento, funcion) VALUES (11, 'set_TareaEstudiante', '"Procedure" encargada de registrar <tareasestudiantes>', true, false);
-INSERT INTO tbd_application.funciones (funcion_id, nombre, descripcion, procedimiento, funcion) VALUES (8, 'get_Grupos', '"Funcion" encargada de leer los <grupos> de un <educador>', false, true);
-INSERT INTO tbd_application.funciones (funcion_id, nombre, descripcion, procedimiento, funcion) VALUES (12, 'get_GruposEstudiantes', '"Funcion" encargada de leer los <grupos> de un <estudiante>', false, true);
+COPY tbd_application.funciones (funcion_id, nombre, descripcion, procedimiento, funcion) FROM stdin;
+1	tareas	"Entity-Type" encargada del historico de <tareas> de un <educador>	f	f
+2	grupos	"Entity-Type" encargada del historico de <grupos> de un <educador>	f	f
+3	estudiantestareas	"Entity-Type" encargada del historico de <tareas> de un <estudiante>	f	f
+4	estudiantesgrupos	"Entity-Type" encargada del historico de <grupos> de un <estudiante>	f	f
+5	get_rol	"Function" encargada de leer los <roles> de un <usuario> registrado	f	t
+6	register_session	"Function" de registrar las <sesiones> de un <usuario> 	f	t
+7	get_AccionesByRol	"Funcion" encargada de leer las <funciones> de un <rol>	f	t
+9	get_TareasByGrupo	"Funcion" encargada de leer las <tareas> de un <grupo>	f	t
+10	set_TareasEnUnGrupo	"Procedure" encargada de registrar <tareas> en un <grupo>	t	f
+11	set_TareaEstudiante	"Procedure" encargada de registrar <tareasestudiantes>	t	f
+8	get_Grupos	"Funcion" encargada de leer los <grupos> de un <educador>	f	t
+12	get_GruposEstudiantes	"Funcion" encargada de leer los <grupos> de un <estudiante>	f	t
+\.
 
 
 --
 -- Data for Name: gestiones; Type: TABLE DATA; Schema: tbd_application; Owner: postgres
 --
 
+COPY tbd_application.gestiones (gestion_id, periodo, fecha_inicio, fecha_fin, descripcion) FROM stdin;
+\.
 
 
 --
 -- Data for Name: grupos; Type: TABLE DATA; Schema: tbd_application; Owner: postgres
 --
 
+COPY tbd_application.grupos (educador_id, grupo_id, materia_id, gestion_id, tipo_grupo_id, nombre, descripcion, capacidad_maxima) FROM stdin;
+\.
 
 
 --
 -- Data for Name: imagenesarchivosestudiantestare; Type: TABLE DATA; Schema: tbd_application; Owner: postgres
 --
 
+COPY tbd_application.imagenesarchivosestudiantestare (archivo_estudiante_tarea_, estudiante_id, tarea_id, educador_id, grupo_id, extension, resolucion, descripcion, contenido_url) FROM stdin;
+\.
 
 
 --
 -- Data for Name: imagenesarchivostareas; Type: TABLE DATA; Schema: tbd_application; Owner: postgres
 --
 
+COPY tbd_application.imagenesarchivostareas (archivo_tarea_id, tarea_id, educador_id, grupo_id, extension, resolucion, descripcion, contenido_url) FROM stdin;
+\.
 
 
 --
 -- Data for Name: log_tbd_application_2023_10; Type: TABLE DATA; Schema: tbd_application; Owner: phpadmin
 --
 
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (1, 0, '::1', 'usuarios', 'SELECT', 'SELECT * FROM tbd_application.usuarios WHERE email = ''juanperez@gmail.com''', 'Consulta de usuarios por email', '2023-10-15', '22:07:23.354859');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (2, 0, '::1', 'usuarios', 'SELECT', 'SELECT * FROM tbd_application.usuarios WHERE email = ''juanperez@gmail.com''', 'Consulta de usuarios por email', '2023-10-15', '22:10:20.003616');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (3, 4, '::1', 'desactivar_sesiones_previas', 'UPDATE', 'UPDATE tbd_application.sesions', 'eL usuario 4 ha iniciado sesión', '2023-10-15', '22:10:23.210384');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (4, 4, '::1', 'register_session', 'INSERT', 'INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);', 'Se registro una nueva sesion para el usuario 4 con el pid 20128', '2023-10-15', '22:10:23.210384');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (5, 4, '::1', 'get_accionesbyrol', 'SELECT', 'SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;', 'Obtiene las acciones de un rol', '2023-10-15', '22:10:32.242492');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (6, 0, '::1', 'usuarios', 'SELECT', 'SELECT * FROM tbd_application.usuarios WHERE email = ''juanperez@gmail.com''', 'Consulta de usuarios por email', '2023-10-15', '22:16:50.697862');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (7, 4, '::1', 'desactivar_sesiones_previas', 'UPDATE', 'UPDATE tbd_application.sesions', 'eL usuario 4 ha iniciado sesión', '2023-10-15', '22:16:50.786116');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (8, 4, '::1', 'register_session', 'INSERT', 'INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);', 'Se registro una nueva sesion para el usuario 4 con el pid 26284', '2023-10-15', '22:16:50.786116');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (9, 4, '::1', 'get_accionesbyrol', 'SELECT', 'SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;', 'Obtiene las acciones de un rol', '2023-10-15', '22:16:51.286696');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (10, 0, '::1', 'usuarios', 'SELECT', 'SELECT * FROM tbd_application.usuarios WHERE email = ''marceloflores@gmail.com''', 'Consulta de usuarios por email', '2023-10-15', '22:17:56.632319');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (11, 0, '::1', 'usuarios', 'SELECT', 'SELECT * FROM tbd_application.usuarios WHERE email = ''marceloflores@gmail.com''', 'Consulta de usuarios por email', '2023-10-15', '22:18:05.919727');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (12, 5, '::1', 'desactivar_sesiones_previas', 'UPDATE', 'UPDATE tbd_application.sesions', 'eL usuario 5 ha iniciado sesión', '2023-10-15', '22:18:06.010761');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (13, 5, '::1', 'register_session', 'INSERT', 'INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);', 'Se registro una nueva sesion para el usuario 5 con el pid 21660', '2023-10-15', '22:18:06.010761');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (14, 0, '::1', 'usuarios', 'SELECT', 'SELECT * FROM tbd_application.usuarios WHERE email = ''marceloflores@gmail.com''', 'Consulta de usuarios por email', '2023-10-15', '22:19:10.039376');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (15, 5, '::1', 'desactivar_sesiones_previas', 'UPDATE', 'UPDATE tbd_application.sesions', 'eL usuario 5 ha iniciado sesión', '2023-10-15', '22:19:10.129318');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (16, 5, '::1', 'register_session', 'INSERT', 'INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);', 'Se registro una nueva sesion para el usuario 5 con el pid 17736', '2023-10-15', '22:19:10.129318');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (17, 0, '::1', 'usuarios', 'SELECT', 'SELECT * FROM tbd_application.usuarios WHERE email = ''marceloflores@gmail.com''', 'Consulta de usuarios por email', '2023-10-15', '22:19:14.185807');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (18, 5, '::1', 'desactivar_sesiones_previas', 'UPDATE', 'UPDATE tbd_application.sesions', 'eL usuario 5 ha iniciado sesión', '2023-10-15', '22:19:14.282759');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (19, 5, '::1', 'register_session', 'INSERT', 'INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);', 'Se registro una nueva sesion para el usuario 5 con el pid 21484', '2023-10-15', '22:19:14.282759');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (20, 0, '::1', 'usuarios', 'SELECT', 'SELECT * FROM tbd_application.usuarios WHERE email = ''marceloflores@gmail.com''', 'Consulta de usuarios por email', '2023-10-15', '22:20:45.785844');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (21, 5, '::1', 'desactivar_sesiones_previas', 'UPDATE', 'UPDATE tbd_application.sesions', 'eL usuario 5 ha iniciado sesión', '2023-10-15', '22:20:45.879732');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (22, 5, '::1', 'register_session', 'INSERT', 'INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);', 'Se registro una nueva sesion para el usuario 5 con el pid 28496', '2023-10-15', '22:20:45.879732');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (23, 5, '::1', 'get_accionesbyrol', 'SELECT', 'SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;', 'Obtiene las acciones de un rol', '2023-10-15', '22:20:46.38128');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (24, 0, '::1', 'usuarios', 'SELECT', 'SELECT * FROM tbd_application.usuarios WHERE email = ''juanperez@gmail.com''', 'Consulta de usuarios por email', '2023-10-15', '22:29:58.414382');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (25, 4, '::1', 'desactivar_sesiones_previas', 'UPDATE', 'UPDATE tbd_application.sesions', 'eL usuario 4 ha iniciado sesión', '2023-10-15', '22:29:58.504417');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (26, 4, '::1', 'register_session', 'INSERT', 'INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);', 'Se registro una nueva sesion para el usuario 4 con el pid 31420', '2023-10-15', '22:29:58.504417');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (27, 4, '::1', 'get_accionesbyrol', 'SELECT', 'SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;', 'Obtiene las acciones de un rol', '2023-10-15', '22:29:59.792026');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (28, 0, '::1', 'usuarios', 'SELECT', 'SELECT * FROM tbd_application.usuarios WHERE email = ''juanperez@gmail.com''', 'Consulta de usuarios por email', '2023-10-16', '07:16:37.759253');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (29, 4, '::1', 'desactivar_sesiones_previas', 'UPDATE', 'UPDATE tbd_application.sesions', 'eL usuario 4 ha iniciado sesión', '2023-10-16', '07:16:37.867571');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (30, 4, '::1', 'register_session', 'INSERT', 'INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);', 'Se registro una nueva sesion para el usuario 4 con el pid 4844', '2023-10-16', '07:16:37.867571');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (31, 4, '::1', 'get_accionesbyrol', 'SELECT', 'SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;', 'Obtiene las acciones de un rol', '2023-10-16', '07:16:38.3627');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (32, 0, '::1', 'usuarios', 'SELECT', 'SELECT * FROM tbd_application.usuarios WHERE email = ''juanperez@gmail.com''', 'Consulta de usuarios por email', '2023-10-16', '07:20:15.524092');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (33, 4, '::1', 'desactivar_sesiones_previas', 'UPDATE', 'UPDATE tbd_application.sesions', 'eL usuario 4 ha iniciado sesión', '2023-10-16', '07:20:15.634855');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (34, 4, '::1', 'register_session', 'INSERT', 'INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);', 'Se registro una nueva sesion para el usuario 4 con el pid 26588', '2023-10-16', '07:20:15.634855');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (35, 4, '::1', 'get_accionesbyrol', 'SELECT', 'SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;', 'Obtiene las acciones de un rol', '2023-10-16', '07:20:16.133733');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (36, 0, '::1', 'usuarios', 'SELECT', 'SELECT * FROM tbd_application.usuarios WHERE email = ''marceloflores@gmail.com''', 'Consulta de usuarios por email', '2023-10-16', '07:20:49.896016');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (37, 5, '::1', 'desactivar_sesiones_previas', 'UPDATE', 'UPDATE tbd_application.sesions', 'eL usuario 5 ha iniciado sesión', '2023-10-16', '07:20:50.002467');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (38, 5, '::1', 'register_session', 'INSERT', 'INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);', 'Se registro una nueva sesion para el usuario 5 con el pid 20580', '2023-10-16', '07:20:50.002467');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (39, 5, '::1', 'get_accionesbyrol', 'SELECT', 'SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;', 'Obtiene las acciones de un rol', '2023-10-16', '07:20:50.50189');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (40, 0, '::1', 'usuarios', 'SELECT', 'SELECT * FROM tbd_application.usuarios WHERE email = ''juanperez@gmail.com''', 'Consulta de usuarios por email', '2023-10-22', '10:40:50.711287');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (41, 4, '::1', 'desactivar_sesiones_previas', 'UPDATE', 'UPDATE tbd_application.sesions SET estado = false WHERE usuario_id =4 AND estado = true AND sesion_id <>42;', 'eL usuario 4 ha iniciado sesión', '2023-10-22', '10:40:50.882659');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (42, 4, '::1', 'register_session', 'INSERT', 'INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);', 'Se registro una nueva sesion para el usuario 4 con el pid 7468', '2023-10-22', '10:40:50.882659');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (43, 4, '::1', 'get_accionesbyrol', 'SELECT', 'SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;', 'Obtiene las acciones de un rol', '2023-10-22', '10:40:51.451763');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (44, 4, '::1', 'get_accionesbyrol', 'SELECT', 'SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;', 'Obtiene las acciones de un rol', '2023-10-22', '10:41:01.631908');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (45, 0, '::1', 'usuarios', 'SELECT', 'SELECT * FROM tbd_application.usuarios WHERE email = ''juanperez@gmail.com''', 'Consulta de usuarios por email', '2023-10-22', '10:44:57.00579');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (46, 4, '::1', 'desactivar_sesiones_previas', 'UPDATE', 'UPDATE tbd_application.sesions SET estado = false WHERE usuario_id =4 AND estado = true AND sesion_id <>43;', 'eL usuario 4 ha iniciado sesión', '2023-10-22', '10:44:57.11461');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (47, 4, '::1', 'register_session', 'INSERT', 'INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);', 'Se registro una nueva sesion para el usuario 4 con el pid 27392', '2023-10-22', '10:44:57.11461');
-INSERT INTO tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) VALUES (48, 4, '::1', 'get_accionesbyrol', 'SELECT', 'SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;', 'Obtiene las acciones de un rol', '2023-10-22', '10:44:57.616505');
+COPY tbd_application.log_tbd_application_2023_10 (id_log_evento, id_usuario, ip_usuario, funcion, operacion, consulta_ejecutada, descripcion_log, fecha_reg, hora_reg) FROM stdin;
+1	0	::1	usuarios	SELECT	SELECT * FROM tbd_application.usuarios WHERE email = 'juanperez@gmail.com'	Consulta de usuarios por email	2023-10-15	22:07:23.354859
+2	0	::1	usuarios	SELECT	SELECT * FROM tbd_application.usuarios WHERE email = 'juanperez@gmail.com'	Consulta de usuarios por email	2023-10-15	22:10:20.003616
+3	4	::1	desactivar_sesiones_previas	UPDATE	UPDATE tbd_application.sesions	eL usuario 4 ha iniciado sesión	2023-10-15	22:10:23.210384
+4	4	::1	register_session	INSERT	INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);	Se registro una nueva sesion para el usuario 4 con el pid 20128	2023-10-15	22:10:23.210384
+5	4	::1	get_accionesbyrol	SELECT	SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;	Obtiene las acciones de un rol	2023-10-15	22:10:32.242492
+6	0	::1	usuarios	SELECT	SELECT * FROM tbd_application.usuarios WHERE email = 'juanperez@gmail.com'	Consulta de usuarios por email	2023-10-15	22:16:50.697862
+7	4	::1	desactivar_sesiones_previas	UPDATE	UPDATE tbd_application.sesions	eL usuario 4 ha iniciado sesión	2023-10-15	22:16:50.786116
+8	4	::1	register_session	INSERT	INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);	Se registro una nueva sesion para el usuario 4 con el pid 26284	2023-10-15	22:16:50.786116
+9	4	::1	get_accionesbyrol	SELECT	SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;	Obtiene las acciones de un rol	2023-10-15	22:16:51.286696
+10	0	::1	usuarios	SELECT	SELECT * FROM tbd_application.usuarios WHERE email = 'marceloflores@gmail.com'	Consulta de usuarios por email	2023-10-15	22:17:56.632319
+11	0	::1	usuarios	SELECT	SELECT * FROM tbd_application.usuarios WHERE email = 'marceloflores@gmail.com'	Consulta de usuarios por email	2023-10-15	22:18:05.919727
+12	5	::1	desactivar_sesiones_previas	UPDATE	UPDATE tbd_application.sesions	eL usuario 5 ha iniciado sesión	2023-10-15	22:18:06.010761
+13	5	::1	register_session	INSERT	INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);	Se registro una nueva sesion para el usuario 5 con el pid 21660	2023-10-15	22:18:06.010761
+14	0	::1	usuarios	SELECT	SELECT * FROM tbd_application.usuarios WHERE email = 'marceloflores@gmail.com'	Consulta de usuarios por email	2023-10-15	22:19:10.039376
+15	5	::1	desactivar_sesiones_previas	UPDATE	UPDATE tbd_application.sesions	eL usuario 5 ha iniciado sesión	2023-10-15	22:19:10.129318
+16	5	::1	register_session	INSERT	INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);	Se registro una nueva sesion para el usuario 5 con el pid 17736	2023-10-15	22:19:10.129318
+17	0	::1	usuarios	SELECT	SELECT * FROM tbd_application.usuarios WHERE email = 'marceloflores@gmail.com'	Consulta de usuarios por email	2023-10-15	22:19:14.185807
+18	5	::1	desactivar_sesiones_previas	UPDATE	UPDATE tbd_application.sesions	eL usuario 5 ha iniciado sesión	2023-10-15	22:19:14.282759
+19	5	::1	register_session	INSERT	INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);	Se registro una nueva sesion para el usuario 5 con el pid 21484	2023-10-15	22:19:14.282759
+20	0	::1	usuarios	SELECT	SELECT * FROM tbd_application.usuarios WHERE email = 'marceloflores@gmail.com'	Consulta de usuarios por email	2023-10-15	22:20:45.785844
+21	5	::1	desactivar_sesiones_previas	UPDATE	UPDATE tbd_application.sesions	eL usuario 5 ha iniciado sesión	2023-10-15	22:20:45.879732
+22	5	::1	register_session	INSERT	INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);	Se registro una nueva sesion para el usuario 5 con el pid 28496	2023-10-15	22:20:45.879732
+23	5	::1	get_accionesbyrol	SELECT	SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;	Obtiene las acciones de un rol	2023-10-15	22:20:46.38128
+24	0	::1	usuarios	SELECT	SELECT * FROM tbd_application.usuarios WHERE email = 'juanperez@gmail.com'	Consulta de usuarios por email	2023-10-15	22:29:58.414382
+25	4	::1	desactivar_sesiones_previas	UPDATE	UPDATE tbd_application.sesions	eL usuario 4 ha iniciado sesión	2023-10-15	22:29:58.504417
+26	4	::1	register_session	INSERT	INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);	Se registro una nueva sesion para el usuario 4 con el pid 31420	2023-10-15	22:29:58.504417
+27	4	::1	get_accionesbyrol	SELECT	SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;	Obtiene las acciones de un rol	2023-10-15	22:29:59.792026
+28	0	::1	usuarios	SELECT	SELECT * FROM tbd_application.usuarios WHERE email = 'juanperez@gmail.com'	Consulta de usuarios por email	2023-10-16	07:16:37.759253
+29	4	::1	desactivar_sesiones_previas	UPDATE	UPDATE tbd_application.sesions	eL usuario 4 ha iniciado sesión	2023-10-16	07:16:37.867571
+30	4	::1	register_session	INSERT	INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);	Se registro una nueva sesion para el usuario 4 con el pid 4844	2023-10-16	07:16:37.867571
+31	4	::1	get_accionesbyrol	SELECT	SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;	Obtiene las acciones de un rol	2023-10-16	07:16:38.3627
+32	0	::1	usuarios	SELECT	SELECT * FROM tbd_application.usuarios WHERE email = 'juanperez@gmail.com'	Consulta de usuarios por email	2023-10-16	07:20:15.524092
+33	4	::1	desactivar_sesiones_previas	UPDATE	UPDATE tbd_application.sesions	eL usuario 4 ha iniciado sesión	2023-10-16	07:20:15.634855
+34	4	::1	register_session	INSERT	INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);	Se registro una nueva sesion para el usuario 4 con el pid 26588	2023-10-16	07:20:15.634855
+35	4	::1	get_accionesbyrol	SELECT	SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;	Obtiene las acciones de un rol	2023-10-16	07:20:16.133733
+36	0	::1	usuarios	SELECT	SELECT * FROM tbd_application.usuarios WHERE email = 'marceloflores@gmail.com'	Consulta de usuarios por email	2023-10-16	07:20:49.896016
+37	5	::1	desactivar_sesiones_previas	UPDATE	UPDATE tbd_application.sesions	eL usuario 5 ha iniciado sesión	2023-10-16	07:20:50.002467
+38	5	::1	register_session	INSERT	INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);	Se registro una nueva sesion para el usuario 5 con el pid 20580	2023-10-16	07:20:50.002467
+39	5	::1	get_accionesbyrol	SELECT	SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;	Obtiene las acciones de un rol	2023-10-16	07:20:50.50189
+40	0	::1	usuarios	SELECT	SELECT * FROM tbd_application.usuarios WHERE email = 'juanperez@gmail.com'	Consulta de usuarios por email	2023-10-22	10:40:50.711287
+41	4	::1	desactivar_sesiones_previas	UPDATE	UPDATE tbd_application.sesions SET estado = false WHERE usuario_id =4 AND estado = true AND sesion_id <>42;	eL usuario 4 ha iniciado sesión	2023-10-22	10:40:50.882659
+42	4	::1	register_session	INSERT	INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);	Se registro una nueva sesion para el usuario 4 con el pid 7468	2023-10-22	10:40:50.882659
+43	4	::1	get_accionesbyrol	SELECT	SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;	Obtiene las acciones de un rol	2023-10-22	10:40:51.451763
+44	4	::1	get_accionesbyrol	SELECT	SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;	Obtiene las acciones de un rol	2023-10-22	10:41:01.631908
+45	0	::1	usuarios	SELECT	SELECT * FROM tbd_application.usuarios WHERE email = 'juanperez@gmail.com'	Consulta de usuarios por email	2023-10-22	10:44:57.00579
+46	4	::1	desactivar_sesiones_previas	UPDATE	UPDATE tbd_application.sesions SET estado = false WHERE usuario_id =4 AND estado = true AND sesion_id <>43;	eL usuario 4 ha iniciado sesión	2023-10-22	10:44:57.11461
+47	4	::1	register_session	INSERT	INSERT INTO tbd_application.sesions(usuario_id, pid, estado, fecha, hora ) VALUES(user_id, client_pid, true, current_date, current_time);	Se registro una nueva sesion para el usuario 4 con el pid 27392	2023-10-22	10:44:57.11461
+48	4	::1	get_accionesbyrol	SELECT	SELECT f.nombre AS nombre_funcion FROM tbd_application.funciones f INNER JOIN tbd_application.rel_funciones rf on f.funcion_id = rf.funcion_id WHERE rf.roles_id = p_rol_id;	Obtiene las acciones de un rol	2023-10-22	10:44:57.616505
+\.
 
 
 --
 -- Data for Name: materias; Type: TABLE DATA; Schema: tbd_application; Owner: postgres
 --
 
+COPY tbd_application.materias (materia_id, nombre, codigo, creditos) FROM stdin;
+\.
 
 
 --
 -- Data for Name: rel_funciones; Type: TABLE DATA; Schema: tbd_application; Owner: phpadmin
 --
 
-INSERT INTO tbd_application.rel_funciones (estado, rel_funcion_id, funcion_id, roles_id, c, r, u, d) VALUES (NULL, 1, 5, 1, NULL, 'r', NULL, NULL);
-INSERT INTO tbd_application.rel_funciones (estado, rel_funcion_id, funcion_id, roles_id, c, r, u, d) VALUES (NULL, 2, 5, 2, NULL, 'r', NULL, NULL);
-INSERT INTO tbd_application.rel_funciones (estado, rel_funcion_id, funcion_id, roles_id, c, r, u, d) VALUES (NULL, 3, 6, 1, 'c', NULL, NULL, NULL);
-INSERT INTO tbd_application.rel_funciones (estado, rel_funcion_id, funcion_id, roles_id, c, r, u, d) VALUES (NULL, 4, 6, 2, 'c', NULL, NULL, NULL);
-INSERT INTO tbd_application.rel_funciones (estado, rel_funcion_id, funcion_id, roles_id, c, r, u, d) VALUES (NULL, 5, 7, 1, NULL, 'r', NULL, NULL);
-INSERT INTO tbd_application.rel_funciones (estado, rel_funcion_id, funcion_id, roles_id, c, r, u, d) VALUES (NULL, 6, 7, 2, NULL, 'r', NULL, NULL);
-INSERT INTO tbd_application.rel_funciones (estado, rel_funcion_id, funcion_id, roles_id, c, r, u, d) VALUES (NULL, 7, 8, 2, NULL, 'r', NULL, NULL);
-INSERT INTO tbd_application.rel_funciones (estado, rel_funcion_id, funcion_id, roles_id, c, r, u, d) VALUES (NULL, 8, 9, 2, NULL, 'r', NULL, NULL);
-INSERT INTO tbd_application.rel_funciones (estado, rel_funcion_id, funcion_id, roles_id, c, r, u, d) VALUES (NULL, 9, 10, 2, 'c', NULL, NULL, NULL);
-INSERT INTO tbd_application.rel_funciones (estado, rel_funcion_id, funcion_id, roles_id, c, r, u, d) VALUES (NULL, 10, 11, 1, 'c', NULL, NULL, NULL);
-INSERT INTO tbd_application.rel_funciones (estado, rel_funcion_id, funcion_id, roles_id, c, r, u, d) VALUES (NULL, 11, 12, 1, NULL, 'r', NULL, NULL);
+COPY tbd_application.rel_funciones (estado, rel_funcion_id, funcion_id, roles_id, c, r, u, d) FROM stdin;
+\N	1	5	1	\N	r	\N	\N
+\N	2	5	2	\N	r	\N	\N
+\N	3	6	1	c	\N	\N	\N
+\N	4	6	2	c	\N	\N	\N
+\N	5	7	1	\N	r	\N	\N
+\N	6	7	2	\N	r	\N	\N
+\N	7	8	2	\N	r	\N	\N
+\N	8	9	2	\N	r	\N	\N
+\N	9	10	2	c	\N	\N	\N
+\N	10	11	1	c	\N	\N	\N
+\N	11	12	1	\N	r	\N	\N
+\.
 
 
 --
 -- Data for Name: roles; Type: TABLE DATA; Schema: tbd_application; Owner: phpadmin
 --
 
-INSERT INTO tbd_application.roles (roles_id, nombre, descripcion) VALUES (1, 'estudiante', 'Rol de un usuario que es un "Estudiante"');
-INSERT INTO tbd_application.roles (roles_id, nombre, descripcion) VALUES (2, 'educador', 'Rol de un usuario que es un "Educador"');
+COPY tbd_application.roles (roles_id, nombre, descripcion) FROM stdin;
+1	estudiante	Rol de un usuario que es un "Estudiante"
+2	educador	Rol de un usuario que es un "Educador"
+\.
 
 
 --
 -- Data for Name: sesions; Type: TABLE DATA; Schema: tbd_application; Owner: phpadmin
 --
 
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (3, 4, 27044, false, '2023-10-13', '12:30:13.420872');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (4, 4, 28092, false, '2023-10-13', '12:36:06.878947');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (5, 4, 27860, false, '2023-10-13', '13:41:05.998622');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (6, 4, 20768, false, '2023-10-14', '21:16:27.456088');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (7, 4, 13728, false, '2023-10-14', '21:19:16.958217');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (8, 4, 28856, false, '2023-10-14', '21:21:02.550664');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (9, 4, 28924, false, '2023-10-14', '21:25:44.047136');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (10, 4, 268, false, '2023-10-14', '21:27:46.791196');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (11, 4, 22444, false, '2023-10-14', '21:34:51.506453');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (12, 4, 20172, false, '2023-10-14', '22:55:30.519505');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (13, 4, 12892, false, '2023-10-14', '23:04:57.791059');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (14, 4, 30684, false, '2023-10-14', '23:08:45.978951');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (15, 4, 11460, false, '2023-10-14', '23:09:13.797918');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (16, 4, 25484, false, '2023-10-14', '23:09:50.104024');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (17, 4, 19364, false, '2023-10-14', '23:15:50.279418');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (18, 4, 26996, false, '2023-10-14', '23:18:31.934777');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (19, 4, 21672, false, '2023-10-14', '23:25:43.167844');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (20, 4, 30996, false, '2023-10-15', '18:06:08.423981');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (21, 4, 31676, false, '2023-10-15', '18:06:45.897289');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (22, 4, 17184, false, '2023-10-15', '18:07:37.54212');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (23, 4, 24088, false, '2023-10-15', '18:07:45.583946');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (24, 4, 29652, false, '2023-10-15', '18:08:35.696755');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (25, 4, 31584, false, '2023-10-15', '18:10:44.80105');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (26, 4, 23736, false, '2023-10-15', '18:18:45.448429');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (27, 4, 13680, false, '2023-10-15', '18:22:23.512532');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (28, 4, 21376, false, '2023-10-15', '18:24:11.112392');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (29, 4, 26160, false, '2023-10-15', '18:26:17.708742');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (30, 4, 3284, false, '2023-10-15', '18:28:12.098653');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (31, 4, 28968, false, '2023-10-15', '18:28:35.065633');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (32, 4, 20128, false, '2023-10-15', '22:10:23.210384');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (33, 4, 26284, false, '2023-10-15', '22:16:50.786116');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (34, 5, 21660, false, '2023-10-15', '22:18:06.010761');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (35, 5, 17736, false, '2023-10-15', '22:19:10.129318');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (36, 5, 21484, false, '2023-10-15', '22:19:14.282759');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (37, 5, 28496, false, '2023-10-15', '22:20:45.879732');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (38, 4, 31420, false, '2023-10-15', '22:29:58.504417');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (39, 4, 4844, false, '2023-10-16', '07:16:37.867571');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (40, 4, 26588, false, '2023-10-16', '07:20:15.634855');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (41, 5, 20580, false, '2023-10-16', '07:20:50.002467');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (43, 4, 27392, true, '2023-10-22', '10:44:57.11461');
-INSERT INTO tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) VALUES (42, 4, 7468, false, '2023-10-22', '10:40:50.882659');
+COPY tbd_application.sesions (sesion_id, usuario_id, pid, estado, fecha, hora) FROM stdin;
+3	4	27044	f	2023-10-13	12:30:13.420872
+4	4	28092	f	2023-10-13	12:36:06.878947
+5	4	27860	f	2023-10-13	13:41:05.998622
+6	4	20768	f	2023-10-14	21:16:27.456088
+7	4	13728	f	2023-10-14	21:19:16.958217
+8	4	28856	f	2023-10-14	21:21:02.550664
+9	4	28924	f	2023-10-14	21:25:44.047136
+10	4	268	f	2023-10-14	21:27:46.791196
+11	4	22444	f	2023-10-14	21:34:51.506453
+12	4	20172	f	2023-10-14	22:55:30.519505
+13	4	12892	f	2023-10-14	23:04:57.791059
+14	4	30684	f	2023-10-14	23:08:45.978951
+15	4	11460	f	2023-10-14	23:09:13.797918
+16	4	25484	f	2023-10-14	23:09:50.104024
+17	4	19364	f	2023-10-14	23:15:50.279418
+18	4	26996	f	2023-10-14	23:18:31.934777
+19	4	21672	f	2023-10-14	23:25:43.167844
+20	4	30996	f	2023-10-15	18:06:08.423981
+21	4	31676	f	2023-10-15	18:06:45.897289
+22	4	17184	f	2023-10-15	18:07:37.54212
+23	4	24088	f	2023-10-15	18:07:45.583946
+24	4	29652	f	2023-10-15	18:08:35.696755
+25	4	31584	f	2023-10-15	18:10:44.80105
+26	4	23736	f	2023-10-15	18:18:45.448429
+27	4	13680	f	2023-10-15	18:22:23.512532
+28	4	21376	f	2023-10-15	18:24:11.112392
+29	4	26160	f	2023-10-15	18:26:17.708742
+30	4	3284	f	2023-10-15	18:28:12.098653
+31	4	28968	f	2023-10-15	18:28:35.065633
+32	4	20128	f	2023-10-15	22:10:23.210384
+33	4	26284	f	2023-10-15	22:16:50.786116
+34	5	21660	f	2023-10-15	22:18:06.010761
+35	5	17736	f	2023-10-15	22:19:10.129318
+36	5	21484	f	2023-10-15	22:19:14.282759
+37	5	28496	f	2023-10-15	22:20:45.879732
+38	4	31420	f	2023-10-15	22:29:58.504417
+39	4	4844	f	2023-10-16	07:16:37.867571
+40	4	26588	f	2023-10-16	07:20:15.634855
+41	5	20580	f	2023-10-16	07:20:50.002467
+43	4	27392	t	2023-10-22	10:44:57.11461
+42	4	7468	f	2023-10-22	10:40:50.882659
+\.
 
 
 --
 -- Data for Name: tareas; Type: TABLE DATA; Schema: tbd_application; Owner: postgres
 --
 
+COPY tbd_application.tareas (tarea_id, educador_id, grupo_id, titulo, descripcion, fecha_limite, puntaje_maximo, instrucciones) FROM stdin;
+\.
 
 
 --
 -- Data for Name: tipo_grupo; Type: TABLE DATA; Schema: tbd_application; Owner: postgres
 --
 
+COPY tbd_application.tipo_grupo (tipo_grupo_id, descripcion, color_asociado, icono, prioridad) FROM stdin;
+\.
 
 
 --
 -- Data for Name: usuarios; Type: TABLE DATA; Schema: tbd_application; Owner: phpadmin
 --
 
-INSERT INTO tbd_application.usuarios (usuario_id, nombre, apellido, email, contrasena, fecha_nacimiento, foto_perfil) VALUES (4, 'Juan', 'Perez', 'juanperez@gmail.com', '$2y$10$nuRyUT9j1Z.KoUCeyRsx/.C/xfKR3d0kQ/qZSC8mkz.XvRXhZ0F.S', '1990-01-01', NULL);
-INSERT INTO tbd_application.usuarios (usuario_id, nombre, apellido, email, contrasena, fecha_nacimiento, foto_perfil) VALUES (5, 'Marcelo', 'Flores', 'marceloflores@gmail.com', '$2y$10$nuRyUT9j1Z.KoUCeyRsx/.C/xfKR3d0kQ/qZSC8mkz.XvRXhZ0F.S', '1974-06-06', NULL);
+COPY tbd_application.usuarios (usuario_id, nombre, apellido, email, contrasena, fecha_nacimiento, foto_perfil) FROM stdin;
+4	Juan	Perez	juanperez@gmail.com	$2y$10$nuRyUT9j1Z.KoUCeyRsx/.C/xfKR3d0kQ/qZSC8mkz.XvRXhZ0F.S	1990-01-01	\N
+5	Marcelo	Flores	marceloflores@gmail.com	$2y$10$nuRyUT9j1Z.KoUCeyRsx/.C/xfKR3d0kQ/qZSC8mkz.XvRXhZ0F.S	1974-06-06	\N
+\.
 
 
 --
 -- Data for Name: usuariosroles; Type: TABLE DATA; Schema: tbd_application; Owner: phpadmin
 --
 
-INSERT INTO tbd_application.usuariosroles (rol_usuario_id, usuario_id, roles_id) VALUES (1, 4, 1);
-INSERT INTO tbd_application.usuariosroles (rol_usuario_id, usuario_id, roles_id) VALUES (2, 5, 2);
+COPY tbd_application.usuariosroles (rol_usuario_id, usuario_id, roles_id) FROM stdin;
+1	4	1
+2	5	2
+\.
 
 
 --
 -- Data for Name: videosarchivosestudiantestareas; Type: TABLE DATA; Schema: tbd_application; Owner: postgres
 --
 
+COPY tbd_application.videosarchivosestudiantestareas (archivo_estudiante_tarea_, estudiante_id, tarea_id, educador_id, grupo_id, duracion, calidad, extension, contenido_url) FROM stdin;
+\.
 
 
 --
 -- Data for Name: videosarchivostareas; Type: TABLE DATA; Schema: tbd_application; Owner: postgres
 --
 
+COPY tbd_application.videosarchivostareas (archivo_tarea_id, tarea_id, educador_id, grupo_id, duracion, calidad, extension, contenido_url) FROM stdin;
+\.
+
+
+--
+-- Name: grupos_grupo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.grupos_grupo_id_seq', 1, true);
+
+
+--
+-- Name: logs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.logs_id_seq', 5, true);
+
+
+--
+-- Name: roles_rol_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.roles_rol_id_seq', 3, true);
+
+
+--
+-- Name: tareas_tarea_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tareas_tarea_id_seq', 1, false);
+
+
+--
+-- Name: tipo_grupo_tipo_grupo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tipo_grupo_tipo_grupo_id_seq', 1, true);
+
+
+--
+-- Name: usuarios_usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.usuarios_usuario_id_seq', 18, true);
 
 
 --
@@ -1528,6 +2095,126 @@ SELECT pg_catalog.setval('tbd_application.usuarios_usuario_id_seq', 5, true);
 --
 
 SELECT pg_catalog.setval('tbd_application.usuariosroles_rol_usuario_id_seq', 2, true);
+
+
+--
+-- Name: Atracciones PK_ATRACCIONES; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Atracciones"
+    ADD CONSTRAINT "PK_ATRACCIONES" PRIMARY KEY (id_atraccion, id_pais);
+
+
+--
+-- Name: estudiantes PK_ESTUDIANTES; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.estudiantes
+    ADD CONSTRAINT "PK_ESTUDIANTES" PRIMARY KEY (estudiante_id);
+
+
+--
+-- Name: estudiantesgrupos PK_ESTUDIANTESGRUPOS; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.estudiantesgrupos
+    ADD CONSTRAINT "PK_ESTUDIANTESGRUPOS" PRIMARY KEY (estudiante_id, grupo_id, educador_id);
+
+
+--
+-- Name: grupos PK_GRUPOS; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.grupos
+    ADD CONSTRAINT "PK_GRUPOS" PRIMARY KEY (educador_id, grupo_id);
+
+
+--
+-- Name: roles PK_ROLES; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.roles
+    ADD CONSTRAINT "PK_ROLES" PRIMARY KEY (rol_id);
+
+
+--
+-- Name: tareas PK_TAREAS; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tareas
+    ADD CONSTRAINT "PK_TAREAS" PRIMARY KEY (tarea_id, educador_id, grupo_id);
+
+
+--
+-- Name: user_roles PK_USER_ROLES; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_roles
+    ADD CONSTRAINT "PK_USER_ROLES" PRIMARY KEY (usuario_id, rol_id);
+
+
+--
+-- Name: educadores educadores_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.educadores
+    ADD CONSTRAINT educadores_pkey PRIMARY KEY (educador_id);
+
+
+--
+-- Name: estudiantes estudiantes_codigo_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.estudiantes
+    ADD CONSTRAINT estudiantes_codigo_key UNIQUE (codigo);
+
+
+--
+-- Name: grupos grupos_codigo_grupo_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.grupos
+    ADD CONSTRAINT grupos_codigo_grupo_key UNIQUE (codigo_grupo);
+
+
+--
+-- Name: logs logs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.logs
+    ADD CONSTRAINT logs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: roles roles_nombre_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.roles
+    ADD CONSTRAINT roles_nombre_key UNIQUE (nombre);
+
+
+--
+-- Name: tipo_grupo tipo_grupo_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tipo_grupo
+    ADD CONSTRAINT tipo_grupo_pkey PRIMARY KEY (tipo_grupo_id);
+
+
+--
+-- Name: usuarios usuarios_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuarios
+    ADD CONSTRAINT usuarios_email_key UNIQUE (email);
+
+
+--
+-- Name: usuarios usuarios_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuarios
+    ADD CONSTRAINT usuarios_pkey PRIMARY KEY (usuario_id);
 
 
 --
@@ -2033,6 +2720,78 @@ CREATE UNIQUE INDEX videosarchivostareas_pk ON tbd_application.videosarchivostar
 --
 
 CREATE TRIGGER trg_desactivar_sesiones_previas AFTER INSERT ON tbd_application.sesions FOR EACH ROW EXECUTE PROCEDURE tbd_application.desactivar_sesiones_previas();
+
+
+--
+-- Name: educadores FK_EDUCADOR_IS_A_EDUC_USUARIOS; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.educadores
+    ADD CONSTRAINT "FK_EDUCADOR_IS_A_EDUC_USUARIOS" FOREIGN KEY (educador_id) REFERENCES public.usuarios(usuario_id);
+
+
+--
+-- Name: estudiantesgrupos FK_ESTUDIANTESGRUPOS_ESTUDIANTES; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.estudiantesgrupos
+    ADD CONSTRAINT "FK_ESTUDIANTESGRUPOS_ESTUDIANTES" FOREIGN KEY (estudiante_id) REFERENCES public.estudiantes(estudiante_id);
+
+
+--
+-- Name: estudiantesgrupos FK_ESTUDIANTESGRUPOS_GRUPOS; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.estudiantesgrupos
+    ADD CONSTRAINT "FK_ESTUDIANTESGRUPOS_GRUPOS" FOREIGN KEY (grupo_id, educador_id) REFERENCES public.grupos(grupo_id, educador_id);
+
+
+--
+-- Name: estudiantes FK_ESTUDIAN_IS_A_ESTU_USUARIOS; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.estudiantes
+    ADD CONSTRAINT "FK_ESTUDIAN_IS_A_ESTU_USUARIOS" FOREIGN KEY (estudiante_id) REFERENCES public.usuarios(usuario_id);
+
+
+--
+-- Name: grupos FK_GRUPOS_CLASIFICA_TIPO_GRU; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.grupos
+    ADD CONSTRAINT "FK_GRUPOS_CLASIFICA_TIPO_GRU" FOREIGN KEY (tipo_grupo_id) REFERENCES public.tipo_grupo(tipo_grupo_id);
+
+
+--
+-- Name: grupos FK_GRUPOS_USUARIOS__EDUCADOR; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.grupos
+    ADD CONSTRAINT "FK_GRUPOS_USUARIOS__EDUCADOR" FOREIGN KEY (educador_id) REFERENCES public.educadores(educador_id);
+
+
+--
+-- Name: tareas FK_TAREAS_GRUPOS; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tareas
+    ADD CONSTRAINT "FK_TAREAS_GRUPOS" FOREIGN KEY (educador_id, grupo_id) REFERENCES public.grupos(educador_id, grupo_id);
+
+
+--
+-- Name: user_roles user_roles_rol_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_roles
+    ADD CONSTRAINT user_roles_rol_id_fkey FOREIGN KEY (rol_id) REFERENCES public.roles(rol_id);
+
+
+--
+-- Name: user_roles user_roles_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_roles
+    ADD CONSTRAINT user_roles_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES public.usuarios(usuario_id);
 
 
 --
