@@ -66,7 +66,6 @@ class ServicioController {
 
 
     }
-
     public static function invoke(Router $router) {
         if (session_status() !== PHP_SESSION_ACTIVE) {
             session_start();

@@ -1,0 +1,13 @@
+.dataTables_paginate .login_button {
+    padding: 5px 10px;
+    margin: 0 2px;
+    border: 1px solid #ddd;
+    background-color: #F2B705; /* Color de fondo amarillo */
+    color: #000000; /* Establece el color del texto a negro */
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
