@@ -49,8 +49,10 @@
                         </div>
                         <!--end::Logo and search-->
                         <?php
-                        include  __DIR__ . '/templates/navbar.php';
+
+                        include  __DIR__ . '/templates/header/header.php';
                         ?>
+
                     </div>
                     <!--end::Header primary container-->
                 </div>
@@ -1492,7 +1494,9 @@
             </div>
             <!--end::Header-->
             <!--begin::Wrapper-->
+            <!--cargado del los users-->
             <?php
+
             include  __DIR__ . '/templates/wrapper.php';
             ?>
             <!--end::Wrapper-->
