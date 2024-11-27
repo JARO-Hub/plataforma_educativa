@@ -86,6 +86,58 @@ class ServicioController {
 
     }
 
+    public static function delete (Router $router, $id){
+        $alertas = [];
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+        ini_set('max_execution_time', 300); // 5 minutos
+        ini_set('memory_limit', '512M');
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $data = json_decode(file_get_contents('php://input'), true);
+                if ($data === null || !array_key_exists('password', $data)) {
+                    throw new \Exception('Ingrese la contraseña por favor');
+                }
+                $usuario = new SambaShare('root', $data['password'], $id, '', '', '', '');
+
+                if(empty($alertas)) {
+                    /** @var SambaShare $usersamba */
+                    $user = array_filter($usuario->all(), function ($usersamba) use ($id) {
+                        return $usersamba->name === $id;
+                    });
+                    if (empty($user)) {
+                        $alertas['error'][] = 'Recurso no encontrado';
+                    }
+
+                    $result = $usuario->deleteSharedDirectory($id);
+                    if($result){
+                        $alertas['success'][] = 'Usuario eliminado correctamente';
+                    }else{
+                        $alertas['error2'][] = 'Error al eliminar el usuario';
+                    }
+                }
+            } catch (\Exception $e) {
+                $alertas['error'][] = $e->getMessage();
+            }
+
+            // Establecer el código de respuesta HTTP
+            http_response_code(empty($alertas['error']) ? 200 : 400);
+
+            // Devolver la respuesta como JSON
+            header('Content-Type: application/json');
+            echo json_encode(['alertas' => $alertas]);
+            return;
+        } else {
+            $alertas['error'][] = 'Método no permitido';
+            http_response_code(405); // Método no permitido
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode(['alertas' => $alertas]);
+    }
+
     public static function actualizar(Router $router) {
         session_start();
         isAdmin();
