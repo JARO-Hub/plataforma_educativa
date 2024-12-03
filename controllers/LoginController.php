@@ -159,7 +159,7 @@ class LoginController {
         ]);
     }
 
-    public static function crear(Router $router) {
+    /*public static function crear(Router $router) {
         $usuario = new Usuario;
 
         // Alertas vacias
@@ -200,7 +200,92 @@ class LoginController {
             'usuario' => $usuario,
             'alertas' => $alertas
         ]);
+    }*/
+    public static function crear(Router $router) {
+        $alertas = [];
+
+        // Verificar si el método es POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Extraer todos los datos del POST
+            $data = $_POST;
+            $files = $_FILES;
+
+            // 1. Crear Usuario
+            $usuario = new User();
+            $usuario->sincronizar($data); // Rellenar el objeto User con los datos recibidos
+
+            // Validar la contraseña
+            $passwordErrors = PasswordService::validatePasswordStrength($data['password']);
+            $alertas = array_merge($alertas, $passwordErrors);
+
+            if (empty($alertas)) {
+                // Si las validaciones de la contraseña son correctas, se encripta la contraseña
+                $usuario->password = PasswordService::hashPassword($data['password']);
+                $resultado = $usuario->guardar();
+
+                if ($resultado['resultado']) {
+                    $_SESSION['user_id'] = $resultado['id']; // Almacenar el ID del usuario en la sesión
+                } else {
+                    $alertas[] = 'Error al guardar el usuario.';
+                }
+            }
+
+            // 2. Crear Cuotas
+            $cuotas = new Cuotas();
+            $cuotas->sincronizar($data);
+            $cuotas->id_user = $_SESSION['user_id']; // Asociar las cuotas con el usuario recién creado
+            $alertasCuotas = $cuotas->validar();
+
+            if (empty($alertasCuotas)) {
+                $cuotas->guardar();
+            } else {
+                $alertas = array_merge($alertas, $alertasCuotas);
+            }
+
+            // 3. Configuración de FTP
+            $ftp = new FTPUsers();
+            $ftp->sincronizar($data);
+            $ftp->id_user = $_SESSION['user_id']; // Asociar el FTP con el usuario
+            $alertasFTP = $ftp->validar();
+
+            if (empty($alertasFTP)) {
+                $ftp->guardar();
+            } else {
+                $alertas = array_merge($alertas, $alertasFTP);
+            }
+
+            // 4. Configuración de Base de Datos
+            $dbAdmin = new DBAdminsPgSQL();
+            $dbAdmin->sincronizar($data);
+            $dbAdmin->id_user = $_SESSION['user_id']; // Asociar la base de datos con el usuario
+            $alertasDB = $dbAdmin->validar();
+
+            if (empty($alertasDB)) {
+                $dbAdmin->guardar();
+            } else {
+                $alertas = array_merge($alertas, $alertasDB);
+            }
+
+            // 5. Subir Archivos
+            $fileUpload = FileService::uploadFiles($files['files']);
+            $alertasArchivos = $fileUpload['errors'];
+
+            if (empty($alertasArchivos)) {
+                // Si los archivos se subieron correctamente, se pueden procesar
+                $_SESSION['archivos_subidos'] = $fileUpload['files']; // Almacenar archivos subidos en la sesión
+                header('Location: /finalizado'); // Redirigir a la página de confirmación
+            } else {
+                $alertas = array_merge($alertas, $alertasArchivos);
+            }
+        }
+
+        // Renderizar la vista con los posibles errores
+        $router->render('auth/crear-cuenta', [
+            'alertas' => $alertas
+        ]);
     }
+
+
 
     public static function mensaje(Router $router) {
         $router->render('auth/mensaje');

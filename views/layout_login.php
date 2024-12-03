@@ -185,6 +185,8 @@ $js=[
                                                 </div>
                                                 <!--end::Heading-->
 
+
+
                                                 <div class="fv-row mb-8 fv-plugins-icon-container">
                                                     <!--begin::Label-->
                                                     <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
@@ -202,6 +204,7 @@ $js=[
                                                     <input type="text" class="form-control form-control-solid" placeholder="Ingrese el usuario"  name="settings_name">
                                                     <!--end::Input-->
                                                     <div class="fv-plugins-message-container invalid-feedback"></div></div>
+
 
                                                 <!--CONTRASENA inicio-->
                                                 <!--begin::Form-->

@@ -2,18 +2,14 @@
 <?php
 
 function connectDB($host, $port, $dbname, $user, $password) {
-
     $connectionString = "host={$host} port={$port} dbname={$dbname} user={$user} password={$password}";
     /** @var PgSql\Connection|false $db */
     $db = pg_connect($connectionString);
-    
     if (!$db) {
         throw new Exception("Error: No se pudo conectar a PostgreSQL. " . pg_last_error());
     }
-
     return $db;
 }
-
 function getCurrentPid($db): int
  {
     try {

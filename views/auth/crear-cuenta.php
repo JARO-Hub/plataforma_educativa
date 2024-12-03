@@ -188,6 +188,47 @@ include_once __DIR__ . "/../templates/alertas.php";
                                                 </div>
                                                 <!--end::Heading-->
 
+                                                <!-- Nombre inicio-->
+                                                <div class="fv-row mb-8 fv-plugins-icon-container">
+                                                    <!--begin::Label-->
+                                                    <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                                        <span class="required">Nombre</span>
+                                                        <span class="ms-1" data-bs-toggle="tooltip" aria-label="Specify project name" data-bs-original-title="Specify project name" data-kt-initialized="1">
+														<i class="ki-duotone ki-information-5 text-gray-500 fs-6">
+															<span class="path1"></span>
+															<span class="path2"></span>
+															<span class="path3"></span>
+														</i>
+													</span>
+                                                    </label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="text" class="form-control form-control-solid" placeholder="Ingrese su nombre"  name="settings_name">
+                                                    <!--end::Input-->
+                                                    <div class="fv-plugins-message-container invalid-feedback"></div></div>
+                                                <!-- Nombre fin-->
+
+                                                <!-- Apellido inicio-->
+                                                <div class="fv-row mb-8 fv-plugins-icon-container">
+                                                    <!--begin::Label-->
+                                                    <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                                        <span class="required">Apellido</span>
+                                                        <span class="ms-1" data-bs-toggle="tooltip" aria-label="Specify project name" data-bs-original-title="Specify project name" data-kt-initialized="1">
+														<i class="ki-duotone ki-information-5 text-gray-500 fs-6">
+															<span class="path1"></span>
+															<span class="path2"></span>
+															<span class="path3"></span>
+														</i>
+													</span>
+                                                    </label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="text" class="form-control form-control-solid" placeholder="Ingrese su apellido"  name="settings_name">
+                                                    <!--end::Input-->
+                                                    <div class="fv-plugins-message-container invalid-feedback"></div></div>
+                                                <!-- Apellido fin-->
+
+                                                <!-- usuario inicio-->
                                                 <div class="fv-row mb-8 fv-plugins-icon-container">
                                                     <!--begin::Label-->
                                                     <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
@@ -205,11 +246,31 @@ include_once __DIR__ . "/../templates/alertas.php";
                                                     <input type="text" class="form-control form-control-solid" placeholder="Ingrese el usuario"  name="settings_name">
                                                     <!--end::Input-->
                                                     <div class="fv-plugins-message-container invalid-feedback"></div></div>
+                                                <!--usuario fin-->
+
+                                                <!--Inicio email-->
+                                                <div class="fv-row mb-8 fv-plugins-icon-container">
+                                                    <!--begin::Label-->
+                                                    <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                                        <span class="required">Email</span>
+                                                        <span class="ms-1" data-bs-toggle="tooltip" aria-label="Specify project name" data-bs-original-title="Specify project name" data-kt-initialized="1">
+														<i class="ki-duotone ki-information-5 text-gray-500 fs-6">
+															<span class="path1"></span>
+															<span class="path2"></span>
+															<span class="path3"></span>
+														</i>
+													</span>
+                                                    </label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="text" class="form-control form-control-solid" placeholder="Ingrese su email"  name="settings_name">
+                                                    <!--end::Input-->
+                                                    <div class="fv-plugins-message-container invalid-feedback"></div></div>
+                                                <!--Fin email-->
+
 
                                                 <!--CONTRASENA inicio-->
                                                 <!--begin::Form-->
-
-
                                                     <!--begin::Input group-->
                                                     <div class="mb-10 fv-row" data-kt-password-meter="true">
                                                         <!--begin::Wrapper-->
@@ -263,18 +324,7 @@ include_once __DIR__ . "/../templates/alertas.php";
 
                                                 <!--begin::Input group-->
                                                 <div class="fv-row mb-8 fv-plugins-icon-container">
-                                                    <!--begin::Label-->
-                                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                                        <span class="required">holaa</span>
-                                                        <span class="ms-1" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="<div class='p-4 rounded bg-light'> <div class='d-flex flex-stack text-muted mb-4'> <i class=&quot;ki-duotone ki-bank fs-3 me-3&quot;><span class=&quot;path1&quot;></span><span class=&quot;path2&quot;></span></i> <div class='fw-bold'>INCBANK **** 1245 STATEMENT</div> </div> <div class='d-flex flex-stack fw-semibold text-gray-600'> <div>Amount</div> <div>Transaction</div> </div> <div class='separator separator-dashed my-2'></div> <div class='d-flex flex-stack text-dark fw-bold mb-2'> <div>USD345.00</div> <div>KEENTHEMES*</div> </div> <div class='d-flex flex-stack text-muted mb-2'> <div>USD75.00</div> <div>Hosting fee</div> </div> <div class='d-flex flex-stack text-muted'> <div>USD3,950.00</div> <div>Payrol</div> </div> </div>" data-kt-initialized="1">
-														<i class="ki-duotone ki-information-5 text-gray-500 fs-6">
-															<span class="path1"></span>
-															<span class="path2"></span>
-															<span class="path3"></span>
-														</i>
-													</span>
-                                                    </label>
-                                                    <!--end::Label-->
+
                                                     <!--begin::Dialer-->
                                                     <div class="position-relative w-lg-250px" id="kt_modal_create_project_budget_setup" data-kt-dialer="true" data-kt-dialer-min="50" data-kt-dialer-max="50000" data-kt-dialer-step="100" data-kt-dialer-prefix="$" data-kt-dialer-decimals="2">
                                                         <!--begin::Decrease control-->
@@ -301,7 +351,6 @@ include_once __DIR__ . "/../templates/alertas.php";
                                                     <div class="fv-plugins-message-container invalid-feedback"></div></div>
                                                 <!--end::Input group-->
 
-
                                                 <!--begin::Actions-->
                                                 <div class="d-flex flex-stack">
                                                     <button type="button" class="btn btn-lg btn-light me-3" data-kt-element="budget-previous">Atras</button>
@@ -312,6 +361,7 @@ include_once __DIR__ . "/../templates/alertas.php";
                                                     </button>
                                                 </div>
                                                 <!--end::Actions-->
+
                                             </div>
                                             <!--end::Wrapper-->
                                         </div>
@@ -538,102 +588,6 @@ include_once __DIR__ . "/../templates/alertas.php";
                                         </div>
                                         <!--end::Targets-->
 
-                                        <!--begin::Settings-->
-                                        <div data-kt-stepper-element="content" class="pending">
-                                            <!--begin::Wrapper-->
-                                            <div class="w-100">
-                                                <!--begin::Heading-->
-                                                <div class="pb-12">
-                                                    <!--begin::Title-->
-                                                    <h1 class="fw-bold text-dark">Registro de archivos</h1>
-                                                    <!--end::Title-->
-                                                    <!--begin::Description-->
-                                                    <!--   <div class="text-muted fw-semibold fs-4">If you need more info, please check
-                                                           <a href="#" class="link-primary">Project Guidelines</a></div>-->
-                                                    <!--end::Description-->
-                                                </div>
-                                                <!--end::Heading-->
-                                                <!--begin::Input group-->
-                                                <div class="fv-row mb-8">
-                                                    <!--begin::Dropzone-->
-                                                    <div class="dropzone dz-clickable" id="kt_modal_create_project_settings_logo">
-                                                        <!--begin::Message-->
-                                                        <div class="dz-message needsclick">
-                                                            <!--begin::Icon-->
-                                                            <i class="ki-duotone ki-file-up fs-3hx text-primary">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                            <!--end::Icon-->
-                                                            <!--begin::Info-->
-                                                            <div class="ms-4">
-                                                                <h3 class="dfs-3 fw-bold text-gray-900 mb-1">Suelta los archivos aqui</h3>
-                                                                <span class="fw-semibold fs-4 text-muted">Cargar hasta 10 archivos</span>
-                                                            </div>
-                                                            <!--end::Info-->
-                                                        </div>
-                                                    </div>
-                                                    <!--end::Dropzone-->
-                                                </div>
-                                                <!--end::Input group-->
-                                                <!--begin::Input group-->
-                                                <!--end::Input group-->
-                                                <!--begin::Input group-->
-                                                <div class="fv-row mb-8 fv-plugins-icon-container">
-                                                    <!--begin::Label-->
-                                                    <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
-                                                        <span class="required">Nombre del proyecto:</span>
-                                                        <span class="ms-1" data-bs-toggle="tooltip" aria-label="Specify project name" data-bs-original-title="Specify project name" data-kt-initialized="1">
-														<i class="ki-duotone ki-information-5 text-gray-500 fs-6">
-															<span class="path1"></span>
-															<span class="path2"></span>
-															<span class="path3"></span>
-														</i>
-													</span>
-                                                    </label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input type="text" class="form-control form-control-solid" placeholder="Ingrese el nombre del proyecto"  name="settings_name">
-                                                    <!--end::Input-->
-                                                    <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                                                <!--end::Input group-->
-                                                <!--begin::Input group-->
-                                                <div class="fv-row mb-8 fv-plugins-icon-container">
-                                                    <!--begin::Label-->
-                                                    <label class="required fs-6 fw-semibold mb-2">Descripcion</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <textarea class="form-control form-control-solid" rows="3" placeholder="Ingresar descripcion del proyecto" name="settings_description"></textarea>
-                                                    <!--end::Input-->
-                                                    <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                                                <!--end::Input group-->
-
-                                                <!--begin::Input group-->
-                                                <div class="fv-row mb-15 fv-plugins-icon-container">
-                                                    <!--begin::Wrapper-->
-                                                    <div class="d-flex flex-stack">
-                                                        <!--begin::Label-->
-                                                        <!--end::Label-->
-                                                        <!--begin::Checkboxes-->
-                                                        <!--end::Checkboxes-->
-                                                    </div>
-                                                    <!--begin::Wrapper-->
-                                                    <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                                                <!--end::Input group-->
-                                                <!--begin::Actions-->
-                                                <div class="d-flex flex-stack">
-                                                    <button type="button" class="btn btn-lg btn-light me-3" data-kt-element="settings-previous">atras</button>
-                                                    <button type="button" class="btn btn-lg btn-primary" data-kt-element="settings-next">
-                                                        <span class="indicator-label">Siguiente</span>
-                                                        <span class="indicator-progress">Please wait...
-													<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                    </button>
-                                                </div>
-                                                <!--end::Actions-->
-                                            </div>
-                                            <!--end::Wrapper-->
-                                        </div>
-                                        <!--end::Settings-->
 
                                     </form>
                                     <!--end::Form-->
