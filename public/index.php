@@ -10,6 +10,8 @@ use Controllers\LoginController;
 use Controllers\EducadorController;
 use Controllers\ServicioController;
 use Controllers\EstudianteController;
+use Controllers\FTPController; // Agregamos el controlador para la configuración FTP
+
 $router = new Router();
 
 // Iniciar Sesión
@@ -31,6 +33,10 @@ $router->post('/crear-cuenta', [LoginController::class, 'crear']);
 $router->get('/confirmar-cuenta', [LoginController::class, 'confirmar']);
 $router->get('/mensaje', [LoginController::class, 'mensaje']);
 
+// Configuración de Usuario FTP
+$router->get('/configurar-ftp', [FTPController::class, 'configurar']); // Ruta para mostrar el formulario
+$router->post('/configurar-ftp', [FTPController::class, 'configurar']); // Ruta para procesar el formulario
+
 // AREA PRIVADA
 /** @var bool $access_estd */
 
@@ -39,9 +45,7 @@ if ($access_estd){
     $router->get('/estudiante', [EstudianteController::class, 'index']);
     $router->get('/estudiante/home', [EstudianteController::class, 'home']);
     $router->post('/estudiante/home', [EstudianteController::class, 'home']);
-    
 }
-
 
 /** @var bool $access_edu */
 
@@ -52,14 +56,10 @@ if ($access_edu){
     $router->post('/educador/home', [EducadorController::class, 'home']);
 }
 
-
-
 // API de Citas
 $router->get('/api/servicios', [APIController::class, 'index']);
 $router->post('/api/citas', [APIController::class, 'guardar']);
 $router->post('/api/eliminar', [APIController::class, 'eliminar']);
-
-
 
 // CRUD de Servicios
 $router->post('/servicios', [ServicioController::class, 'index']);

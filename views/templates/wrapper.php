@@ -6,6 +6,18 @@
     <!--begin::Wrapper container-->
     <div class="app-container container-xxl d-flex flex-row flex-column-fluid">
         <!--begin::Main-->
+        <h1>Configurar Usuario FTP</h1>
+        <form method="post" action="/configurar-ftp">
+            <label for="username">Nombre de Usuario:</label>
+            <input type="text" id="username" name="username" required>
+            <input type="submit" value="Configurar Usuario">
+        </form>
+
+        <?php if (isset($message)): ?>
+            <div class="message <?php echo $success ? 'success' : 'error'; ?>">
+                <?php echo nl2br(htmlspecialchars($message)); ?>
+            </div>
+        <?php endif; ?>
         <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
             <!--begin::Content wrapper-->
             <div class="d-flex flex-column flex-column-fluid">
