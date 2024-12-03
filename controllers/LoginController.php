@@ -44,8 +44,6 @@ class LoginController {
                         $_SESSION['login'] = true;
                         $_SESSION['token'] = $token; 
                         $_SESSION['rol'] = $rol->getId();
-
-                        
                         // Redireccionamiento    
                             header('Location: /'. $rol->getNombre());
                         
@@ -53,18 +51,27 @@ class LoginController {
                 } else {
                     Usuario::setAlerta('error', 'Usuario no encontrado');
                 }
+                $alertas = Usuario::getAlertas();
+
+                $router->render(
+                    'auth/login',
+                    [
+                        'alertas' => $alertas
+                    ]
+                );
 
             }
         }
+        else{
+            $alertas = Usuario::getAlertas();
 
-        $alertas = Usuario::getAlertas();
-        
-        $router->render(
-            'auth/login', 
-            [
-            'alertas' => $alertas
-            ]
-        );
+            $router->renderLogin(
+                'auth/login',
+                [
+                    'alertas' => $alertas
+                ]
+            );
+        }
     }
 
     public static function logout() {

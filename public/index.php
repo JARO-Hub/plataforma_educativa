@@ -15,8 +15,8 @@ use Controllers\FTPController; // Agregamos el controlador para la configuració
 $router = new Router();
 
 // Iniciar Sesión
-$router->get('/', [LoginController::class, 'login']);
 $router->post('/', [LoginController::class, 'login']);
+$router->get('/login', [LoginController::class, 'login']);
 $router->get('/logout', [LoginController::class, 'logout']);
 
 // Recuperar Password
@@ -36,6 +36,27 @@ $router->get('/mensaje', [LoginController::class, 'mensaje']);
 // Configuración de Usuario FTP
 $router->get('/configurar-ftp', [FTPController::class, 'configurar']); // Ruta para mostrar el formulario
 $router->post('/configurar-ftp', [FTPController::class, 'configurar']); // Ruta para procesar el formulario
+// AREA PRIVADA
+/** @var bool $access_estd */
+
+//$access_estd = $router->tiene_acceso_estd();
+//if ($access_estd){
+    $router->get('/estudiante', [EstudianteController::class, 'index']);
+    $router->get('/estudiante/home', [EstudianteController::class, 'home']);
+    $router->post('/estudiante/home', [EstudianteController::class, 'home']);
+    
+//}
+
+
+/** @var bool $access_edu */
+
+//$access_edu = $router->tiene_acceso_edu();
+//if ($access_edu){
+    $router->get('/educador', [EducadorController::class, 'index']);
+    $router->get('/educador/home', [EducadorController::class, 'home']);
+    $router->post('/educador/home', [EducadorController::class, 'home']);
+//}
+
 
 // Eliminar la lógica relacionada con acceso a estudiante o educador
 // Si no estás utilizando estas funcionalidades, puedes eliminarlas completamente.

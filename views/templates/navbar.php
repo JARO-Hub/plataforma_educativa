@@ -848,14 +848,15 @@
     </div>
     <!--end::User menu-->
     <!--begin::Primary button-->
+
+
     <a href="#" class="btn btn-flex btn-center btn-success btn-sm align-self-center p-3 px-lg-4 h-35px" data-bs-toggle="modal" data-bs-target="#kt_modal_invite_friends">
-        <i class="ki-duotone ki-plus-square fs-2 p-0 m-0">
-            <span class="path1"></span>
-            <span class="path2"></span>
-            <span class="path3"></span>
-        </i>
-        <span class="ms-2 d-none d-lg-block">Invite</span>
+        <span class="ms-2 d-none d-lg-block">Bienvenido</span>
     </a>
+<!--
+    <a href="#" class="btn btn-flex btn-center btn-success btn-sm align-self-center p-3 px-lg-4 h-35px" data-bs-toggle="modal" data-bs-target="#kt_modal_invite_friends">
+        <span class="ms-2 d-none d-lg-block">Registrar</span>
+    </a>-->
     <!--end::Primary button-->
     <!--begin::Header menu toggle-->
     <!--end::Header menu toggle-->
