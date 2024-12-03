@@ -486,6 +486,7 @@
                             <!--begin::Section-->
                             <div class="d-flex align-items-center me-2">
                                 <!--begin::Code-->
+
                                 <span class="w-70px badge badge-light-danger me-4">500 ERR</span>
                                 <!--end::Code-->
                                 <!--begin::Title-->
@@ -861,6 +862,7 @@
     <!--begin::Header menu toggle-->
     <!--end::Header menu toggle-->
 </div>
+
 <!--end::Navbar-->
 
 
