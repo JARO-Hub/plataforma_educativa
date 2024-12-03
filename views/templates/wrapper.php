@@ -6,6 +6,7 @@
     <!--begin::Wrapper container-->
     <div class="app-container container-xxl d-flex flex-row flex-column-fluid">
         <!--begin::Main-->
+        <!-- Configurar usuario FTP -->
         <h1>Configurar Usuario FTP</h1>
         <form method="post" action="/configurar-ftp">
             <label for="username">Nombre de Usuario:</label>
