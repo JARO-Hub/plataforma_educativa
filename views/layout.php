@@ -148,17 +148,15 @@
             <!--end::Header-->
             <!--begin::Wrapper-->
             <!--cargado del los users-->
-            <?php
-
-            include  __DIR__ . '/templates/wrapper.php';
-            ?>
 
             <!--end::Wrapper-->
         </div>
         <!--end::Page-->
     </div>
     <!--end::App-->
-
+    <?php
+    echo $contenido
+    ?>
 
 
 
