@@ -46,8 +46,6 @@ class Router
         // Incluir la vista
         include_once __DIR__ . "/views/$view.php";
         $contenido = ob_get_clean(); // Obtener y limpiar el buffer
-        include_once __DIR__ . '/views/layout.php'; // Incluir el layout principal
-        $contenido = ob_get_clean(); // Limpia el Buffer
         include_once __DIR__ . '/views/layout.php';
     }
 
