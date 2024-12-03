@@ -1,4 +1,7 @@
 <?php
+$css = [
+    '/assets/plugins/custom/datatables/datatables.bundle.css'
+];
 
 ?>
 <h1 class="nombre-pagina">Login</h1>
@@ -22,9 +25,11 @@
             name="contrasena"
         />
     </div>
-    <input type="submit" class="boton" value="Iniciar Sesión">
+    <input type="submit" class="boton" value="Iniciar Sesión en este momento" />
+
 </form>
 <div class="acciones">
     <a href="/crear-cuenta">¿Aún no tienes una cuenta? <strong>Crear una</strong></a>
     <a href="/olvide">¿Olvidaste tu password?</a>
 </div>
+

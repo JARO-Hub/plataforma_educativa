@@ -12,11 +12,12 @@
                 <li class="nav-item">
                     <a href="inicio.php" class="nav-link text ql-color-white  fw-bold px-3">Inicio</a>
                 </li>
+
                 <li class="nav-item">
-                    <a href="producto.php" class="nav-link text-dark fw-bold px-3">Producto</a>
+                    <a href="producto.php" class="nav-link text ql-color-white fw-bold px-3">Producto</a>
                 </li>
                 <li class="nav-item">
-                    <a href="quienes-somos.php" class="nav-link text-dark fw-bold px-3">Quiénes Somos</a>
+                    <a href="quienes-somos.php" class="nav-link text ql-color-white fw-bold px-3">Quiénes Somos</a>
                 </li>
             </ul>
         </nav>

@@ -49,7 +49,6 @@
                         <?php
 
                         include  __DIR__ . '/templates/header/header.php';
-
                         ?>
 
                     </div>
@@ -72,6 +71,7 @@
                                         'dominios_confianza' => $_SERVER['REQUEST_URI']=== '/dominios_confianza' ? 'here' : '',
                                         'configuracion_ldap' => $_SERVER['REQUEST_URI']=== '/configuracion_ldap' ? 'here' : '',
                                 ];
+
                             ?>
                             <div class="d-flex justify-content-between align-items-center menu menu-rounded menu-active-bg menu-state-primary menu-column menu-lg-row menu-title-gray-700 menu-icon-gray-500 menu-arrow-gray-500 menu-bullet-gray-500 my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0" id="kt_app_header_menu" data-kt-menu="true">
                                 <!--begin:Menu item-->
@@ -148,16 +148,15 @@
             <!--end::Header-->
             <!--begin::Wrapper-->
             <!--cargado del los users-->
-            <?php
 
-            include  __DIR__ . '/templates/wrapper.php';
-            ?>
             <!--end::Wrapper-->
         </div>
         <!--end::Page-->
     </div>
     <!--end::App-->
-
+    <?php
+    echo $contenido
+    ?>
 
 
 
