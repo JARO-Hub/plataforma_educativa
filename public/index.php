@@ -10,7 +10,8 @@ use Controllers\LoginController;
 use Controllers\EducadorController;
 use Controllers\ServicioController;
 use Controllers\EstudianteController;
-use Controllers\FTPController; // Agregamos el controlador para la configuración FTP
+use Controllers\FTPController;
+use Controllers\CuotaController;
 
 $router = new Router();
 
@@ -52,5 +53,9 @@ $router->get('/servicios/actualizar', [ServicioController::class, 'actualizar'])
 $router->post('/servicios/actualizar', [ServicioController::class, 'actualizar']);
 $router->post('/servicios/eliminar', [ServicioController::class, 'eliminar']);
 
+$router->get('/asignar-cuota', [CuotaController::class, 'asignar']);
+
+
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();
+
