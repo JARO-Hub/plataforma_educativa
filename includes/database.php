@@ -27,7 +27,9 @@ function getCurrentPid($db): int
 
 // Conectarnos a la base de datos
 try {
-    $db = connectDB('localhost', '5433', 'taller_bd', 'postgres', 'anabel');
+
+    $db = connectDB('172.20.10.13', '5432', 'taller_bd', 'honeycomb', 'admin123');
+
     /** @var int $pid */
     $pid = getCurrentPid($db);
     // La conexión fue exitosa

@@ -23,6 +23,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: admin@honeycomb.com
       PGADMIN_DEFAULT_PASSWORD: admin123
       PGADMIN_CONFIG_ALLOW_SPECIAL_EMAIL_DOMAINS: "True"
+      PGADMIN_CONFIG_PATH: /dbadmin/
     ports:
       - "8080:80"
     depends_on:
@@ -36,3 +37,8 @@ volumes:
 networks:
   honeycomb_network:
     driver: bridge
+
+    #<Location "/dbadmin/">
+    #        RequestHeader set X-Script-Name /dbadmin
+    #        RequestHeader set X-Forwarded-Host local.honeycomb.aso
+    #    </Location>
