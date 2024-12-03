@@ -49,9 +49,6 @@ class Usuario extends ActiveRecord {
         if(strlen($this->contrasena) < 6) {
             self::$alertas['error'][] = 'La contrasena debe contener al menos 6 caracteres';
         }
-
-
-
         return self::$alertas;
     }
 
