@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:11
+    container_name: postgres11
+    restart: always
+    environment:
+      POSTGRES_USER: honeycomb
+      POSTGRES_PASSWORD: admin123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - honeycomb_network
+
+  phpmyadmin:
+    image: dpage/pgadmin4
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@honeycomb.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+      PGADMIN_CONFIG_ALLOW_SPECIAL_EMAIL_DOMAINS: "True"
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    networks:
+      - honeycomb_network
+
+volumes:
+  postgres_data:
+
+networks:
+  honeycomb_network:
+    driver: bridge
